@@ -1,17 +1,31 @@
 <template>
-  <div id="app" class="pb-5">
-    <search></search>
+
+  <div id="app" class="m-0 p-0">
+    <div class="container-fluid" >
+      <div class="row d-flex align-items-stretch" style="min-height:800px;">
+        
+        <div class="col-12 col-sm-12 px-0">
+          <navbar></navbar>
+        </div>
+
+        <div class="col-12 col-sm-12 px-0">
+          <search></search>
+        </div>
+
+      </div>
+    </div>
   </div>
+
 </template>
 
 <script>
 
-import Search from './components/Search'
+import navbar   from './components/Navbar'
+import search  from './components/Search'
 
 export default {
-  name: 'App',
   components: { 
-   Search
+   navbar, search
   }
 }
 </script>
