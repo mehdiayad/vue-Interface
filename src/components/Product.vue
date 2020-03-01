@@ -3,7 +3,7 @@
 		<div class="row">
 			<div class="col-4 col-sm-4 mt-3" v-for="product in products" v-bind:key="product.id">
 				<div class="mx-auto h-100 text-left">
-					<!-- <img class="product_img mx-auto mx-auto d-block" alt="product img" v-bind:src="getImgUrl(product.img_overview)" /> --> 
+					<img class="product_img mx-auto mx-auto d-block" alt="product img" v-bind:src="getImgUrl(product.img_overview)" /> 
 					<h5> {{ formatPrice(product.price) }} € </h5>
 					<div class="small"> {{ product.description_title }} </div>
 					<div class="small"> {{ product.img_overview }} </div>
@@ -25,7 +25,7 @@ export default {
 	      }
     },
   	mounted: function() {
-   		axios.get("http://localhost:8888/Laravel6-WS/public/product")
+   		axios.get("http://localhost:8888/Laravel-WS/public/product")
         .then((response) => {
         	console.log(response);
         	this.products = response.data.data;
