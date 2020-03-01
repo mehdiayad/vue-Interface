@@ -42,5 +42,4 @@ export default {
   min-width: 1000px;
 }
 
-
 </style>

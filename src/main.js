@@ -6,7 +6,7 @@ import VueRouter from 'vue-router'
 import App from './App.vue'
 import Hello from './components/HelloWorld.vue'
 import PageA from './components/PageA.vue'
-import Product from './components/Product.vue'
+//import Product from './components/Product.vue'
 
 Vue.use(VueRouter)
 
@@ -22,7 +22,7 @@ const router = new VueRouter({
     component: PageA
   },{
     path:'/product',
-    component: Product
+    component: PageA
   },{
     path:'*',
     redirect: '/'
