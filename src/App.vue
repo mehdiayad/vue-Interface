@@ -1,15 +1,15 @@
 <template>
 
-  <div id="app" class="m-0 p-0">
+  <div id="app2" class="m-0 p-0">
     <div class="container-fluid" >
-      <div class="row d-flex align-items-stretch" style="min-height:800px;">
+      <div class="row">
         
         <div class="col-12 col-sm-12 px-0">
           <navbar></navbar>
         </div>
 
-        <div class="col-12 col-sm-12 px-0">
-          <search></search>
+        <div class="col-12 col-sm-12 px-0 text-center">
+            <router-view></router-view>
         </div>
 
       </div>
@@ -21,13 +21,26 @@
 <script>
 
 import navbar   from './components/Navbar'
-import search  from './components/Search'
 
 export default {
   components: { 
-   navbar, search
+   navbar
   }
 }
 </script>
 
-<style src="./css/style.css"> </style>
+<style>
+
+#app 
+{
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+  margin-top: 60px;
+  min-width: 1000px;
+}
+
+
+</style>
