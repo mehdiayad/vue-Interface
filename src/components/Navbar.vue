@@ -13,9 +13,7 @@
         </a>
         <div class="dropdown-menu bg-info" aria-labelledby="navbarDropdownMenuLink">
           <a class="dropdown-item" href="#"> <i class="fas fa-chevron-right"></i> Option 1</a>
-          <div class="dropdown-divider"></div>
           <a class="dropdown-item" href="#"> <i class="fas fa-chevron-right"></i> Option 2</a>
-          <div class="dropdown-divider"></div>
           <a class="dropdown-item" href="#"> <i class="fas fa-chevron-right"></i> Option 3</a>
         </div>
       </li>

@@ -1,10 +1,10 @@
 <template>
 
-  <div id="app2" class="m-0 p-0">
+  <div id="app" class="m-0 p-0">
     <div class="container-fluid" >
       <div class="row">
         
-        <div class="col-12 col-sm-12 px-0">
+        <div v-show="displayNavbar()" class="col-12 col-sm-12 px-0">
           <navbar></navbar>
         </div>
 
@@ -25,6 +25,14 @@ import navbar   from './components/Navbar'
 export default {
   components: { 
    navbar
+  },
+  methods:{
+	  displayNavbar() {
+		  if(this.$route.name == "hello")
+	        return false;
+		  else
+		  	return true;
+	    }
   }
 }
 </script>
