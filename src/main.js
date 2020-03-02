@@ -8,10 +8,6 @@ import App from './App.vue'
 import Hello from './components/HelloWorld.vue'
 import PageA from './components/PageA.vue'
 import Product from './components/Product.vue'
-import Paginate from 'vuejs-paginate'
-
-Vue.component('paginate', Paginate)
-
 
 Vue.use(VueRouter)
 
