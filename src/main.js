@@ -5,7 +5,7 @@ import VueRouter from 'vue-router'
 
 // Additionnal Vues
 import App from './App.vue'
-import Hello from './components/HelloWorld.vue'
+import Home from './components/Home.vue'
 import PageA from './components/PageA.vue'
 import ProductIndex from './components/ProductIndex.vue'
 import ProductShow from './components/ProductShow.vue'
@@ -19,8 +19,8 @@ const router = new VueRouter({
   mode:'history',
   routes: [{
     path:'/',
-    name: 'hello',
-    component: Hello
+    name: 'home',
+    component: Home
   },{
     path:'/page',
     name: 'page',
