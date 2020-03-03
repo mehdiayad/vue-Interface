@@ -1,15 +1,5 @@
-/*
-code APP.VUE 
+<router-link to="/product/1"> WORKS
 
-<template>
-  <div id="app" class="m-0 p-0">
-    <router-view></router-view>
-  </div>
-</template>
+<router-link v-bind:to="{path: '/product/' + product.id}"> WORKS
 
-<script>
-export default {}
-</script>
-
-<style></style>
-*/
+<router-link :to="{ name: 'product_show', params: { id: product.id } }"> WORKS
