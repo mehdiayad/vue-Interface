@@ -8,10 +8,14 @@
           <navbar></navbar>
         </div>
 
-        <div class="col-12 col-sm-12 px-0 text-center">
+        <div class="dynamic-component col-12 col-sm-12 px-0 text-center">
             <router-view></router-view>
         </div>
 
+		    <div v-show="displayFootbar()" class="col-12 col-sm-12 px-0">
+          <footbar></footbar>
+        </div>
+        
       </div>
     </div>
   </div>
@@ -20,11 +24,12 @@
 
 <script>
 
-import navbar   from './components/Navbar'
+import navbar  from './components/Navbar'
+import footbar from './components/Footbar'
 
 export default {
   components: { 
-   navbar
+   navbar,footbar
   },
   methods:{
 	  displayNavbar() {
@@ -32,6 +37,12 @@ export default {
 	        return false;
 		  else
 		  	return true;
+	    },
+	    displayFootbar() {
+			  if(this.$route.name == "hello")
+		        return false;
+			  else
+			  	return true;
 	    }
   }
 }
@@ -48,6 +59,10 @@ export default {
   color: #2c3e50;
   margin-top: 60px;
   min-width: 1000px;
+}
+
+.dynamic-component{
+  min-height: 650px;
 }
 
 </style>

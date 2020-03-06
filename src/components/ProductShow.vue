@@ -111,7 +111,7 @@ export default {
 			return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
 		},
 		getImgUrl(img_path) {
-			return '/products/'+ img_path
+			return '/images/products/'+ img_path
 		},
 		getProduct(id) {
 

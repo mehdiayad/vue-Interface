@@ -60,7 +60,7 @@ export default {
 			return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
 		},
 		getImgUrl(img_path) {
-			return '/products/'+ img_path
+			return '/images/products/'+ img_path
 		},
 		getProducts(page) {
 			var url = process.env.VUE_APP_API_URL_PRODUCT_INDEX_PAGE + this.page.toString()
