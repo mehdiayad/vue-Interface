@@ -16,14 +16,14 @@
               
               <div class="input-group-prepend col-3 col-sm-3 px-0"> 
                 <select v-model="selected" class="w-100 bg-info text-white">
-                  <option disabled value="">Choisissez</option>
+                  <option>Toutes categories</option>
                   <option>AAAAA</option>
                   <option>BBBBB</option>
                   <option>CCCCC</option>
                 </select>
               </div>
           
-              <input class="search-bar col-7 col-sm-7 px-2 mx-0" v-model="message" placeholder="Rechercher un produit"/>
+              <input class="search-bar col-7 col-sm-7 px-2 mx-0" v-model="product_search" placeholder="Rechercher un produit"/>
 
               <div class="input-group-append col-1 col-sm-1 px-0 mx-0">
                     <a href="#" class="text-center ml-4"> <i class="fa fa-search fa-2x text-white py-1 pl-3" aria-hidden="true"></i> </a> 
@@ -74,7 +74,8 @@
   export default {
   data() {
     return {
-      selected: "test"
+      selected: "Toutes categories",
+      product_search: "",
     }
   }
 }
