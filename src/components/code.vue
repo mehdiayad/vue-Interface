@@ -4,3 +4,4 @@
 
 <router-link :to="{ name: 'product_show', params: { id: product.id } }"> WORKS
 
+

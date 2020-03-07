@@ -6,12 +6,12 @@ import VueRouter from 'vue-router'
 // Additionnal Vues
 import App from './App.vue'
 import Home from './components/Home.vue'
-import PageA from './components/PageA.vue'
+import Login from './components/Login.vue'
 import ProductIndex from './components/ProductIndex.vue'
 import ProductShow from './components/ProductShow.vue'
 
-Vue.use(VueRouter)
 
+Vue.use(VueRouter)
 
 Vue.config.productionTip = false
 
@@ -21,19 +21,23 @@ const router = new VueRouter({
     path:'/',
     name: 'home',
     component: Home
-  },{
-    path:'/page',
-    name: 'page',
-    component: PageA
-  },{
+  },
+  {
+    path:'/login',
+    name: 'login',
+    component: Login
+  },
+  {
     path:'/product',
     name: 'product_index',
     component: ProductIndex
-  },{
+  },
+  {
     path:'/product/:id',
     name: 'product_show',
     component: ProductShow
-  },{
+  },
+  {
     path:'*',
     redirect: '/'
   }]

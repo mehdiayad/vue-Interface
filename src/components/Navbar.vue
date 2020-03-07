@@ -43,7 +43,7 @@
             </a>
 
             <div class="dropdown-menu bg-white text-dark" aria-labelledby="dropdownMenuLink">
-              <a class="dropdown-item text-dark" href="#"> <i class="fas fa-chevron-right"></i> Utilisateurs </a>
+              <a class="dropdown-item text-dark" href="/login"> <i class="fas fa-chevron-right"></i> Connexion </a>
               <a class="dropdown-item text-dark" href="/product"> <i class="fas fa-chevron-right"></i> Produits </a>
               <a class="dropdown-item text-dark" href="#"> <i class="fas fa-chevron-right"></i> Deconnexion </a>
             </div>
