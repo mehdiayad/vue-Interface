@@ -15,9 +15,13 @@
               <input v-model="password" type="password" class="form-control"/>
             </div>
             <div class="text-center">
-              <a class="float-left btn btn-info text-white" v-on:click="loginGet()">GET</a>
-              <a class="btn btn-info text-white" v-on:click="loginTest()">TEST</a>
-              <a class="float-right btn btn-info text-white" v-on:click="loginPost()">POST</a>
+              <a class="float-left btn btn-info text-white" v-on:click="loginGet1()">GET UI </a>
+              <a class="float-right btn btn-info text-white" v-on:click="loginGet2()">GET PASSPORT</a>
+            </div>
+            <br/><br/><br/>
+            <div class="text-center">
+              <a class="float-left btn btn-info text-white" v-on:click="loginPost1()">POST UI </a>
+              <a class="float-right btn btn-info text-white" v-on:click="loginPost2()">POST PASSPORT</a>
             </div>
           </div>
         </div>
@@ -40,36 +44,55 @@ import axios from 'axios'
   },
   methods:{
 
-    loginTest(){
-      var url1 = process.env.VUE_APP_API_URL_PRODUCT_INDEX_PAGE;
+    loginGet1(){
+      var url1 = process.env.VUE_APP_API_URL_AUTHENTIFICATION_UI;
       console.log(url1)
 
-			axios.get(url1)
-        .then(function (response) {
+      axios({
+        method: 'get',
+        url : url1,
+      })
+      .then(function (response) {
             console.log(response);
         });
     },
-    loginGet(){
-      var url1 = process.env.VUE_APP_API_URL_AUTHENTIFICATION;
+    loginGet2(){
+      var url1 = process.env.VUE_APP_API_URL_AUTHENTIFICATION_PASSPORT;
       console.log(url1)
 
-			axios.get(url1)
-        .then(function (response) {
-            console.log(response);
-        });
+      axios({
+        method: 'get',
+        url : url1,
+      })
+      .then(function (response) {
+          console.log(response);
+      });
     },
-    loginPost(){
-      var url1 = process.env.VUE_APP_API_URL_AUTHENTIFICATION;
+    loginPost1(){
+      var url1 = process.env.VUE_APP_API_URL_AUTHENTIFICATION_UI;
       console.log(url1)
 
       axios({
         method: 'post',
         url : url1,
-        data: {firstName: 'Fred', lastName: 'Flintstone' }
-      })
-      .then(function (response) {
-          console.log(response);
-      });
+        data: {firstName: 'Fred',lastName: 'Flintstone'}      
+        })
+        .then(function (response) {
+            console.log(response);
+        });
+    },
+    loginPost2(){
+      var url1 = process.env.VUE_APP_API_URL_AUTHENTIFICATION_PASSPORT;
+      console.log(url1)
+
+      axios({
+        method: 'post',
+        url : url1,
+        data: {firstName: 'Fred',lastName: 'Flintstone'}      
+        })
+        .then(function (response) {
+            console.log(response);
+        });
     }
 
 
