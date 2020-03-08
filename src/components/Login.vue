@@ -101,6 +101,6 @@ import axios from 'axios'
 </script>
 
 
-
-<style></style>
+<style scoped>
+</style>
 

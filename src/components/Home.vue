@@ -10,7 +10,7 @@
 
 <script></script>
 
-<style>
+<style scoped>
 
 .home_img{
   height: 600px;

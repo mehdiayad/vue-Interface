@@ -3,12 +3,11 @@
 		
 		<div class="row">
 			<div class="col-4 col-sm-4 mt-3" v-for="product in products" v-bind:key="product.id">
-        		<router-link :to="{ name: 'product_show', params: { id: product.id } }">
+        		<router-link :to="{ name: 'product_show', params: { id: product.id } }" style="text-decoration:none;">
 					<div class="mx-auto h-100 text-left">
 						<img class="product_img mx-auto d-block" alt="product img" v-bind:src="getImgUrl(product.img_overview)" /> 
-						<h5> {{ formatPrice(product.price) }} € </h5>
-						<div class="small"> {{ product.description_title }} </div>
-						<div class="small"> {{ product.img_overview }} </div>
+						<h5  class="product_price"> {{ formatPrice(product.price) }} € </h5>
+						<div class="product_desc small"> {{ product.description_title }} </div>
 					</div>
 				</router-link>
 			</div>
@@ -110,20 +109,24 @@ export default {
 </script>
 
 
-<style>
+<style scoped>
 
 .product_img{
 	width: 200px;
 	height: 200px;
 }
 
-a{
+a {
 	color: black;
-	text-decoration: none;
 }
 
 a :hover{
-	color: black;
-	text-decoration: none;
+	color: #5bc0de;
 }
+
+
+.product_desc :hover{
+	text-decoration: none; 
+}
+
 </style>

@@ -140,7 +140,7 @@ export default {
 </script>
 
 
-<style>
+<style scoped>
 
 .product_img_show_mini
 {	

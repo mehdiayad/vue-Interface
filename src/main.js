@@ -1,16 +1,19 @@
 // Default Vues
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import Vuex from 'vuex'
+//import App from './App'
 
 
 // Additionnal Vues
-import App from './App.vue'
 import Home from './components/Home.vue'
 import Login from './components/Login.vue'
 import ProductIndex from './components/ProductIndex.vue'
 import ProductShow from './components/ProductShow.vue'
+import Counter from './components/Counter.vue'
+import Alert from './components/Alert.vue'
 
-
+Vue.use(Vuex)
 Vue.use(VueRouter)
 
 Vue.config.productionTip = false
@@ -21,6 +24,11 @@ const router = new VueRouter({
     path:'/',
     name: 'home',
     component: Home
+  },
+  {
+    path:'/counter',
+    name: 'counter',
+    component: Counter
   },
   {
     path:'/login',
@@ -38,6 +46,11 @@ const router = new VueRouter({
     component: ProductShow
   },
   {
+    path:'/alert',
+    name: 'alert',
+    component: Alert
+  },
+  {
     path:'*',
     redirect: '/'
   }]
@@ -46,5 +59,5 @@ const router = new VueRouter({
 
 new Vue({
   router,
-  render: h => h(App),
+  render: h => h(require('./App').default),
 }).$mount('#app')

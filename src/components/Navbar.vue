@@ -9,7 +9,10 @@
         </router-link>
       </div>
 
-      <div class="col-6 offset-2 col-sm-6 offset-sm-2 py-3">
+      <div class="col-2 col-sm-2">
+      </div>
+
+      <div class="col-6 col-sm-6 py-3 px-0">
         <div class="input-group border rounded">
           <div class="container">
             <div class="row">
@@ -23,10 +26,10 @@
                 </select>
               </div>
           
-              <input class="search-bar col-7 col-sm-7 px-2 mx-0" v-model="product_search" placeholder="Rechercher un produit"/>
+              <input class="search-bar col-8 col-sm-8" v-model="product_search" placeholder="Rechercher un produit"/>
 
-              <div class="input-group-append col-1 col-sm-1 px-0 mx-0">
-                    <a href="#" class="text-center ml-4"> <i class="fa fa-search fa-2x text-white py-1 pl-3" aria-hidden="true"></i> </a> 
+              <div class="input-group-append col-1 col-sm-1">
+                <a href="#"> <!-- <i class="fa fa-search fa-2x text-white py-1" aria-hidden="true"></i> --> </a>
               </div>
 
             </div>
@@ -45,6 +48,8 @@
             <div class="dropdown-menu bg-white text-dark" aria-labelledby="dropdownMenuLink">
               <a class="dropdown-item text-dark" href="/login"> <i class="fas fa-chevron-right"></i> Connexion </a>
               <a class="dropdown-item text-dark" href="/product"> <i class="fas fa-chevron-right"></i> Produits </a>
+              <a class="dropdown-item text-dark" href="/counter"> <i class="fas fa-chevron-right"></i> Counter </a>
+              <a class="dropdown-item text-dark" href="/alert"> <i class="fas fa-chevron-right"></i> Alert </a>
               <a class="dropdown-item text-dark" href="#"> <i class="fas fa-chevron-right"></i> Deconnexion </a>
             </div>
 
@@ -54,7 +59,7 @@
       	 <div class="col-1 col-sm-1">
             <div class="row">
                   <div class="col-12 col-sm-12 text-white card_number">
-                      <h4> 0 </h4>
+                      <h4> {{cart_number}} </h4>
                   </div>
 
                   <div class="col-12 col-sm-12 card_shop">
@@ -71,11 +76,32 @@
 </template>
 
 <script>
-  export default {
+import axios from 'axios'
+import cartStore from '../store/CartStore'
+
+export default {
+
+  store: cartStore,
+
   data() {
     return {
       selected: "Toutes categories",
       product_search: "",
+      cart_number: 0,
+      user_id: 6,
+    }
+  },
+  mounted: function(){
+    this.getCartNumber(this.user_id)
+  },
+  methods : {
+      getCartNumber: function(id){
+        var url = process.env.VUE_APP_API_URL_CART_NUMBER + id 
+        axios.get(url).
+          then((response) => {
+            console.log(response)
+            this.cart_number = response.data
+        })
     }
   }
 }
