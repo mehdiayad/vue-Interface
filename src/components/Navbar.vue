@@ -18,11 +18,9 @@
             <div class="row">
               
               <div class="input-group-prepend col-3 col-sm-3 px-0"> 
-                <select v-model="selected" class="w-100 bg-info text-white">
+                <select v-model="category_search" class="w-100 bg-info text-white">
                   <option>Toutes categories</option>
-                  <option>AAAAA</option>
-                  <option>BBBBB</option>
-                  <option>CCCCC</option>
+                  <option v-for="category in categories2" :key="category.id" :value="category.id">{{ category.name }}</option>
                 </select>
               </div>
           
@@ -63,7 +61,7 @@
                   </div>
 
                   <div class="col-12 col-sm-12 card_shop">
-                    <i class="fas fa-shopping-cart fa-3x text-white"></i>
+                    <i @click="splitData()" class="fas fa-shopping-cart fa-3x text-white"></i> 
                   </div>
 
                 </div>
@@ -85,23 +83,44 @@ export default {
 
   data() {
     return {
-      selected: "Toutes categories",
-      product_search: "",
-      cart_number: 0,
+      category_search: null,
+      product_search: null,
+      cart_number: null,
+      categories: [],
+      categories2: [],
       user_id: 6,
     }
   },
   mounted: function(){
     this.getCartNumber(this.user_id)
+    this.getCategories()
+    this.fillCategories()
   },
   methods : {
-      getCartNumber: function(id){
-        var url = process.env.VUE_APP_API_URL_CART_NUMBER + id 
-        axios.get(url).
-          then((response) => {
-            console.log(response)
-            this.cart_number = response.data
+    getCartNumber: function(id){
+      console.log('call navbar function 1')
+      var url = process.env.VUE_APP_API_URL_CART_NUMBER + id 
+      axios.get(url).
+        then((response) => {
+          console.log(response)
+          this.cart_number = response.data
+      })
+    },
+    getCategories: function(){
+      console.log('call navbar function 2')
+      var url = process.env.VUE_APP_API_URL_CATEGORY_INDEX_PAGE
+      axios.get(url).
+        then((response) => {
+          console.log(response)
+          this.categories = response.data
         })
+    },
+    fillCategories: function(){
+        console.log('call navbar function 3')
+        for(var i= 0; i < this.categories.length; i++){
+          this.categories2[this.categories[i].id] = this.categories[i].name
+        }
+        console.log(this.categories2)
     }
   }
 }
