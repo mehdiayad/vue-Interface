@@ -15,8 +15,7 @@
               <input v-model="password" type="password" class="form-control"/>
             </div>
             <div class="text-center">
-              <a class="float-left btn btn-info text-white" v-on:click="loginGet()">GET</a>
-              <a class="float-right btn btn-info text-white" v-on:click="loginPost()">POST</a>
+              <a class="float-right btn btn-info text-white" v-on:click="login()">GET</a>
             </div>
           </div>
         </div>
@@ -38,19 +37,7 @@ import axios from 'axios'
     }
   },
   methods:{
-    loginGet(){
-      console.log('Call login')
-      var url1 = process.env.VUE_APP_API_URL_AUTHENTIFICATION_API;
-
-      axios({
-        method: 'get',
-        url : url1,
-      })
-      .then(function (response) {
-            console.log(response);
-        });
-    },
-    loginPost(){
+    login:  function(){
       console.log('Call login')
       var url1 = process.env.VUE_APP_API_URL_AUTHENTIFICATION_API;
 
