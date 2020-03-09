@@ -62,6 +62,8 @@ export default {
 			return '/images/products/'+ img_path
 		},
 		getProducts(page) {
+
+			console.log('call get products')
 			var url = process.env.VUE_APP_API_URL_PRODUCT_INDEX_PAGE + this.page.toString()
 			   
 			axios.get(url)

@@ -20,7 +20,7 @@
               <div class="input-group-prepend col-3 col-sm-3 px-0"> 
                 <select v-model="category_search" class="w-100 bg-info text-white">
                   <option>Toutes categories</option>
-                  <option v-for="category in categories2" :key="category.id" :value="category.id">{{ category.name }}</option>
+                  <option v-for="category in categories2" :key="category">{{ category }}</option>
                 </select>
               </div>
           
@@ -61,7 +61,7 @@
                   </div>
 
                   <div class="col-12 col-sm-12 card_shop">
-                    <i @click="splitData()" class="fas fa-shopping-cart fa-3x text-white"></i> 
+                    <i @click="fillCategories()" class="fas fa-shopping-cart fa-3x text-white"></i> 
                   </div>
 
                 </div>
@@ -91,36 +91,44 @@ export default {
       user_id: 6,
     }
   },
+  beforeMount: function(){
+
+  },
   mounted: function(){
     this.getCartNumber(this.user_id)
     this.getCategories()
-    this.fillCategories()
+    this.fillCategories()  
+    this.displayConsole()
   },
   methods : {
     getCartNumber: function(id){
-      console.log('call navbar function 1')
+      console.log('call get cart number')
       var url = process.env.VUE_APP_API_URL_CART_NUMBER + id 
       axios.get(url).
         then((response) => {
-          console.log(response)
+          //console.log(response)
           this.cart_number = response.data
       })
     },
     getCategories: function(){
-      console.log('call navbar function 2')
+      console.log('call get Categories')
       var url = process.env.VUE_APP_API_URL_CATEGORY_INDEX_PAGE
       axios.get(url).
         then((response) => {
-          console.log(response)
+          //console.log(response)
           this.categories = response.data
         })
     },
     fillCategories: function(){
-        console.log('call navbar function 3')
+        console.log('call fill categories')
         for(var i= 0; i < this.categories.length; i++){
           this.categories2[this.categories[i].id] = this.categories[i].name
         }
-        console.log(this.categories2)
+        //console.log(this.categories2)
+    },
+    displayConsole: function(){
+        //console.log('call display Console')
+        //console.log(this.categories2)
     }
   }
 }

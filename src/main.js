@@ -13,6 +13,7 @@ import ProductShow from './components/ProductShow.vue'
 import Counter from './components/Counter.vue'
 import Alert from './components/Alert.vue'
 
+
 Vue.use(Vuex)
 Vue.use(VueRouter)
 
@@ -20,8 +21,17 @@ Vue.config.productionTip = false
 
 const router = new VueRouter({
   mode:'history',
-  routes: [{
+  routes: [
+  {
+    path:'*',
+    redirect: '/'
+  },
+  {
     path:'/',
+    redirect: '/login'
+  },
+  {
+    path:'/home',
     name: 'home',
     component: Home
   },
@@ -49,15 +59,11 @@ const router = new VueRouter({
     path:'/alert',
     name: 'alert',
     component: Alert
-  },
-  {
-    path:'*',
-    redirect: '/'
   }]
 })
-
 
 new Vue({
   router,
   render: h => h(require('./App').default),
+  //render: h => h(App),
 }).$mount('#app')
