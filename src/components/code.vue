@@ -1,7 +1,12 @@
-<router-link to="/product/1"> WORKS
+<template>
 
-<router-link v-bind:to="{path: '/product/' + product.id}"> WORKS
+</template> 
 
-<router-link :to="{ name: 'product_show', params: { id: product.id } }"> WORKS
+<script>
+
+</script>
+
+<style>
 
 
+</style>

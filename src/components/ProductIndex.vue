@@ -6,7 +6,7 @@
         		<router-link :to="{ name: 'product_show', params: { id: product.id } }" style="text-decoration:none;">
 					<div class="mx-auto h-100 text-left">
 						<img class="product_img mx-auto d-block" alt="product img" v-bind:src="getImgUrl(product.img_overview)" /> 
-						<h5  class="product_price"> {{ formatPrice(product.price) }} € </h5>
+						<h5  class="product_price mt-2"> {{ formatPrice(product.price) }} € </h5>
 						<div class="product_desc small"> {{ product.description_title }} </div>
 					</div>
 				</router-link>
@@ -16,13 +16,13 @@
 		<div class="row">
 			<div class="col-4 col-sm-4 mx-auto text-white mt-3 mb-3">
 
-				<span v-if="canGoBefore()"> <a class="btn btn-info mx-1" v-on:click="previousPage()"> Precedent </a> </span>
-				<span v-else> <a class="btn btn-info disabled mx-1" v-on:click="previousPage()"> Precedent </a> </span>
+				<span v-if="canGoBefore()"> <a class="btn btn-info text-white mx-1" v-on:click="previousPage()"> Precedent </a> </span>
+				<span v-else> <a class="btn btn-info text-white disabled mx-1" v-on:click="previousPage()"> Precedent </a> </span>
 				
 				<span class="text text-dark mx-1"> {{ currentPage }} of {{lastPage}} </span>
 
-				<span v-if="canGoAfter()"> <a class="btn btn-info mx-1" v-on:click="nextPage()"> Suivant </a> </span>
-				<span v-else> <a class="btn btn-info disabled mx-1" v-on:click="nextPage()"> Suivant </a> </span>
+				<span v-if="canGoAfter()"> <a class="btn btn-info text-white mx-1" v-on:click="nextPage()"> Suivant </a> </span>
+				<span v-else> <a class="btn btn-info text-white disabled mx-1" v-on:click="nextPage()"> Suivant </a> </span>
 
 			</div>
 
@@ -37,6 +37,7 @@
 <script>
 
 import axios from 'axios'
+import navbarStore from '../store/navbarStore'
 
 export default {
   	data () {
@@ -48,6 +49,8 @@ export default {
 			lastPage: null,
 			nextPageUrl: null,
 			previousPageUrl: null,
+			product_search: navbarStore.getters.productsearch,
+			category_search: navbarStore.getters.categorysearch,
 	      }
     },
   	mounted: function() {
@@ -64,9 +67,15 @@ export default {
 		getProducts(page) {
 
 			console.log('call get products')
-			var url = process.env.VUE_APP_API_URL_PRODUCT_INDEX_PAGE + this.page.toString()
-			   
-			axios.get(url)
+			//var url = process.env.VUE_APP_API_URL_PRODUCT_INDEX_PAGE + this.page.toString()
+			var url = process.env.VUE_APP_API_URL_PRODUCT_INDEX_2_PAGE
+			console.log(url)
+			
+			axios({
+				method: 'post',
+				url : url,
+				data : {category : this.category_search, product: this.product_search}
+			})
        		.then((response) => {
 			console.log(response)
 			this.page = response.data.current_page
@@ -76,8 +85,7 @@ export default {
 			this.lastPage = response.data.last_page
 			this.nextPageUrl = response.data.next_page_url
 			this.previousPageUrl = response.data.prev_page_url
-			})
-
+			});
 		},
 		canGoBefore(){
 			if(this.currentPage > 1){ return true; }

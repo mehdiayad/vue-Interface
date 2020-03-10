@@ -8,7 +8,7 @@
           <navbar></navbar>
         </div>
 
-        <div class="dynamic-component col-12 col-sm-12 px-0 text-center">
+        <div class="router_view col-12 col-sm-12 px-0 text-center">
             <router-view></router-view>
         </div>
 
@@ -33,13 +33,13 @@ export default {
   },
   methods:{
 	  displayNavbar() {
-		  if(this.$route.name == "hello")
+		  if(this.$route.name == "login")
 	        return false;
 		  else
 		  	return true;
 	    },
 	    displayFootbar() {
-			  if(this.$route.name == "hello")
+			  if(this.$route.name == "login")
 		        return false;
 			  else
 			  	return true;
@@ -50,18 +50,63 @@ export default {
 
 <style>
 
-#app 
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px)
 {
+	body
+	{
+		background-color:red;
+	} 
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px)
+{
+	body
+	{
+		background-color:green;
+	} 
+
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px)
+{
+	body
+	{
+		background-color:blue;
+	} 
+}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px)
+{
+	body
+	{
+		background-color:yellow;
+	} 
+}
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px)
+{
+	body
+	{
+		background-color:white;
+	} 
+}
+
+#app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
-  min-width: 1000px;
+  min-width: 900px;
 }
 
-.dynamic-component{
+.router_view{
   min-height: 650px;
 }
 

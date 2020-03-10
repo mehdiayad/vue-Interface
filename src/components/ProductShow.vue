@@ -73,8 +73,8 @@
 									<button class="btn btn-info w-100 mt-3"> Ajouter au panier </button>
 								</router-link>
 
-								<router-link :to="{ name: 'product_show', params: { id: product.id } }">
-									<button class="btn btn-danger w-100 mt-3"> Voir au panier </button>
+								<router-link :to="{ name: 'cart_index', params: { id: user_id } }">
+									<button class="btn btn-danger w-100 mt-3"> Voir le panier </button>
 								</router-link>
 							</div>
 													
@@ -91,12 +91,15 @@
 <script>
 
 import axios from 'axios'
+import userStore from '../store/userStore'
+
 
 export default {
   	data () {
 	    return {
         page: 1,
 		product_id: this.$route.params.id,
+		user_id: userStore.getters.userid,
 		product: null,
 		descriptions: null,
 		product_quantity:null,

@@ -17,17 +17,16 @@
           <div class="container">
             <div class="row">
               
-              <div class="input-group-prepend col-3 col-sm-3 px-0"> 
-                <select v-model="category_search" class="w-100 bg-info text-white">
-                  <option>Toutes categories</option>
-                  <option v-for="category in categories2" :key="category">{{ category }}</option>
+              <div class="input-group-prepend col-4 col-sm-4 px-0"> 
+                <select v-model.number="category_search" class="w-100 bg-info text-white">
+                      <option v-for="(category, index) in categories" :key="index" :value="index"> {{category}} </option>
                 </select>
               </div>
           
-              <input class="search-bar col-8 col-sm-8" v-model="product_search" placeholder="Rechercher un produit"/>
+              <input class="search-bar col-6 col-sm-6" v-model="product_search" placeholder="Rechercher un produit"/>
 
               <div class="input-group-append col-1 col-sm-1">
-                <a href="#"> <!-- <i class="fa fa-search fa-2x text-white py-1" aria-hidden="true"></i> --> </a>
+                  <a href="#" @click='searchProducts()'> <i class="fa fa-search fa-2x text-white px-2 h-100 w-100" aria-hidden="true"></i> </a>
               </div>
 
             </div>
@@ -40,15 +39,11 @@
       <div class="col-2 col-sm-2">
           <div class="dropdown show">
             <a class="btn bg-white text-dark dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              username
+              {{user_name}}
             </a>
 
             <div class="dropdown-menu bg-white text-dark" aria-labelledby="dropdownMenuLink">
-              <a class="dropdown-item text-dark" href="/login"> <i class="fas fa-chevron-right"></i> Connexion </a>
-              <a class="dropdown-item text-dark" href="/product"> <i class="fas fa-chevron-right"></i> Produits </a>
-              <a class="dropdown-item text-dark" href="/counter"> <i class="fas fa-chevron-right"></i> Counter </a>
-              <a class="dropdown-item text-dark" href="/alert"> <i class="fas fa-chevron-right"></i> Alert </a>
-              <a class="dropdown-item text-dark" href="#"> <i class="fas fa-chevron-right"></i> Deconnexion </a>
+              <a class="dropdown-item text-dark" href="#" @click='logout()'> <i class="fas fa-chevron-right"></i> Deconnexion </a>
             </div>
 
           </div>
@@ -56,6 +51,8 @@
 
       	 <div class="col-1 col-sm-1">
             <div class="row">
+              <router-link :to="{ name: 'cart_index', params: { id: user_id } }">
+
                   <div class="col-12 col-sm-12 text-white card_number">
                       <h4> {{cart_number}} </h4>
                   </div>
@@ -63,8 +60,8 @@
                   <div class="col-12 col-sm-12 card_shop">
                     <i @click="fillCategories()" class="fas fa-shopping-cart fa-3x text-white"></i> 
                   </div>
-
-                </div>
+              </router-link>
+            </div>
         </div>
 
 
@@ -75,34 +72,33 @@
 
 <script>
 import axios from 'axios'
-import cartStore from '../store/CartStore'
+import router from '../router/index'
+import userStore from '../store/userStore'
+import navbarStore from '../store/navbarStore'
+
 
 export default {
 
-  store: cartStore,
-
   data() {
     return {
-      category_search: null,
-      product_search: null,
+      category_search: (navbarStore.getters.categorysearch != null ? navbarStore.getters.categorysearch : 0),
+      product_search: navbarStore.getters.productsearch,
       cart_number: null,
-      categories: [],
-      categories2: [],
-      user_id: 6,
+      categories: { 0: 'Toutes les categories', 1 : 'Informatique',2 :'Mobilier', 3 : 'Mode', 4: 'Auto & Moto', 5: 'Cuisine'},
+      categories1: [],
+      categories11: [],
+      user_id: userStore.getters.userid,
+      user_name: userStore.getters.username,
     }
   },
   beforeMount: function(){
-
-  },
-  mounted: function(){
     this.getCartNumber(this.user_id)
     this.getCategories()
     this.fillCategories()  
-    this.displayConsole()
   },
   methods : {
     getCartNumber: function(id){
-      console.log('call get cart number')
+      console.log('call getCartNumber')
       var url = process.env.VUE_APP_API_URL_CART_NUMBER + id 
       axios.get(url).
         then((response) => {
@@ -111,24 +107,54 @@ export default {
       })
     },
     getCategories: function(){
-      console.log('call get Categories')
+      console.log('call getCategories')
       var url = process.env.VUE_APP_API_URL_CATEGORY_INDEX_PAGE
       axios.get(url).
         then((response) => {
           //console.log(response)
-          this.categories = response.data
+          this.categories1 = response.data
         })
     },
     fillCategories: function(){
-        console.log('call fill categories')
-        for(var i= 0; i < this.categories.length; i++){
-          this.categories2[this.categories[i].id] = this.categories[i].name
+        console.log('call fillCategories')
+        for(var i= 0; i < this.categories1.length; i++){
+          this.categories11[this.categories1[i].id] = this.categories1[i].name
         }
-        //console.log(this.categories2)
+        //console.log(this.categories11)
     },
-    displayConsole: function(){
-        //console.log('call display Console')
-        //console.log(this.categories2)
+    searchProducts: function() {
+
+      console.log('category = ' + this.category_search)
+      console.log('product = ' + this.product_search)
+
+      this.product_search = (this.product_search != '' ? this.product_search: null)
+
+      navbarStore.commit('setcategory',this.category_search)
+      navbarStore.commit('setproduct',this.product_search)
+
+      console.log("Route Name = " + router.currentRoute.name)
+      
+      if(router.currentRoute.name == 'product_index'){
+        router.go()
+      }else{
+        router.push('product')
+      }
+
+
+
+    },
+    logout: function(){
+
+      userStore.commit('setuserid',null)
+      userStore.commit('setuseremail',null)
+      userStore.commit('setuserconnected',false)
+      userStore.commit('setuserinfosconnexion',null)
+
+      //local storage
+      //localStorage.setItem("user", JSON.stringify(userStore.getters.all)) automatic with vuex-persist
+
+      router.push('login')
+
     }
   }
 }
