@@ -136,6 +136,7 @@ export default {
       
       if(router.currentRoute.name == 'product_index'){
         router.go()
+        //this.$forceUpdate(); change data but not refresh vue
       }else{
         router.push('product')
       }

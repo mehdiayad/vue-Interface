@@ -92,9 +92,12 @@
 
 import axios from 'axios'
 import userStore from '../store/userStore'
+import {functionsMixin} from '../mixins/functionsMixin'
 
 
 export default {
+
+	mixins: [functionsMixin],
   	data () {
 	    return {
         page: 1,
@@ -109,13 +112,6 @@ export default {
 		this.getProduct(this.product_id)
 	},
   	methods: {
-		formatPrice(value) {
-			let val = (value/1).toFixed(2).replace('.', ',')
-			return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
-		},
-		getImgUrl(img_path) {
-			return '/images/products/'+ img_path
-		},
 		getProduct(id) {
 			console.log('call get product')
 			var url = process.env.VUE_APP_API_URL_PRODUCT_SHOW_PAGE + id   

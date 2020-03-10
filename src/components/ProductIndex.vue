@@ -38,8 +38,11 @@
 
 import axios from 'axios'
 import navbarStore from '../store/navbarStore'
+import {functionsMixin} from '../mixins/functionsMixin'
 
 export default {
+	
+	mixins: [functionsMixin],
   	data () {
 	    return {
 			page: 1,
@@ -57,15 +60,7 @@ export default {
 		this.getProducts(this.page)
 	},
   	methods: {
-		formatPrice(value) {
-			let val = (value/1).toFixed(2).replace('.', ',')
-			return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
-		},
-		getImgUrl(img_path) {
-			return '/images/products/'+ img_path
-		},
 		getProducts(page) {
-
 			console.log('call get products')
 			//var url = process.env.VUE_APP_API_URL_PRODUCT_INDEX_PAGE + this.page.toString()
 			var url = process.env.VUE_APP_API_URL_PRODUCT_INDEX_2_PAGE
