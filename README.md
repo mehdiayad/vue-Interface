@@ -5,7 +5,7 @@
 
 - Reproduce Amazon website as a training (Front End Side)
 - SPA Architecture
-- Communicate with the backend (API RESTFULL)
+- Communicate with the backend
 
 ## Project Version
 
