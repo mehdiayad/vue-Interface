@@ -69,9 +69,7 @@
 							</div>
 
 							<div class="text-center">
-								<router-link :to="{ name: 'product_show', params: { id: product.id } }">
-									<button class="btn btn-info w-100 mt-3"> Ajouter au panier </button>
-								</router-link>
+								<button class="btn btn-info w-100 mt-3" @click="addToCart()"> Ajouter au panier </button>
 
 								<router-link :to="{ name: 'cart_index', params: { id: user_id } }">
 									<button class="btn btn-danger w-100 mt-3"> Voir le panier </button>
@@ -112,7 +110,7 @@ export default {
 		this.getProduct(this.product_id)
 	},
   	methods: {
-		getProduct(id) {
+		getProduct: function(id) {
 			//console.log('call get product')
 			var url = process.env.VUE_APP_API_URL_PRODUCT_SHOW + id   
 			
@@ -127,13 +125,36 @@ export default {
 			})
 
 		},
-		changeImg(path){
+		changeImg: function(path){
 			document.getElementById("product_img_show_display").src = this.getImgUrl(path);
 		},
 		displayConsole(){
 			console.log(this.product)
 			console.log(this.descriptions)
-		}
+		},
+		addToCart: function(){
+			var url = process.env.VUE_APP_API_URL_CART_ADD    
+			console.log('[ADDTOCART] = ' + url)
+
+			axios({
+				method: 'post',
+				url : url,
+				data : {
+						// variable elements
+						user_id: userStore.getters.userid, 
+						product_id : this.product_id,
+						product_quantity : this.product_quantity,
+
+						// static elements
+						product_price: this.product.price
+						}
+			})
+       		.then((response) => {
+			console.log("[AddToCart] Response API")
+			console.log(response)
+			});
+		}	
+		
 	}
 }
 </script>

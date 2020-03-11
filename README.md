@@ -12,7 +12,7 @@
 
 ## Project requirements
 
-- Server : MAMP / WAMP / XAMPP
+- Server : local build-in
 - Browser : Chrome / Mozilla
 
 ## Project components version

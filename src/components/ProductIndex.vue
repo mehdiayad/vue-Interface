@@ -62,6 +62,7 @@ export default {
 		getProducts(page) {
 			//console.log('call get products')
 			var url = process.env.VUE_APP_API_URL_PRODUCT_INDEX_CUSTOM + this.page.toString()
+		
 			//console.log(url)
 			
 			axios({
