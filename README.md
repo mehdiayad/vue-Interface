@@ -39,8 +39,9 @@
 - Run the  Laravel API first and the database (https://github.com/mehdiayad/Laravel-WS/blob/master/README.md)
 - Download the project
 - Open the terminal and go to the root directory
-- Run pnm run serve (should listen on the port 8080)
-- Open your browser and go to the page http://localhost:8080/
+- Run pnm run serve
+- You should se App running at: Local:   http://localhost:XXXX/ 
+- Open your browser and go to the page http://localhost:XXXX/
 - You can connect to the app with (email:super@gmail.com / password:super)
 
 
