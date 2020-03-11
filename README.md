@@ -36,7 +36,7 @@
 
 ## Project setup
 
-- Run the  Laravel API first (https://github.com/mehdiayad/Laravel-WS/blob/master/README.md)
+- Run the  Laravel API first and the database (https://github.com/mehdiayad/Laravel-WS/blob/master/README.md)
 - Download the project
 - Open the terminal and go to the root directory
 - Run pnm run serve (should listen on the port 8080)
