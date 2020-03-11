@@ -27,7 +27,6 @@
 									<div v-show="notLastElement(cart)" class="col-12 col-sm-12">
 										<div class="bg-dark pt-1"></div>
 									</div>
-
 								</div>
 							</div>
 						</div>
@@ -52,12 +51,12 @@
 
 import axios from 'axios'
 import store from '../store/store'
-import {functionsMixin} from '../mixins/functionsMixin'
+//import {functionsMixin} from '../mixins/functionsMixin'
 
 
 export default {
 
-	mixins: [functionsMixin],
+	//mixins: [functionsMixin],
   	data () {
 	    return {
 			carts: [],
@@ -70,15 +69,15 @@ export default {
 	},
   	methods: {
 		getCart(id) {
-			console.log('call get cart')
-			var url = process.env.VUE_APP_API_URL_CART_INDEX_PAGE + id   
-			console.log(url)
+			//console.log('call get cart')
+			var url = process.env.VUE_APP_API_URL_CART_INDEX_CUSTOM + id   
+			//console.log(url)
 
 		axios.get(url)
        		.then((response) => {
-			console.log(response),
+			//console.log(response),
 			this.carts = response.data,
-			console.log(this.carts)
+			//console.log(this.carts)
 			this.getTotalPriceCart()
 			})
 
@@ -92,7 +91,7 @@ export default {
 				return true
 		},
 		getTotalPriceCart(){
-			console.log('call getTotalPriceCart')
+			//console.log('call getTotalPriceCart')
 			this.carts.forEach(element => (
 				//console.log(element.cart_price),
 				this.total_cart_price += element.cart_price

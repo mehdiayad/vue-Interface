@@ -8,6 +8,12 @@ export const functionsMixin = {
 		getImgUrl: function(img_path) {
 			return '/images/products/'+ img_path
 		},
+		isNotNull: function(obj){
+			var test = false
+			if (obj != null) test = true
+			console.log('test = ' + test)
+			return test
+		}
 	}
 
 }

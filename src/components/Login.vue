@@ -43,7 +43,7 @@ import userStore from '../store/userStore'
   methods:{
     login:  function(){
       console.log('Call login')
-      var url1 = process.env.VUE_APP_API_URL_AUTHENTIFICATION_API;
+      var url1 = process.env.VUE_APP_API_URL_AUTHENTIFICATION_SIMPLE
 
       axios({
         method: 'post',

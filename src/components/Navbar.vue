@@ -91,57 +91,59 @@ export default {
       user_name: userStore.getters.username,
     }
   },
-  beforeMount: function(){
+  mounted: function() {
     this.getCartNumber(this.user_id)
     this.getCategories()
     this.fillCategories()  
   },
   methods : {
     getCartNumber: function(id){
-      console.log('call getCartNumber')
+      //console.log('[GetCartNumber] START')
       var url = process.env.VUE_APP_API_URL_CART_NUMBER + id 
       axios.get(url).
         then((response) => {
           //console.log(response)
           this.cart_number = response.data
       })
+      .catch(function (error) {
+        console.log('[GetCartNumber] ERROR : ' +  error)
+      })
     },
     getCategories: function(){
-      console.log('call getCategories')
-      var url = process.env.VUE_APP_API_URL_CATEGORY_INDEX_PAGE
-      axios.get(url).
-        then((response) => {
+      //console.log('[GetCategories] START')
+      var url = process.env.VUE_APP_API_URL_CATEGORY_INDEX
+      axios.get(url)
+        .then((response) => {
           //console.log(response)
           this.categories1 = response.data
         })
+        .catch(function (error) {
+          console.log('[GetCategories] ERROR : ' +  error)
+         })
     },
     fillCategories: function(){
-        console.log('call fillCategories')
-        for(var i= 0; i < this.categories1.length; i++){
-          this.categories11[this.categories1[i].id] = this.categories1[i].name
-        }
-        //console.log(this.categories11)
+      //console.log('[FillCategories] START')
+      for(var i= 0; i < this.categories1.length; i++){
+        this.categories11[this.categories1[i].id] = this.categories1[i].name
+      }
+      //console.log(this.categories11)
     },
     searchProducts: function() {
 
-      console.log('category = ' + this.category_search)
-      console.log('product = ' + this.product_search)
+      //console.log('category = ' + this.category_search)
+      //console.log('product = ' + this.product_search)
+      //console.log("Route Name = " + router.currentRoute.name)
 
       this.product_search = (this.product_search != '' ? this.product_search: null)
 
       navbarStore.commit('setcategory',this.category_search)
       navbarStore.commit('setproduct',this.product_search)
-
-      console.log("Route Name = " + router.currentRoute.name)
       
       if(router.currentRoute.name == 'product_index'){
         router.go()
-        //this.$forceUpdate(); change data but not refresh vue
       }else{
         router.push('product')
       }
-
-
 
     },
     logout: function(){
@@ -151,7 +153,6 @@ export default {
       userStore.commit('setuserconnected',false)
       userStore.commit('setuserinfosconnexion',null)
 
-      //local storage
       //localStorage.setItem("user", JSON.stringify(userStore.getters.all)) automatic with vuex-persist
 
       router.push('login')

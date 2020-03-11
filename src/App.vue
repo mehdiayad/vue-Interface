@@ -55,7 +55,7 @@ export default {
 {
 	body
 	{
-		background-color:red;
+		background-color:white;
 	} 
 }
 
@@ -64,7 +64,7 @@ export default {
 {
 	body
 	{
-		background-color:green;
+		background-color:white;
 	} 
 
 }
@@ -74,7 +74,7 @@ export default {
 {
 	body
 	{
-		background-color:blue;
+		background-color:white;
 	} 
 }
 
@@ -83,7 +83,7 @@ export default {
 {
 	body
 	{
-		background-color:yellow;
+		background-color:white;
 	} 
 }
 

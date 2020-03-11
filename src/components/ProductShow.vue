@@ -92,18 +92,18 @@
 
 import axios from 'axios'
 import userStore from '../store/userStore'
-import {functionsMixin} from '../mixins/functionsMixin'
+//import {functionsMixin} from '../mixins/functionsMixin'
 
 
 export default {
 
-	mixins: [functionsMixin],
+	//mixins: [functionsMixin],
   	data () {
 	    return {
         page: 1,
 		product_id: this.$route.params.id,
 		user_id: userStore.getters.userid,
-		product: null,
+		product: [],
 		descriptions: null,
 		product_quantity:null,
       }
@@ -113,17 +113,17 @@ export default {
 	},
   	methods: {
 		getProduct(id) {
-			console.log('call get product')
-			var url = process.env.VUE_APP_API_URL_PRODUCT_SHOW_PAGE + id   
+			//console.log('call get product')
+			var url = process.env.VUE_APP_API_URL_PRODUCT_SHOW + id   
 			
 			axios.get(url)
        		.then((response) => {
-			console.log(response),
+			//console.log(response),
 			this.product = response.data
 			this.descriptions = this.product.description_product.split('.')
 			this.product_quantity = 0
-			console.log(this.product)
-			console.log(this.descriptions)
+			//console.log(this.product)
+			//console.log(this.descriptions)
 			})
 
 		},

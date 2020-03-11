@@ -1,15 +1,14 @@
 <template>
 	<div class="container-fluid">
-		
 		<div class="row">
 			<div class="col-4 col-sm-4 mt-3" v-for="product in products" v-bind:key="product.id">
-        		<router-link :to="{ name: 'product_show', params: { id: product.id } }" style="text-decoration:none;">
-					<div class="mx-auto h-100 text-left">
-						<img class="product_img mx-auto d-block" alt="product img" v-bind:src="getImgUrl(product.img_overview)" /> 
-						<h5  class="product_price mt-2"> {{ formatPrice(product.price) }} € </h5>
-						<div class="product_desc small"> {{ product.description_title }} </div>
-					</div>
-				</router-link>
+					<router-link :to="{ name: 'product_show', params: { id: product.id } }" style="text-decoration:none;">
+						<div class="mx-auto h-100 text-left">
+							<img class="product_img mx-auto d-block" alt="product img" v-bind:src="getImgUrl(product.img_overview)" /> 
+							<h5  class="product_price mt-2"> {{ formatPrice(product.price) }} € </h5>
+							<div class="product_desc small"> {{ product.description_title }} </div>
+						</div>
+					</router-link>
 			</div>
 		</div>
 
@@ -38,11 +37,11 @@
 
 import axios from 'axios'
 import navbarStore from '../store/navbarStore'
-import {functionsMixin} from '../mixins/functionsMixin'
+//import {functionsMixin} from '../mixins/functionsMixin'
 
 export default {
 	
-	mixins: [functionsMixin],
+	//mixins: [functionsMixin],
   	data () {
 	    return {
 			page: 1,
@@ -61,10 +60,9 @@ export default {
 	},
   	methods: {
 		getProducts(page) {
-			console.log('call get products')
-			//var url = process.env.VUE_APP_API_URL_PRODUCT_INDEX_PAGE + this.page.toString()
-			var url = process.env.VUE_APP_API_URL_PRODUCT_INDEX_2_PAGE
-			console.log(url)
+			//console.log('call get products')
+			var url = process.env.VUE_APP_API_URL_PRODUCT_INDEX_CUSTOM + this.page.toString()
+			//console.log(url)
 			
 			axios({
 				method: 'post',
@@ -72,7 +70,7 @@ export default {
 				data : {category : this.category_search, product: this.product_search}
 			})
        		.then((response) => {
-			console.log(response)
+			//console.log(response)
 			this.page = response.data.current_page
 			this.products = response.data.data
 			this.totalProducts = response.data.total
