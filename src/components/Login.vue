@@ -41,31 +41,44 @@ import userStore from '../store/userStore'
     }
   },
   methods:{
-    login:  function(){
-      console.log('Call login')
-      var url1 = process.env.VUE_APP_API_URL_AUTHENTIFICATION_SIMPLE
-
+    login:  function() {
+      console.log('[V]LOGIN [M]LOGIN [S]ENTER')
+      var url = process.env.VUE_APP_API_URL_AUTHENTIFICATION_SIMPLE
       axios({
         method: 'post',
-        url : url1,
+        url : url,
         data : {email : this.email, password: this.password}
       })
       .then(function (response) {
-            console.log(response)
-
+            //console.log(response)
             userStore.commit('setuserid',response.data.id)
             userStore.commit('setuseremail',response.data.email)
             userStore.commit('setusername',response.data.name)
             userStore.commit('setuserconnected',response.data.connected)
             userStore.commit('setuserinfosconnexion',response.data.infosconnexion)
-
+            
             if(response.data.connected){
-              // localStorage.setItem("user", JSON.stringify(store.getters.all)) automatic with VuexPersist
+              //this.getCartNumber(userStore.getters.userid)
               router.push({ name: 'home' })
             }
-
-        });
-    }
+        })
+        .catch(function (error) {
+          console.log('[V]LOGIN [M]LOGIN [S]ERROR')
+      });
+    },
+    getCartNumber: function(id){
+      console.log('[V]LOGIN [M]GETCARTNUMBER [S]ENTER')
+      var url = process.env.VUE_APP_API_URL_CART_NUMBER + id 
+      axios.get(url).
+        then((response) => {
+          //console.log(response)
+          var number = response.data
+          navbarStore.commit('setcartnumber',number)
+      })
+      .catch(function (error) {
+          console.log('[V]LOGIN [M]GETCARTNUMBER [S]ERROR')
+      })
+    },
   }
 }
 </script>

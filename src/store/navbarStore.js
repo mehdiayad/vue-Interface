@@ -11,26 +11,33 @@ const vuexPersist = new VuexPersist({
 
 const state = {
 	productsearch: null,
-	categorysearch: null,
+	categorysearch: 0,
+	cartnumber: 0,
 }
 
 const mutations = {
 	setproduct(state, productsearch) {
-		state.productsearch = productsearch 
+		
+		if (productsearch == "") {
+			productsearch = null
+		}
+		state.productsearch = productsearch
 	},
 	setcategory(state, categorysearch) {
-
-		if (categorysearch == 0){
-			categorysearch = null
-		}
 		state.categorysearch = categorysearch 
 	},
+	setcartnumber(state, cartnumber) {
+		state.cartnumber = cartnumber 
+	},
+	updatecartnumber(state, cartnumber) {
+		state.cartnumber += cartnumber 
+	}
 }
 
 const getters = {
 	productsearch: state => { return state.productsearch },
 	categorysearch: state => { return state.categorysearch },
-	all : state => { return state}
+	cartnumber: state => { return state.cartnumber },
 }
 
 var navbarStore = new Vuex.Store({

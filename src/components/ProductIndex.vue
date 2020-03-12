@@ -37,11 +37,9 @@
 
 import axios from 'axios'
 import navbarStore from '../store/navbarStore'
-//import {functionsMixin} from '../mixins/functionsMixin'
 
 export default {
 	
-	//mixins: [functionsMixin],
   	data () {
 	    return {
 			page: 1,
@@ -64,11 +62,11 @@ export default {
 			var url = process.env.VUE_APP_API_URL_PRODUCT_INDEX_CUSTOM + this.page.toString()
 		
 			//console.log(url)
-			
+			var search = (this.category_search != 0 ? this.category_search : null)
 			axios({
 				method: 'post',
 				url : url,
-				data : {category : this.category_search, product: this.product_search}
+				data : {category : search, product: this.product_search}
 			})
        		.then((response) => {
 			//console.log(response)

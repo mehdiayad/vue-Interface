@@ -10,6 +10,7 @@
       </div>
 
       <div class="col-2 col-sm-2">
+        <div class="text-white">{{ myroutename }}</div>
       </div>
 
       <div class="col-6 col-sm-6 py-3 px-0">
@@ -43,7 +44,7 @@
             </a>
 
             <div class="dropdown-menu bg-white text-dark" aria-labelledby="dropdownMenuLink">
-              <a class="dropdown-item text-dark" href="#" @click='logout()'> <i class="fas fa-chevron-right"></i> Deconnexion </a>
+              <a class="dropdown-item text-dark" href="" @click='logout()'> <i class="fas fa-chevron-right"></i> Deconnexion </a>
             </div>
 
           </div>
@@ -82,13 +83,19 @@ export default {
   data() {
     return {
       category_search: (navbarStore.getters.categorysearch != null ? navbarStore.getters.categorysearch : 0),
-      product_search: navbarStore.getters.productsearch,
-      cart_number: null,
+      product_search: null,
+      cart_number: (navbarStore.getters.cartnumber != null ? navbarStore.getters.cartnumber  : 0),
       categories: { 0: 'Toutes les categories', 1 : 'Informatique',2 :'Mobilier', 3 : 'Mode', 4: 'Auto & Moto', 5: 'Cuisine'},
       categories1: [],
       categories11: [],
       user_id: userStore.getters.userid,
       user_name: userStore.getters.username,
+    }
+  },
+  computed: {
+    myroutename: function(){
+      return this.category_search + '-' + this.product_search  //REACTIVE
+      //return router.currentRoute.name //NOT REACTIVE
     }
   },
   mounted: function() {
@@ -98,12 +105,13 @@ export default {
   },
   methods : {
     getCartNumber: function(id){
-      //console.log('[GetCartNumber] START')
       var url = process.env.VUE_APP_API_URL_CART_NUMBER + id 
       axios.get(url).
         then((response) => {
           //console.log(response)
           this.cart_number = response.data
+          navbarStore.commit('setcartnumber',this.cart_number)
+
       })
       .catch(function (error) {
         console.log('[GetCartNumber] ERROR : ' +  error)
@@ -130,14 +138,17 @@ export default {
     },
     searchProducts: function() {
 
-      //console.log('category = ' + this.category_search)
-      //console.log('product = ' + this.product_search)
-      //console.log("Route Name = " + router.currentRoute.name)
+      console.log('[V]NAVBAR [M]SEARCHPRODUCTS [S]ENTER')
+
+      console.log('category = ' + this.category_search)
+      console.log('product = ' + this.product_search)
+      console.log("Route Name = " + router.currentRoute.name)
 
       this.product_search = (this.product_search != '' ? this.product_search: null)
 
       navbarStore.commit('setcategory',this.category_search)
       navbarStore.commit('setproduct',this.product_search)
+      
       
       if(router.currentRoute.name == 'product_index'){
         router.go()

@@ -8,9 +8,40 @@
   </div>
 </template>
 
-<script></script>
+
+
+<script>
+
+import axios from 'axios'
+import navbarStore from '../store/navbarStore'
+import userStore from '../store/userStore'
+
+
+export default {
+
+  mounted: function() {
+		this.getCartNumber(userStore.getters.userid)
+	},
+  	methods: {
+      getCartNumber: function(id){
+          console.log('[Home.VUE] [GETCARTNUMBER] START')
+        var url = process.env.VUE_APP_API_URL_CART_NUMBER + id 
+        axios.get(url).
+          then((response) => {
+            //console.log(response)
+            var number = response.data
+            navbarStore.commit('setcartnumber',number)
+        })
+        .catch(function (error) {
+          console.log('[GetCartNumber] ERROR : ' +  error)
+        })
+      }		
+	}
+}
+</script>
 
 <style scoped>
+
 .home_img{
   height: 600px;
 }

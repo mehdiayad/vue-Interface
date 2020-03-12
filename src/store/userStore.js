@@ -30,8 +30,7 @@ const getters = {
 	username: state => { return state.username },
 	useremail: state => { return state.useremail },
 	userconnected: state => { return state.userconnected },
-	userinfosconnexion: state => { return state.userinfosconnexion },
-	all : state => { return state}
+	userinfosconnexion: state => { return state.userinfosconnexion }
 }
 
 var userStore = new Vuex.Store({

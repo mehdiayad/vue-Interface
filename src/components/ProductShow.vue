@@ -90,12 +90,11 @@
 
 import axios from 'axios'
 import userStore from '../store/userStore'
-//import {functionsMixin} from '../mixins/functionsMixin'
+import navbarStore from '../store/userStore'
 
 
 export default {
 
-	//mixins: [functionsMixin],
   	data () {
 	    return {
         page: 1,
@@ -133,7 +132,8 @@ export default {
 			console.log(this.descriptions)
 		},
 		addToCart: function(){
-			var url = process.env.VUE_APP_API_URL_CART_ADD    
+			
+			var url = process.env.VUE_APP_API_URL_CART_STORE    
 			console.log('[ADDTOCART] = ' + url)
 
 			axios({
@@ -152,6 +152,11 @@ export default {
        		.then((response) => {
 			console.log("[AddToCart] Response API")
 			console.log(response)
+			if(response.data.store){
+				navbarStore.state.commit('updatecartnumber', this.product_quantity)
+			}
+			this.product_quantity = 0
+
 			});
 		}	
 		
