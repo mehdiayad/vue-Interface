@@ -1,7 +1,17 @@
 <template>
  
-	<div class="container-fluid pt-5">
+	<div class="container-fluid pt-1">
 		<div class="row">
+
+			<transition name="fade">
+				<div class="col-12 col-sm-12 text-center" v-show="displayAlertAdd()">
+					<div class="col-6 col-sm-6 mx-auto border rounded py-2 my-2 text-white" style="background-color:#39CCCC;">
+						<div> Votre produit a bien ete ajoute au panier </div>
+					</div>
+				</div>
+			</transition>
+
+
 			<div class="col-1 col-sm-1">
 				<div class="container-fluid p-0">
 					<div class="row">
@@ -47,7 +57,7 @@
 								<h4 class="text-primary"> En Stock </h4>
 								<h5 class="mt-5"> Quantite :
 
-									<select v-model="product_quantity">
+									<select v-model.number="productQuantity">
 										<option v-for="number in 15" v-bind:key="number">
 											{{ number }}
 										</option>
@@ -59,7 +69,7 @@
 								<h4 class="text-danger"> Plus que {{ product.stock }} restants </h4>
 								<h5 class="mt-5"> Quantite : 
 									
-									<select v-model="product_quantity">
+									<select v-model.number="productQuantity">
 										<option v-for="number in product.stock" v-bind:key="number">
 											{{ number }}
 										</option>
@@ -71,7 +81,7 @@
 							<div class="text-center">
 								<button class="btn btn-info w-100 mt-3" @click="addToCart()"> Ajouter au panier </button>
 
-								<router-link :to="{ name: 'cart_index', params: { id: user_id } }">
+								<router-link :to="{ name: 'cart_index', params: { id: userId } }">
 									<button class="btn btn-danger w-100 mt-3"> Voir le panier </button>
 								</router-link>
 							</div>
@@ -90,25 +100,27 @@
 
 import axios from 'axios'
 import userStore from '../store/userStore'
-import navbarStore from '../store/userStore'
-
+import navbarStore from '../store/navbarStore'
 
 export default {
 
   	data () {
 	    return {
-        page: 1,
-		product_id: this.$route.params.id,
-		user_id: userStore.getters.userid,
+		productId: this.$route.params.id,
+		userId: userStore.getters.getUserId,
 		product: [],
 		descriptions: null,
-		product_quantity:null,
+		productQuantity: 5,
+		alert: false
       }
 	},
   	mounted: function() {
-		this.getProduct(this.product_id)
+		this.getProduct(this.productId)
 	},
   	methods: {
+		displayAlertAdd: function(){
+			return this.alert
+		},
 		getProduct: function(id) {
 			//console.log('call get product')
 			var url = process.env.VUE_APP_API_URL_PRODUCT_SHOW + id   
@@ -118,7 +130,7 @@ export default {
 			//console.log(response),
 			this.product = response.data
 			this.descriptions = this.product.description_product.split('.')
-			this.product_quantity = 0
+			this.productQuantity = 0
 			//console.log(this.product)
 			//console.log(this.descriptions)
 			})
@@ -134,28 +146,30 @@ export default {
 		addToCart: function(){
 			
 			var url = process.env.VUE_APP_API_URL_CART_STORE    
-			console.log('[ADDTOCART] = ' + url)
+			//console.log('[ADDTOCART] = ' + url)
 
 			axios({
 				method: 'post',
 				url : url,
 				data : {
 						// variable elements
-						user_id: userStore.getters.userid, 
-						product_id : this.product_id,
-						product_quantity : this.product_quantity,
-
-						// static elements
+						user_id: userStore.getters.getUserId, 
+						product_id : this.productId,
+						product_quantity : this.productQuantity,
 						product_price: this.product.price
 						}
 			})
        		.then((response) => {
-			console.log("[AddToCart] Response API")
-			console.log(response)
-			if(response.data.store){
-				navbarStore.state.commit('updatecartnumber', this.product_quantity)
+			//console.log(response)
+
+			if(response.data.isStored){
+				//console.log(this.productQuantity)
+				//console.log( typeof this.productQuantity)
+				navbarStore.commit('updateCartNumber', this.productQuantity)
+				this.alert = true
 			}
-			this.product_quantity = 0
+			
+			this.productQuantity = 0
 
 			});
 		}	

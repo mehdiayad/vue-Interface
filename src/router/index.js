@@ -55,7 +55,7 @@ router.beforeEach((to, from, next) => {
   var local = JSON.parse(localStorage.getItem('user'))
   
   if(local != null){
-    isAuthenticated = local.userconnected
+    isAuthenticated = local.userConnected
   }     
   
   if (to.name == 'login' && isAuthenticated){

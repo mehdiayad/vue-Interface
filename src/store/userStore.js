@@ -10,27 +10,27 @@ const vuexPersist = new VuexPersist({
 })
 
 const state = {
-	userid: null,
-	username: null,
-	useremail: null,
-	userconnected: false,
-	userinfosconnexion: null
+	userId: null,
+	userName: null,
+	userEmail: null,
+	userConnected: false,
+	userInformations: null
 }
 
 const mutations = {
-	setuserid(state, id) { state.userid = id },
-	setusername(state, username) { state.username = username },
-	setuseremail(state, email) { state.useremail = email },
-	setuserconnected(state, connected) { state.userconnected = connected },
-	setuserinfosconnexion(state, userinfosconnexion) { state.userinfosconnexion = userinfosconnexion }
+	setUserId(state, value) { state.userId = value },
+	setUserName(state, value) { state.userName = value },
+	setUserEmail(state, value) { state.userEmail = value },
+	setUserConnected(state, value) { state.userConnected = value },
+	setUserInformations(state, value) { state.userInformations = value }
 }
 
 const getters = {
-	userid: state => { return state.userid },
-	username: state => { return state.username },
-	useremail: state => { return state.useremail },
-	userconnected: state => { return state.userconnected },
-	userinfosconnexion: state => { return state.userinfosconnexion }
+	getUserId: state => { return state.userId },
+	getUserName: state => { return state.userName },
+	getUserEmail: state => { return state.userEmail },
+	getUserConnected: state => { return state.userConnected },
+	getUserInformations: state => { return state.userInformations }
 }
 
 var userStore = new Vuex.Store({

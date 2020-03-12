@@ -3,14 +3,14 @@
   <div class="container-fluid ">
     <div class="row bg-info align-items-center py-1 ">
 
-      <div class="col-1 col-sm-1">
-        <router-link :to="{ name: 'home' }">
-          <h3 class="text-white my-auto">VueJS</h3>        			
-        </router-link>
+      <div class="col-1 col-sm-1 text-center px-0">
+          <a class="btn mx-auto" @click="goHomePage()"> 
+            <h3 class="text-white">VueJS</h3>
+          </a>        			
       </div>
 
       <div class="col-2 col-sm-2">
-        <div class="text-white">{{ myroutename }}</div>
+        {{ test }}
       </div>
 
       <div class="col-6 col-sm-6 py-3 px-0">
@@ -19,15 +19,15 @@
             <div class="row">
               
               <div class="input-group-prepend col-4 col-sm-4 px-0"> 
-                <select v-model.number="category_search" class="w-100 bg-info text-white">
+                <select v-model.number="categorySearch" class="w-100 bg-info text-white">
                       <option v-for="(category, index) in categories" :key="index" :value="index"> {{category}} </option>
                 </select>
               </div>
           
-              <input class="search-bar col-6 col-sm-6" v-model="product_search" placeholder="Rechercher un produit"/>
+              <input class="search-bar col-6 col-sm-6" v-model="productSearch" placeholder="Rechercher un produit"/>
 
               <div class="input-group-append col-1 col-sm-1">
-                  <a href="#" @click='searchProducts()'> <i class="fa fa-search fa-2x text-white px-2 h-100 w-100" aria-hidden="true"></i> </a>
+                  <a class="btn my-0 py-0" @click='searchProducts()'> <i class="fa fa-search fa-2x text-white px-2 h-100 w-100" aria-hidden="true"></i> </a>
               </div>
 
             </div>
@@ -40,7 +40,7 @@
       <div class="col-2 col-sm-2">
           <div class="dropdown show">
             <a class="btn bg-white text-dark dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              {{user_name}}
+              {{userName}}
             </a>
 
             <div class="dropdown-menu bg-white text-dark" aria-labelledby="dropdownMenuLink">
@@ -52,10 +52,10 @@
 
       	 <div class="col-1 col-sm-1">
             <div class="row">
-              <router-link :to="{ name: 'cart_index', params: { id: user_id } }">
+              <router-link :to="{ name: 'cart_index', params: { id: userId } }">
 
                   <div class="col-12 col-sm-12 text-white card_number">
-                      <h4> {{cart_number}} </h4>
+                      <h4> {{cartNumber}} </h4>
                   </div>
 
                   <div class="col-12 col-sm-12 card_shop">
@@ -82,35 +82,45 @@ export default {
 
   data() {
     return {
-      category_search: (navbarStore.getters.categorysearch != null ? navbarStore.getters.categorysearch : 0),
-      product_search: null,
-      cart_number: (navbarStore.getters.cartnumber != null ? navbarStore.getters.cartnumber  : 0),
-      categories: { 0: 'Toutes les categories', 1 : 'Informatique',2 :'Mobilier', 3 : 'Mode', 4: 'Auto & Moto', 5: 'Cuisine'},
-      categories1: [],
-      categories11: [],
-      user_id: userStore.getters.userid,
-      user_name: userStore.getters.username,
+      categorySearch: navbarStore.getters.getCategorySearch,
+      productSearch: navbarStore.getters.getProductSearch,
+      categoryTemp: [],
     }
   },
   computed: {
-    myroutename: function(){
-      return this.category_search + '-' + this.product_search  //REACTIVE
-      //return router.currentRoute.name //NOT REACTIVE
+    cartNumber: {
+      get: function() { return navbarStore.getters.getCartNumber },
+      set: function(value) {this.cartNumber = value}
+    },
+    userName: {
+      get: function() { return userStore.getters.getUserName },
+      set: function(value) {this.userName = value}
+    },
+    userId: {
+      get: function() { return userStore.getters.getUserId },
+      set: function(value) {this.userId = value}
+    },
+    categories: {
+      get: function() { return navbarStore.getters.getCategories},
+      set: function(value) {this.categories = value}
+    },
+    test: {
+      get: function() {return router.currentRoute.name},
+      set: function(value) {this.test = value}
     }
   },
   mounted: function() {
-    this.getCartNumber(this.user_id)
     this.getCategories()
-    this.fillCategories()  
   },
   methods : {
     getCartNumber: function(id){
+      //console.log(id)
       var url = process.env.VUE_APP_API_URL_CART_NUMBER + id 
       axios.get(url).
         then((response) => {
           //console.log(response)
-          this.cart_number = response.data
-          navbarStore.commit('setcartnumber',this.cart_number)
+          this.cartNumber = response.data
+          navbarStore.commit('setCartNumber',this.cartNumber)
 
       })
       .catch(function (error) {
@@ -122,53 +132,67 @@ export default {
       var url = process.env.VUE_APP_API_URL_CATEGORY_INDEX
       axios.get(url)
         .then((response) => {
-          //console.log(response)
-          this.categories1 = response.data
+          //console.log(response.data)
+          this.categoryTemp = response.data
+          this.fillCategories()
         })
         .catch(function (error) {
           console.log('[GetCategories] ERROR : ' +  error)
          })
     },
     fillCategories: function(){
+      this.getCategories()
       //console.log('[FillCategories] START')
-      for(var i= 0; i < this.categories1.length; i++){
-        this.categories11[this.categories1[i].id] = this.categories1[i].name
+      this.categories[0]='Toutes les categories'
+      for(var i= 0; i < this.categoryTemp.length; i++){
+        this.categories[this.categoryTemp[i].id] = this.categoryTemp[i].name
       }
-      //console.log(this.categories11)
+
+      for(var i= 0; i < this.categories.length; i++){
+        //console.log(this.categories2[i])
+      }
+      //console.log(this.categories2)
+      navbarStore.commit('setCategories',this.categories)
+
     },
     searchProducts: function() {
+      //console.log('[V]NAVBAR [M]SEARCHPRODUCTS [S]ENTER')
 
-      console.log('[V]NAVBAR [M]SEARCHPRODUCTS [S]ENTER')
-
-      console.log('category = ' + this.category_search)
-      console.log('product = ' + this.product_search)
-      console.log("Route Name = " + router.currentRoute.name)
-
-      this.product_search = (this.product_search != '' ? this.product_search: null)
-
-      navbarStore.commit('setcategory',this.category_search)
-      navbarStore.commit('setproduct',this.product_search)
+      navbarStore.commit('setCategorySearch',this.categorySearch)
+      navbarStore.commit('setProductSearch',this.productSearch)
       
       
       if(router.currentRoute.name == 'product_index'){
         router.go()
       }else{
-        router.push('product')
+        router.push({ name: 'product_index'})
       }
 
     },
     logout: function(){
 
-      userStore.commit('setuserid',null)
-      userStore.commit('setuseremail',null)
-      userStore.commit('setuserconnected',false)
-      userStore.commit('setuserinfosconnexion',null)
+      userStore.commit('setUserId',null)
+      userStore.commit('setUserEmail',null)
+      userStore.commit('setUserConnected',false)
+      userStore.commit('setUserInformations',null)
 
       //localStorage.setItem("user", JSON.stringify(userStore.getters.all)) automatic with vuex-persist
 
-      router.push('login')
+        router.push({ name: 'login'})
 
-    }
+    },
+    goHomePage: function(){
+
+      navbarStore.commit('setProductSearch',null)
+      navbarStore.commit('setCategorySearch',0)
+
+      if(router.currentRoute.name == 'home'){
+        router.go()
+      }else{
+        router.push({ name: 'home'})
+      }
+
+    } 
   }
 }
 </script>

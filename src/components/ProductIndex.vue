@@ -49,8 +49,8 @@ export default {
 			lastPage: null,
 			nextPageUrl: null,
 			previousPageUrl: null,
-			product_search: navbarStore.getters.productsearch,
-			category_search: navbarStore.getters.categorysearch,
+			productSearch: navbarStore.getters.getProductSearch,
+			categorySearch: navbarStore.getters.getCategorySearch,
 	      }
     },
   	mounted: function() {
@@ -59,14 +59,19 @@ export default {
   	methods: {
 		getProducts(page) {
 			//console.log('call get products')
-			var url = process.env.VUE_APP_API_URL_PRODUCT_INDEX_CUSTOM + this.page.toString()
+			var url = process.env.VUE_APP_API_URL_PRODUCT_INDEX_CUSTOM + this.page
 		
 			//console.log(url)
-			var search = (this.category_search != 0 ? this.category_search : null)
+			var categorySearchTemp = (this.categorySearch !=0  ? this.categorySearch : null)
+			var productSearchTemp = (this.productSearch   !='' ? this.productSearch : null)
+
+			//console.log('Category = '+ categorySearchTemp)
+			//console.log('Product = '+ productSearchTemp)
+			
 			axios({
 				method: 'post',
 				url : url,
-				data : {category : search, product: this.product_search}
+				data : {category : categorySearchTemp, product: productSearchTemp}
 			})
        		.then((response) => {
 			//console.log(response)
@@ -98,13 +103,6 @@ export default {
 			this.page++;
 			this.getProducts(this.page);
 			}
-		},
-		displayConsole(){
-			console.log("Total products : " + this.totalProducts)
-			console.log("Current page : " + this.currentPage)
-			console.log("Last page : " + this.lastPage)
-			console.log("Previous page : " + this.previousPage)
-			console.log("Next Page : " + this.nextPage)
 		}
 	}
 }

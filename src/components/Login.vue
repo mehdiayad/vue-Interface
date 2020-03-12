@@ -50,15 +50,14 @@ import userStore from '../store/userStore'
         data : {email : this.email, password: this.password}
       })
       .then(function (response) {
-            //console.log(response)
-            userStore.commit('setuserid',response.data.id)
-            userStore.commit('setuseremail',response.data.email)
-            userStore.commit('setusername',response.data.name)
-            userStore.commit('setuserconnected',response.data.connected)
-            userStore.commit('setuserinfosconnexion',response.data.infosconnexion)
+            console.log(response)
+            userStore.commit('setUserId',response.data.userId)
+            userStore.commit('setUserEmail',response.data.userEmail)
+            userStore.commit('setUserName',response.data.userName)
+            userStore.commit('setUserConnected',response.data.userConnected)
+            userStore.commit('setUserInformations',response.data.userInformations)
             
-            if(response.data.connected){
-              //this.getCartNumber(userStore.getters.userid)
+            if(userStore.getters.getUserConnected){
               router.push({ name: 'home' })
             }
         })
@@ -73,7 +72,7 @@ import userStore from '../store/userStore'
         then((response) => {
           //console.log(response)
           var number = response.data
-          navbarStore.commit('setcartnumber',number)
+          navbarStore.commit('setCartNumber',number)
       })
       .catch(function (error) {
           console.log('[V]LOGIN [M]GETCARTNUMBER [S]ERROR')

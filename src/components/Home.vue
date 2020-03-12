@@ -20,17 +20,17 @@ import userStore from '../store/userStore'
 export default {
 
   mounted: function() {
-		this.getCartNumber(userStore.getters.userid)
+		this.getCartNumber(userStore.getters.getUserId)
 	},
   	methods: {
       getCartNumber: function(id){
-          console.log('[Home.VUE] [GETCARTNUMBER] START')
+        //console.log('[Home.VUE] [GETCARTNUMBER] START')
         var url = process.env.VUE_APP_API_URL_CART_NUMBER + id 
         axios.get(url).
           then((response) => {
             //console.log(response)
             var number = response.data
-            navbarStore.commit('setcartnumber',number)
+            navbarStore.commit('setCartNumber',number)
         })
         .catch(function (error) {
           console.log('[GetCartNumber] ERROR : ' +  error)
