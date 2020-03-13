@@ -29,8 +29,8 @@
           <div class="card-header bg-info text-white"> Connexion PASSPORT</div>
           <div class="card-body">
             <div class="form-group">
-              <div> Nom  </div>
-              <input v-model="name2" type="text" class="form-control"/>
+              <div> Email  </div>
+              <input v-model="email2" type="text" class="form-control"/>
             </div>
             <div class="form-group">
               <div> Mot de passe </div>
@@ -60,7 +60,7 @@ import userStore from '../store/userStore'
     return {
       email1: userStore.getters.getUserEmail,
       password1: null,
-      name2: userStore.getters.getUserName,
+      email2: userStore.getters.getUserEmail,
       password2: null,
     }
   },
@@ -97,7 +97,7 @@ import userStore from '../store/userStore'
       axios({
         method: 'post',
         url : url1,
-        data : {username : this.name2, password: this.password2, url: url1}
+        data : {username : this.email2, password: this.password2, url: url1}
       })
       .then(function (response) {
             console.log(response)

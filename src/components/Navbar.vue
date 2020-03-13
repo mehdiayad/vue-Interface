@@ -172,8 +172,8 @@ export default {
       userStore.commit('setUserId',null)
       userStore.commit('setUserConnected',false)
       userStore.commit('setUserInformations',null)
+      userStore.commit('setUserName',null)
       //userStore.commit('setUserEmail',null)
-      //userStore.commit('setUserName',null)
       //localStorage.setItem("user", JSON.stringify(userStore.getters.all)) automatic with vuex-persist
 
         router.push({ name: 'login'})
