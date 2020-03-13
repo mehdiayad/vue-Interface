@@ -27,6 +27,7 @@
 - Vuex-Persist : 2.2
 
 ## Project concepts used
+
 - Component architecture with Vue
 - Axios for HTTP reuqets with API
 - Routing with vue-Router

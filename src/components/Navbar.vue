@@ -43,9 +43,11 @@
             </a>
 
             <div class="dropdown-menu bg-white text-dark" aria-labelledby="dropdownMenuLink">
+              <!--
               <a class="dropdown-item text-dark" href="/clients" > <i class="fas fa-chevron-right"></i> Clients </a>
               <a class="dropdown-item text-dark" href="/authorizedClients" > <i class="fas fa-chevron-right"></i> Authorized Clients </a>
               <a class="dropdown-item text-dark" href="/personalAccessTokens" > <i class="fas fa-chevron-right"></i> Personal Access Tokens </a>
+              -->
               <a class="dropdown-item text-dark" href="" @click='logout()'> <i class="fas fa-chevron-right"></i> Deconnexion </a>
             </div>
 

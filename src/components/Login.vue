@@ -9,11 +9,11 @@
           <div class="card-body">
             <div class="form-group">
               <div> Email </div>
-              <input v-model="email1" type="email" class="form-control"/>
+              <input v-model="email" type="email" class="form-control"/>
             </div>
             <div class="form-group">
               <div> Mot de passe </div>
-              <input v-model="password1" type="password" class="form-control"/>
+              <input v-model="password" type="password" class="form-control"/>
             </div>
             <div class="text-center">
               <a class="float-right btn btn-info text-white" v-on:click="loginSimple()">Valider</a>
@@ -30,11 +30,11 @@
           <div class="card-body">
             <div class="form-group">
               <div> Email  </div>
-              <input v-model="email2" type="text" class="form-control"/>
+              <input v-model="email" type="text" class="form-control"/>
             </div>
             <div class="form-group">
               <div> Mot de passe </div>
-              <input v-model="password2" type="password" class="form-control"/>
+              <input v-model="password" type="password" class="form-control"/>
             </div>
             <div class="text-center">
               <a class="float-right btn btn-info text-white" v-on:click="loginPassport()">Valider</a>
@@ -58,10 +58,8 @@ import userStore from '../store/userStore'
   export default {
   data() {
     return {
-      email1: userStore.getters.getUserEmail,
-      password1: null,
-      email2: userStore.getters.getUserEmail,
-      password2: null,
+      email: userStore.getters.getUserEmail,
+      password: null,
     }
   },
   methods:{
@@ -71,7 +69,7 @@ import userStore from '../store/userStore'
       axios({
         method: 'post',
         url : url,
-        data : {email : this.email1, password: this.password1}
+        data : {email : this.email, password: this.password}
       })
       .then(function (response) {
             //console.log(response)
@@ -91,13 +89,13 @@ import userStore from '../store/userStore'
     },
     loginPassport:  function() {
       console.log('[V]LOGINP [M]LOGIN [S]ENTER')
-      var url1 = process.env.VUE_APP_API_URL_AUTHENTIFICATION_PASSPORT
-      console.log('[URL = '+ url1)
+      var apiURL= process.env.VUE_APP_API_URL_AUTHENTIFICATION_PASSPORT
+      console.log('[URL = '+ apiURL)
       
       axios({
         method: 'post',
         url : url1,
-        data : {username : this.email2, password: this.password2, url: url1}
+        data : {username : this.email, password: this.password, url: apiURL}
       })
       .then(function (response) {
             console.log(response)
