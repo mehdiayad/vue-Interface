@@ -53,28 +53,25 @@
 					<div class="row text-left">
 						<div class="col-9 col-sm-9 border rounded p-3 mx-auto">
 										
-							<div v-if="(product.stock) >= 15">
+							<div v-if="stockIsEnough(product.stock)">
 								<h4 class="text-primary"> En Stock </h4>
 								<h5 class="mt-5"> Quantite :
-
-									<select v-model.number="productQuantity">
-										<option v-for="number in 15" v-bind:key="number">
+									<select v-model="productQuantity">
+										<option v-for="number in 15" :key="number" :value="number">
 											{{ number }}
 										</option>
 									</select>
 								</h5>
 							</div>
 
-							<div v-if="(product.stock) < 15">
+							<div v-else>
 								<h4 class="text-danger"> Plus que {{ product.stock }} restants </h4>
 								<h5 class="mt-5"> Quantite : 
-									
-									<select v-model.number="productQuantity">
-										<option v-for="number in product.stock" v-bind:key="number">
+									<select v-model="productQuantity">
+										<option v-for="number in product.stock" :key="number" :value="number">
 											{{ number }}
 										</option>
 									</select>
-
 								</h5>
 							</div>
 
@@ -110,14 +107,19 @@ export default {
 		userId: userStore.getters.getUserId,
 		product: [],
 		descriptions: null,
-		productQuantity: 5,
-		alert: false
+		alert: false,
       }
+	},
+	computed: {
+		productQuantity: { get: function() {return 1 }, set: function(value){}}
 	},
   	mounted: function() {
 		this.getProduct(this.productId)
 	},
   	methods: {
+		stockIsEnough: function(value){
+			return (value >= 15 ? true : false)
+		},
 		displayAlertAdd: function(){
 			return this.alert
 		},

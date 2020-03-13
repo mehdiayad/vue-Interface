@@ -10,7 +10,6 @@
       </div>
 
       <div class="col-2 col-sm-2">
-        {{ test }}
       </div>
 
       <div class="col-6 col-sm-6 py-3 px-0">
@@ -44,6 +43,9 @@
             </a>
 
             <div class="dropdown-menu bg-white text-dark" aria-labelledby="dropdownMenuLink">
+              <a class="dropdown-item text-dark" href="/clients" > <i class="fas fa-chevron-right"></i> Clients </a>
+              <a class="dropdown-item text-dark" href="/authorizedClients" > <i class="fas fa-chevron-right"></i> Authorized Clients </a>
+              <a class="dropdown-item text-dark" href="/personalAccessTokens" > <i class="fas fa-chevron-right"></i> Personal Access Tokens </a>
               <a class="dropdown-item text-dark" href="" @click='logout()'> <i class="fas fa-chevron-right"></i> Deconnexion </a>
             </div>
 
@@ -141,16 +143,12 @@ export default {
          })
     },
     fillCategories: function(){
-      this.getCategories()
       //console.log('[FillCategories] START')
       this.categories[0]='Toutes les categories'
       for(var i= 0; i < this.categoryTemp.length; i++){
         this.categories[this.categoryTemp[i].id] = this.categoryTemp[i].name
       }
 
-      for(var i= 0; i < this.categories.length; i++){
-        //console.log(this.categories2[i])
-      }
       //console.log(this.categories2)
       navbarStore.commit('setCategories',this.categories)
 
@@ -172,10 +170,10 @@ export default {
     logout: function(){
 
       userStore.commit('setUserId',null)
-      userStore.commit('setUserEmail',null)
       userStore.commit('setUserConnected',false)
       userStore.commit('setUserInformations',null)
-
+      //userStore.commit('setUserEmail',null)
+      //userStore.commit('setUserName',null)
       //localStorage.setItem("user", JSON.stringify(userStore.getters.all)) automatic with vuex-persist
 
         router.push({ name: 'login'})

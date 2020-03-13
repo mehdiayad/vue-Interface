@@ -51,6 +51,7 @@ export default {
 			previousPageUrl: null,
 			productSearch: navbarStore.getters.getProductSearch,
 			categorySearch: navbarStore.getters.getCategorySearch,
+			pagination: 10,
 	      }
     },
   	mounted: function() {
@@ -71,7 +72,7 @@ export default {
 			axios({
 				method: 'post',
 				url : url,
-				data : {category : categorySearchTemp, product: productSearchTemp}
+				data : {category : categorySearchTemp, product: productSearchTemp, pagination: this.pagination}
 			})
        		.then((response) => {
 			//console.log(response)

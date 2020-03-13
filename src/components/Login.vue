@@ -1,27 +1,49 @@
 <template>
 
   <div class="container-fluid">
-    <div class="row pt-5">
+
+    <div class="row pt-2">
       <div class="col-5 col-sm-5 mx-auto mt-5">
         <div class="card mx-auto text-left">
-          <div class="card-header bg-info text-white"> Connexion </div>
+          <div class="card-header bg-info text-white"> Connexion SIMPLE</div>
           <div class="card-body">
             <div class="form-group">
               <div> Email </div>
-              <input v-model="email" type="email" class="form-control"/>
+              <input v-model="email1" type="email" class="form-control"/>
             </div>
             <div class="form-group">
               <div> Mot de passe </div>
-              <input v-model="password" type="password" class="form-control"/>
+              <input v-model="password1" type="password" class="form-control"/>
             </div>
             <div class="text-center">
-              <a class="float-right btn btn-info text-white" v-on:click="login()">Valider</a>
+              <a class="float-right btn btn-info text-white" v-on:click="loginSimple()">Valider</a>
             </div>
-
           </div>
         </div>
       </div>
     </div>
+
+    <div class="row pt-2">
+      <div class="col-5 col-sm-5 mx-auto mt-5">        
+        <div class="card mx-auto text-left">
+          <div class="card-header bg-info text-white"> Connexion PASSPORT</div>
+          <div class="card-body">
+            <div class="form-group">
+              <div> Nom  </div>
+              <input v-model="name2" type="text" class="form-control"/>
+            </div>
+            <div class="form-group">
+              <div> Mot de passe </div>
+              <input v-model="password2" type="password" class="form-control"/>
+            </div>
+            <div class="text-center">
+              <a class="float-right btn btn-info text-white" v-on:click="loginPassport()">Valider</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </div>
 
 </template>
@@ -36,21 +58,23 @@ import userStore from '../store/userStore'
   export default {
   data() {
     return {
-      email: null,
-      password: null,
+      email1: userStore.getters.getUserEmail,
+      password1: null,
+      name2: userStore.getters.getUserName,
+      password2: null,
     }
   },
   methods:{
-    login:  function() {
-      console.log('[V]LOGIN [M]LOGIN [S]ENTER')
+    loginSimple:  function() {
+      console.log('[V]LOGINS [M]LOGIN [S]ENTER')
       var url = process.env.VUE_APP_API_URL_AUTHENTIFICATION_SIMPLE
       axios({
         method: 'post',
         url : url,
-        data : {email : this.email, password: this.password}
+        data : {email : this.email1, password: this.password1}
       })
       .then(function (response) {
-            console.log(response)
+            //console.log(response)
             userStore.commit('setUserId',response.data.userId)
             userStore.commit('setUserEmail',response.data.userEmail)
             userStore.commit('setUserName',response.data.userName)
@@ -60,6 +84,23 @@ import userStore from '../store/userStore'
             if(userStore.getters.getUserConnected){
               router.push({ name: 'home' })
             }
+        })
+        .catch(function (error) {
+          console.log('[V]LOGIN [M]LOGIN [S]ERROR')
+      });
+    },
+    loginPassport:  function() {
+      console.log('[V]LOGINP [M]LOGIN [S]ENTER')
+      var url1 = process.env.VUE_APP_API_URL_AUTHENTIFICATION_PASSPORT
+      console.log('[URL = '+ url1)
+      
+      axios({
+        method: 'post',
+        url : url1,
+        data : {username : this.name2, password: this.password2, url: url1}
+      })
+      .then(function (response) {
+            console.log(response)
         })
         .catch(function (error) {
           console.log('[V]LOGIN [M]LOGIN [S]ERROR')

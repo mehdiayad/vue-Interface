@@ -8,6 +8,9 @@ import Login from '../components/Login.vue'
 import ProductIndex from '../components/ProductIndex.vue'
 import ProductShow from '../components/ProductShow.vue'
 import CartIndex from '../components/CartIndex.vue'
+import Clients from '../components/Passeport/Clients.vue'
+import AuthorizedClients from '../components/Passeport/AuthorizedClients.vue'
+import PersonalAccessTokens from '../components/Passeport/PersonalAccessTokens.vue'
 
 Vue.use(VueRouter)
 
@@ -26,6 +29,25 @@ var router = new VueRouter({
     path:'/home',
     name: 'home',
     component: Home
+  },
+  {
+    path:'*',
+    redirect: '/'
+  },
+  {
+    path:'/clients',
+    name: 'clients',
+    component: Clients
+  },
+  {
+    path:'/authorizedClients',
+    name: 'authorizedClients',
+    component: AuthorizedClients
+  },
+  {
+    path:'/personalAccessTokens',
+    name: 'personalAccessTokens',
+    component: PersonalAccessTokens
   },
   {
     path:'/cart',

@@ -14,7 +14,7 @@ const state = {
 	userName: null,
 	userEmail: null,
 	userConnected: false,
-	userInformations: null
+	userInformations: null,
 }
 
 const mutations = {
