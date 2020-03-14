@@ -96,6 +96,8 @@ data () {
 	},
 	mounted:function(){
 		//console.log('userID = ' + this.userId)
+    	axios.defaults.headers.common['Authorization'] = 'Bearer ' + userStore.getters.getUserTokenAccess;
+		console.log(axios.defaults.headers.common['Authorization'])
 		this.getCart(this.userId)
 	},
   	methods: {
@@ -107,7 +109,7 @@ data () {
 		},
 		getCart(id) {
 			//console.log('call get cart')
-			var url = process.env.VUE_APP_API_URL_CART_INDEX_CUSTOM + id   
+      		var url = process.env.VUE_APP_API_BASE_URL + 'cart/list/' + id
 			//console.log(url)
 
 		axios.get(url)
@@ -116,6 +118,9 @@ data () {
 			this.carts = response.data,
 			this.getTotalPriceCart()
 			})
+			.catch(function (error) {
+          		console.log(error)
+      		});
 
 		},
 		notLastElement(cart){
@@ -130,7 +135,7 @@ data () {
 
 			var cartTemp = this.carts[indexTemp]
 			var idCart = cartTemp.cart_id;
-			var url = process.env.VUE_APP_API_URL_CART_UPDATE + idCart
+      		var url = process.env.VUE_APP_API_BASE_URL + 'cart/' + idCart
 			cartTemp.cart_price = cartTemp.price * cartTemp.product_quantity
 
 			axios({
@@ -150,7 +155,10 @@ data () {
 			this.getCartNumber()
 			this.alertUpdate = true
 			this.alertDelete = false
-			});
+			})
+			.catch(function (error) {
+          		console.log(error)
+      		});
 
 		},
 		deleteCart(indexTemp){
@@ -158,7 +166,7 @@ data () {
 			// Variables
 			var cartTemp = this.carts[indexTemp]
 			var idCart = cartTemp.cart_id;
-			var url = process.env.VUE_APP_API_URL_CART_DELETE + idCart
+      		var url = process.env.VUE_APP_API_BASE_URL + 'cart/' + idCart
 
 			axios({
 				method: 'delete',
@@ -171,7 +179,10 @@ data () {
 				this.getCartNumber()
 				this.alertDelete = true
 				this.alertUpdate = false
-			});
+			})
+			.catch(function (error) {
+          		console.log(error)
+      		});
 		},
 		getTotalPriceCart(){
 

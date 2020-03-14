@@ -6,11 +6,13 @@ import router from './router'
 import store from './store/store'
 import {functionsMixin} from './mixins/functionsMixin'
 
+
 Vue.use(Vuex)
 Vue.use(VueRouter)
 Vue.mixin(functionsMixin)
 
 Vue.config.productionTip = false
+
 
 var vm  = new Vue({
   router,

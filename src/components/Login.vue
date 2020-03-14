@@ -65,7 +65,7 @@ import userStore from '../store/userStore'
   methods:{
     loginSimple:  function() {
       console.log('[V]LOGINS [M]LOGIN [S]ENTER')
-      var url = process.env.VUE_APP_API_URL_AUTHENTIFICATION_SIMPLE
+      var url = process.env.VUE_APP_API_BASE_URL + 'loginOne'
       axios({
         method: 'post',
         url : url,
@@ -84,29 +84,46 @@ import userStore from '../store/userStore'
             }
         })
         .catch(function (error) {
-          console.log('[V]LOGIN [M]LOGIN [S]ERROR')
+          console.log(error)
       });
     },
     loginPassport:  function() {
       console.log('[V]LOGINP [M]LOGIN [S]ENTER')
-      var apiURL= process.env.VUE_APP_API_URL_AUTHENTIFICATION_PASSPORT
-      console.log('[URL = '+ apiURL)
+      var url = process.env.VUE_APP_API_BASE_URL + 'loginTwo'
+      //console.log('[URL = '+ apiURL)
       
       axios({
         method: 'post',
-        url : url1,
-        data : {username : this.email, password: this.password, url: apiURL}
+        url: url,
+        data : {username : this.email, password: this.password}
       })
       .then(function (response) {
             console.log(response)
+            
+            userStore.commit('setUserId',response.data.userId)
+            userStore.commit('setUserEmail',response.data.userEmail)
+            userStore.commit('setUserName',response.data.userName)
+            userStore.commit('setUserConnected',response.data.userConnected)
+            userStore.commit('setUserInformations',response.data.userInformations)
+            userStore.commit('setUserTokenType',response.data.token_type)
+            userStore.commit('setUserTokenExpire',response.data.expires_in)
+            userStore.commit('setUserTokenAccess',response.data.access_token)
+            userStore.commit('setUserTokenRefresh',response.data.refresh_token)
+
+            if(userStore.getters.getUserConnected){
+              axios.defaults.headers.common['Authorization'] = 'Bearer ' + userStore.getters.getUserTokenAccess;
+              //console.log(axios.defaults.headers.common['Authorization'])
+              router.push({ name: 'home' })
+            }
+
         })
         .catch(function (error) {
-          console.log('[V]LOGIN [M]LOGIN [S]ERROR')
+          console.log(error)
       });
     },
     getCartNumber: function(id){
       console.log('[V]LOGIN [M]GETCARTNUMBER [S]ENTER')
-      var url = process.env.VUE_APP_API_URL_CART_NUMBER + id 
+      var url = process.env.VUE_APP_API_BASE_URL + 'cart/number/' + id
       axios.get(url).
         then((response) => {
           //console.log(response)
@@ -114,7 +131,7 @@ import userStore from '../store/userStore'
           navbarStore.commit('setCartNumber',number)
       })
       .catch(function (error) {
-          console.log('[V]LOGIN [M]GETCARTNUMBER [S]ERROR')
+          console.log(error)
       })
     },
   }

@@ -114,13 +114,16 @@ export default {
     }
   },
   mounted: function() {
+    axios.defaults.headers.common['Authorization'] = 'Bearer ' + userStore.getters.getUserTokenAccess;
+    console.log(axios.defaults.headers.common['Authorization'])
     this.getCategories()
   },
   methods : {
     getCartNumber: function(id){
       //console.log(id)
-      var url = process.env.VUE_APP_API_URL_CART_NUMBER + id 
-      axios.get(url).
+      var url = process.env.VUE_APP_API_BASE_URL + 'cart/number/' + id
+
+    axios.get(url).
         then((response) => {
           //console.log(response)
           this.cartNumber = response.data
@@ -128,20 +131,21 @@ export default {
 
       })
       .catch(function (error) {
-        console.log('[GetCartNumber] ERROR : ' +  error)
+          console.log(error)
       })
     },
     getCategories: function(){
       //console.log('[GetCategories] START')
-      var url = process.env.VUE_APP_API_URL_CATEGORY_INDEX
-      axios.get(url)
+      var url = process.env.VUE_APP_API_BASE_URL + 'category'
+
+    axios.get(url)
         .then((response) => {
           //console.log(response.data)
           this.categoryTemp = response.data
           this.fillCategories()
         })
         .catch(function (error) {
-          console.log('[GetCategories] ERROR : ' +  error)
+          console.log(error)
          })
     },
     fillCategories: function(){
@@ -171,14 +175,17 @@ export default {
     },
     logout: function(){
 
+      //userStore.commit('setUserEmail',null)
       userStore.commit('setUserId',null)
       userStore.commit('setUserConnected',false)
       userStore.commit('setUserInformations',null)
       userStore.commit('setUserName',null)
-      //userStore.commit('setUserEmail',null)
-      //localStorage.setItem("user", JSON.stringify(userStore.getters.all)) automatic with vuex-persist
-
-        router.push({ name: 'login'})
+      userStore.commit('setUserTokenType',null)
+      userStore.commit('setUserTokenExpire',null)
+      userStore.commit('setUserTokenAccess',null)
+      userStore.commit('setUserTokenRefresh',null)
+      
+      router.push({ name: 'login'})
 
     },
     goHomePage: function(){

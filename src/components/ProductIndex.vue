@@ -37,6 +37,7 @@
 
 import axios from 'axios'
 import navbarStore from '../store/navbarStore'
+import userStore from '../store/userStore'
 
 export default {
 	
@@ -55,18 +56,18 @@ export default {
 	      }
     },
   	mounted: function() {
+    	axios.defaults.headers.common['Authorization'] = 'Bearer ' + userStore.getters.getUserTokenAccess;
+		console.log(axios.defaults.headers.common['Authorization'])
 		this.getProducts(this.page)
 	},
   	methods: {
 		getProducts(page) {
 			//console.log('call get products')
-			var url = process.env.VUE_APP_API_URL_PRODUCT_INDEX_CUSTOM + this.page
+      		var url = process.env.VUE_APP_API_BASE_URL + 'product/list?page=' + this.page
 		
 			//console.log(url)
 			var categorySearchTemp = (this.categorySearch !=0  ? this.categorySearch : null)
 			var productSearchTemp = (this.productSearch   !='' ? this.productSearch : null)
-
-			//console.log('Category = '+ categorySearchTemp)
 			//console.log('Product = '+ productSearchTemp)
 			
 			axios({
@@ -83,7 +84,10 @@ export default {
 			this.lastPage = response.data.last_page
 			this.nextPageUrl = response.data.next_page_url
 			this.previousPageUrl = response.data.prev_page_url
-			});
+			})
+			.catch(function (error) {
+          		console.log(error)
+      		});
 		},
 		canGoBefore(){
 			if(this.currentPage > 1){ return true; }

@@ -114,6 +114,8 @@ export default {
 		productQuantity: { get: function() {return 1 }, set: function(value){}}
 	},
   	mounted: function() {
+    	axios.defaults.headers.common['Authorization'] = 'Bearer ' + userStore.getters.getUserTokenAccess;
+		console.log(axios.defaults.headers.common['Authorization'])
 		this.getProduct(this.productId)
 	},
   	methods: {
@@ -125,7 +127,7 @@ export default {
 		},
 		getProduct: function(id) {
 			//console.log('call get product')
-			var url = process.env.VUE_APP_API_URL_PRODUCT_SHOW + id   
+      		var url = process.env.VUE_APP_API_BASE_URL + 'product/' + id
 			
 			axios.get(url)
        		.then((response) => {
@@ -147,8 +149,8 @@ export default {
 		},
 		addToCart: function(){
 			
-			var url = process.env.VUE_APP_API_URL_CART_STORE    
-			//console.log('[ADDTOCART] = ' + url)
+      		var url = process.env.VUE_APP_API_BASE_URL + 'cart/'
+			console.log('[ADDTOCART] = ' + url)
 
 			axios({
 				method: 'post',
@@ -173,7 +175,10 @@ export default {
 			
 			this.productQuantity = 0
 
-			});
+			})
+			.catch(function (error) {
+          		console.log(error)
+      		});
 		}	
 		
 	}

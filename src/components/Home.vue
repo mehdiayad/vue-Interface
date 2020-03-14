@@ -20,12 +20,15 @@ import userStore from '../store/userStore'
 export default {
 
   mounted: function() {
-		this.getCartNumber(userStore.getters.getUserId)
+    axios.defaults.headers.common['Authorization'] = 'Bearer ' + userStore.getters.getUserTokenAccess;
+    console.log(axios.defaults.headers.common['Authorization'])
+    this.getCartNumber(userStore.getters.getUserId)
 	},
   	methods: {
       getCartNumber: function(id){
         //console.log('[Home.VUE] [GETCARTNUMBER] START')
-        var url = process.env.VUE_APP_API_URL_CART_NUMBER + id 
+      	var url = process.env.VUE_APP_API_BASE_URL + 'cart/number/' + id
+        
         axios.get(url).
           then((response) => {
             //console.log(response)
