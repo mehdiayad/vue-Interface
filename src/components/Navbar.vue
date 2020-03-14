@@ -114,26 +114,14 @@ export default {
     }
   },
   mounted: function() {
-    axios.defaults.headers.common['Authorization'] = 'Bearer ' + userStore.getters.getUserTokenAccess;
-    console.log(axios.defaults.headers.common['Authorization'])
-    this.getCategories()
+    if(userStore.getters.getUserTokenAccess != null){
+      axios.defaults.headers.common['Authorization'] = 'Bearer ' + userStore.getters.getUserTokenAccess;
+      console.log(axios.defaults.headers.common['Authorization'].substring(0, 25))    
+      this.getCategories()
+    }
+
   },
   methods : {
-    getCartNumber: function(id){
-      //console.log(id)
-      var url = process.env.VUE_APP_API_BASE_URL + 'cart/number/' + id
-
-    axios.get(url).
-        then((response) => {
-          //console.log(response)
-          this.cartNumber = response.data
-          navbarStore.commit('setCartNumber',this.cartNumber)
-
-      })
-      .catch(function (error) {
-          console.log(error)
-      })
-    },
     getCategories: function(){
       //console.log('[GetCategories] START')
       var url = process.env.VUE_APP_API_BASE_URL + 'category'

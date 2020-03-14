@@ -108,14 +108,12 @@ export default {
 		product: [],
 		descriptions: null,
 		alert: false,
+		productQuantity: 0
       }
 	},
-	computed: {
-		productQuantity: { get: function() {return 1 }, set: function(value){}}
-	},
   	mounted: function() {
-    	axios.defaults.headers.common['Authorization'] = 'Bearer ' + userStore.getters.getUserTokenAccess;
-		console.log(axios.defaults.headers.common['Authorization'])
+		axios.defaults.headers.common['Authorization'] = 'Bearer ' + userStore.getters.getUserTokenAccess;
+		console.log(axios.defaults.headers.common['Authorization'].substring(0, 25))
 		this.getProduct(this.productId)
 	},
   	methods: {
@@ -138,6 +136,9 @@ export default {
 			//console.log(this.product)
 			//console.log(this.descriptions)
 			})
+			.catch(function (error) {
+          		console.log(error)
+      		});
 
 		},
 		changeImg: function(path){
@@ -149,8 +150,8 @@ export default {
 		},
 		addToCart: function(){
 			
-      		var url = process.env.VUE_APP_API_BASE_URL + 'cart/'
-			console.log('[ADDTOCART] = ' + url)
+      		var url = process.env.VUE_APP_API_BASE_URL + 'cart'
+			//console.log('[ADDTOCART] = ' + url)
 
 			axios({
 				method: 'post',
@@ -168,7 +169,6 @@ export default {
 
 			if(response.data.isStored){
 				//console.log(this.productQuantity)
-				//console.log( typeof this.productQuantity)
 				navbarStore.commit('updateCartNumber', this.productQuantity)
 				this.alert = true
 			}

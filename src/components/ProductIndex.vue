@@ -57,7 +57,7 @@ export default {
     },
   	mounted: function() {
     	axios.defaults.headers.common['Authorization'] = 'Bearer ' + userStore.getters.getUserTokenAccess;
-		console.log(axios.defaults.headers.common['Authorization'])
+		console.log(axios.defaults.headers.common['Authorization'].substring(0, 25))
 		this.getProducts(this.page)
 	},
   	methods: {

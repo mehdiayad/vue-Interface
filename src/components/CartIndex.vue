@@ -97,7 +97,7 @@ data () {
 	mounted:function(){
 		//console.log('userID = ' + this.userId)
     	axios.defaults.headers.common['Authorization'] = 'Bearer ' + userStore.getters.getUserTokenAccess;
-		console.log(axios.defaults.headers.common['Authorization'])
+		console.log(axios.defaults.headers.common['Authorization'].substring(0, 25))
 		this.getCart(this.userId)
 	},
   	methods: {
@@ -109,7 +109,7 @@ data () {
 		},
 		getCart(id) {
 			//console.log('call get cart')
-      		var url = process.env.VUE_APP_API_BASE_URL + 'cart/list/' + id
+      		var url = process.env.VUE_APP_API_BASE_URL + 'cart'
 			//console.log(url)
 
 		axios.get(url)
