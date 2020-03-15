@@ -50,10 +50,10 @@
 
 <script>
 
-import axios from 'axios'
 import router from '../router/index'
-import userStore from '../store/userStore'
+import axios from 'axios'
 
+import userStore from '../store/userStore'
 
   export default {
   data() {
@@ -62,10 +62,14 @@ import userStore from '../store/userStore'
       password: null,
     }
   },
+  mounted: function(){
+    //console.log(axios.defaults.headers.common['Authorization'])
+  },
   methods:{
     loginSimple:  function() {
       console.log('[V]LOGINS [M]LOGIN [S]ENTER')
       var url = process.env.VUE_APP_API_BASE_URL + 'loginSimple'
+      
       axios({
         method: 'post',
         url : url,
@@ -127,8 +131,11 @@ import userStore from '../store/userStore'
     },
     getCartNumber: function(id){
       console.log('[V]LOGIN [M]GETCARTNUMBER [S]ENTER')
-      var url = process.env.VUE_APP_API_BASE_URL + 'cart/number/' + id
-      axios.get(url).
+      var url = process.env.VUE_APP_API_BASE_URL + 'cart/number'
+      axios({
+          method: 'get',
+          url: url,
+        })
         then((response) => {
           //console.log(response)
           var number = response.data

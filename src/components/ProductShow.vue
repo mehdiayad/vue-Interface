@@ -53,12 +53,12 @@
 					<div class="row text-left">
 						<div class="col-9 col-sm-9 border rounded p-3 mx-auto">
 										
-							<div v-if="stockIsEnough(product.stock)">
+							<div v-if="stockIsEnough(product.stock)" >
 								<h4 class="text-primary"> En Stock </h4>
 								<h5 class="mt-5"> Quantite :
-									<select v-model="productQuantity">
-										<option v-for="number in 15" :key="number" :value="number">
-											{{ number }}
+									<select v-model.number="productQuantity" >
+										<option v-for="number in 15"  :key="number" :value="number">
+											{{  number }}
 										</option>
 									</select>
 								</h5>
@@ -67,9 +67,9 @@
 							<div v-else>
 								<h4 class="text-danger"> Plus que {{ product.stock }} restants </h4>
 								<h5 class="mt-5"> Quantite : 
-									<select v-model="productQuantity">
-										<option v-for="number in product.stock" :key="number" :value="number">
-											{{ number }}
+									<select v-model.number="productQuantity" >
+										<option v-for="number in product.stock"  :key="number" :value="number">
+											{{ number  }}
 										</option>
 									</select>
 								</h5>
@@ -108,12 +108,12 @@ export default {
 		product: [],
 		descriptions: null,
 		alert: false,
-		productQuantity: 0
+		productQuantity: 1
       }
 	},
   	mounted: function() {
-		axios.defaults.headers.common['Authorization'] = 'Bearer ' + userStore.getters.getUserTokenAccess;
-		console.log(axios.defaults.headers.common['Authorization'].substring(0, 25))
+		axios.defaults.headers.common['Authorization'] = 'Bearer ' + userStore.getters.getUserTokenAccess
+		//console.log(axios.defaults.headers.common['Authorization'])
 		this.getProduct(this.productId)
 	},
   	methods: {
@@ -132,7 +132,6 @@ export default {
 			//console.log(response),
 			this.product = response.data
 			this.descriptions = this.product.description_product.split('.')
-			this.productQuantity = 0
 			//console.log(this.product)
 			//console.log(this.descriptions)
 			})
@@ -168,13 +167,11 @@ export default {
 			//console.log(response)
 
 			if(response.data.isStored){
-				//console.log(this.productQuantity)
 				navbarStore.commit('updateCartNumber', this.productQuantity)
 				this.alert = true
+				this.productQuantity = 1
 			}
 			
-			this.productQuantity = 0
-
 			})
 			.catch(function (error) {
           		console.log(error)

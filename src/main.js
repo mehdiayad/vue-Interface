@@ -2,9 +2,10 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Vuex from 'vuex'
-import router from './router'
-import store from './store/store'
-import {functionsMixin} from './mixins/functionsMixin'
+
+import router from './router/index'
+import store from './store/index'
+import {functionsMixin} from './mixins/index'
 
 
 Vue.use(Vuex)
@@ -14,7 +15,7 @@ Vue.mixin(functionsMixin)
 Vue.config.productionTip = false
 
 
-var vm  = new Vue({
+var vm = new Vue({
   router,
   store,
   render: h => h(require('./App').default),

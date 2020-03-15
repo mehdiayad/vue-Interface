@@ -76,11 +76,11 @@
 </template>
 
 <script>
+
 import axios from 'axios'
 import router from '../router/index'
 import userStore from '../store/userStore'
 import navbarStore from '../store/navbarStore'
-
 
 export default {
 
@@ -115,8 +115,8 @@ export default {
   },
   mounted: function() {
     if(userStore.getters.getUserTokenAccess != null){
-      axios.defaults.headers.common['Authorization'] = 'Bearer ' + userStore.getters.getUserTokenAccess;
-      console.log(axios.defaults.headers.common['Authorization'].substring(0, 25))    
+		  axios.defaults.headers.common['Authorization'] = 'Bearer ' + userStore.getters.getUserTokenAccess
+		  //console.log(axios.defaults.headers.common['Authorization'])
       this.getCategories()
     }
 

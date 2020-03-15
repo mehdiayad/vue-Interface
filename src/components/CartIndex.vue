@@ -95,9 +95,8 @@ data () {
       }
 	},
 	mounted:function(){
-		//console.log('userID = ' + this.userId)
-    	axios.defaults.headers.common['Authorization'] = 'Bearer ' + userStore.getters.getUserTokenAccess;
-		console.log(axios.defaults.headers.common['Authorization'].substring(0, 25))
+		axios.defaults.headers.common['Authorization'] = 'Bearer ' + userStore.getters.getUserTokenAccess
+		//console.log(axios.defaults.headers.common['Authorization'])
 		this.getCart(this.userId)
 	},
   	methods: {

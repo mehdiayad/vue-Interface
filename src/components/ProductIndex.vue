@@ -1,6 +1,6 @@
 <template>
-	<div class="container-fluid">
-		<div class="row">
+	<div class="container-fluid text-left">
+		<div v-if="products.length>0" class="row">
 			<div class="col-4 col-sm-4 mt-3" v-for="product in products" v-bind:key="product.id">
 					<router-link :to="{ name: 'product_show', params: { id: product.id } }" style="text-decoration:none;">
 						<div class="mx-auto h-100 text-left">
@@ -11,8 +11,12 @@
 					</router-link>
 			</div>
 		</div>
+		<div v-else class="mt-3">
+			<h3> Aucun produit ne correspond a votre recherche </h3>
+			<h5> Essayez de vérifier votre orthographe ou d’utiliser des termes plus généraux </h5>
+		</div>
 
-		<div class="row">
+		<div v-if="products.length>0" class="row">
 			<div class="col-4 col-sm-4 mx-auto text-white mt-3 mb-3">
 
 				<span v-if="canGoBefore()"> <a class="btn btn-info text-white mx-1" v-on:click="previousPage()"> Precedent </a> </span>
@@ -56,8 +60,8 @@ export default {
 	      }
     },
   	mounted: function() {
-    	axios.defaults.headers.common['Authorization'] = 'Bearer ' + userStore.getters.getUserTokenAccess;
-		console.log(axios.defaults.headers.common['Authorization'].substring(0, 25))
+		axios.defaults.headers.common['Authorization'] = 'Bearer ' + userStore.getters.getUserTokenAccess
+		//console.log(axios.defaults.headers.common['Authorization'])
 		this.getProducts(this.page)
 	},
   	methods: {
