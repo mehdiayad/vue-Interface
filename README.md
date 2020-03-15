@@ -29,7 +29,8 @@
 ## Project concepts used
 
 - Component architecture with Vue
-- Axios for HTTP reuqets with API
+- Axios for HTTP request with API
+- Passport Token for secure communication with API
 - Routing with vue-Router
 - Global State management with VueX
 - Local storage with Vuex-persist
@@ -37,11 +38,11 @@
 
 ## Project setup
 
-- Run the  Laravel API first and the database (https://github.com/mehdiayad/Laravel-WS/blob/master/README.md)
+- Setup first the  Laravel API and the database (https://github.com/mehdiayad/Laravel-WS/blob/master/README.md)
 - Download the project
 - Open the terminal and go to the root directory
 - Run pnm run serve
-- You should se App running at: Local:   http://localhost:8080/ 
+- You should se App running at: Local: http://localhost:8080/ 
 - Open your browser and go to the page http://localhost:8080/
 - You can connect to the app with (email:super@gmail.com / password:super)
 
