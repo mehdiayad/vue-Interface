@@ -105,6 +105,7 @@ export default {
     }
   },
   mounted: function() {
+    
       this.getCategories()
       this.getCartNumber()
   },

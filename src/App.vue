@@ -4,7 +4,7 @@
     <div class="container-fluid" >
       <div class="row">
         
-        <div v-show="displayNavbar()" class="col-12 col-sm-12 px-0">
+        <div v-if="displayNavbar()" class="col-12 col-sm-12 px-0">
           <navbar></navbar>
         </div>
 
@@ -12,7 +12,7 @@
             <router-view></router-view>
         </div>
 
-		    <div v-show="displayFootbar()" class="col-12 col-sm-12 px-0">
+		    <div v-if="displayFootbar()" class="col-12 col-sm-12 px-0">
           <footbar></footbar>
         </div>
         
