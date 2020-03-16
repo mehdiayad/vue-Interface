@@ -63,7 +63,9 @@
                   </div>
 
                   <div class="col-12 col-sm-12 card_shop">
-                    <i @click="fillCategories()" class="fas fa-shopping-cart fa-3x text-white"></i> 
+                    <router-link :to="{ name: 'cart_index'}" style="text-decoration:none;">
+                      <i class="fas fa-shopping-cart fa-3x text-white"></i>
+                    </router-link>
                   </div>
               </router-link>
             </div>
@@ -77,7 +79,7 @@
 
 <script>
 
-import axios from 'axios'
+import axios from '../axios/index'
 import router from '../router/index'
 import userStore from '../store/userStore'
 import navbarStore from '../store/navbarStore'
@@ -88,63 +90,46 @@ export default {
     return {
       categorySearch: navbarStore.getters.getCategorySearch,
       productSearch: navbarStore.getters.getProductSearch,
-      categoryTemp: [],
+      userId: userStore.getters.getUserId
     }
   },
-  computed: {
-    cartNumber: {
-      get: function() { return navbarStore.getters.getCartNumber },
-      set: function(value) {this.cartNumber = value}
+  computed:{
+    categories : function() {
+      return navbarStore.getters.getCategories
     },
-    userName: {
-      get: function() { return userStore.getters.getUserName },
-      set: function(value) {this.userName = value}
+    cartNumber : function() {
+      return navbarStore.getters.getCartNumber
     },
-    userId: {
-      get: function() { return userStore.getters.getUserId },
-      set: function(value) {this.userId = value}
-    },
-    categories: {
-      get: function() { return navbarStore.getters.getCategories},
-      set: function(value) {this.categories = value}
-    },
-    test: {
-      get: function() {return router.currentRoute.name},
-      set: function(value) {this.test = value}
+    userName : function() {
+      return userStore.getters.getUserName
     }
   },
   mounted: function() {
-    if(userStore.getters.getUserTokenAccess != null){
-		  axios.defaults.headers.common['Authorization'] = 'Bearer ' + userStore.getters.getUserTokenAccess
-		  //console.log(axios.defaults.headers.common['Authorization'])
       this.getCategories()
-    }
-
+      this.getCartNumber()
   },
   methods : {
     getCategories: function(){
-      //console.log('[GetCategories] START')
       var url = process.env.VUE_APP_API_BASE_URL + 'category'
-
-    axios.get(url)
+      axios.get(url)
         .then((response) => {
           //console.log(response.data)
-          this.categoryTemp = response.data
-          this.fillCategories()
+          var categoryTemp1 = response.data
+          this.fillCategories(categoryTemp1)
         })
         .catch(function (error) {
-          console.log(error)
-         })
+          console.log('ERROR : ' +  error)
+        })
     },
-    fillCategories: function(){
-      //console.log('[FillCategories] START')
-      this.categories[0]='Toutes les categories'
-      for(var i= 0; i < this.categoryTemp.length; i++){
-        this.categories[this.categoryTemp[i].id] = this.categoryTemp[i].name
+    fillCategories: function(categoryTemp1){
+      //console.log(categoryTemp1)
+      var categoryTemp2 = []
+      categoryTemp2[0 ]= 'Toutes les categories'
+      for(var i= 0; i < categoryTemp1.length; i++){
+        categoryTemp2[categoryTemp1[i].id] = categoryTemp1[i].name
       }
-
-      //console.log(this.categories2)
-      navbarStore.commit('setCategories',this.categories)
+      //console.log(categoryTemp2)
+      navbarStore.commit('setCategories',categoryTemp2)
 
     },
     searchProducts: function() {
@@ -153,7 +138,6 @@ export default {
       navbarStore.commit('setCategorySearch',this.categorySearch)
       navbarStore.commit('setProductSearch',this.productSearch)
       
-      
       if(router.currentRoute.name == 'product_index'){
         router.go()
       }else{
@@ -161,6 +145,20 @@ export default {
       }
 
     },
+    getCartNumber: function(){
+      //console.log('[Home.VUE] [GETCARTNUMBER] START')
+      var url = process.env.VUE_APP_API_BASE_URL + 'cart/number'
+      
+      axios.get(url).
+        then((response) => {
+          //console.log(response)
+          var number = response.data
+          navbarStore.commit('setCartNumber',number)
+      })
+      .catch(function (error) {
+        console.log('ERROR : ' +  error)
+      })
+    },	
     logout: function(){
 
       //userStore.commit('setUserEmail',null)
@@ -168,10 +166,10 @@ export default {
       userStore.commit('setUserConnected',false)
       userStore.commit('setUserInformations',null)
       userStore.commit('setUserName',null)
-      userStore.commit('setUserTokenType',null)
-      userStore.commit('setUserTokenExpire',null)
-      userStore.commit('setUserTokenAccess',null)
-      userStore.commit('setUserTokenRefresh',null)
+      //userStore.commit('setUserTokenType',null)
+      //userStore.commit('setUserTokenExpire',null)
+      //userStore.commit('setUserTokenAccess',null)
+      //userStore.commit('setUserTokenRefresh',null)
       
       router.push({ name: 'login'})
 

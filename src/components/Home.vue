@@ -10,38 +10,7 @@
 
 
 
-<script>
-
-import axios from 'axios'
-import navbarStore from '../store/navbarStore'
-import userStore from '../store/userStore'
-
-
-export default {
-
-  mounted: function() {
-    axios.defaults.headers.common['Authorization'] = 'Bearer ' + userStore.getters.getUserTokenAccess
-		//console.log(axios.defaults.headers.common['Authorization'])
-    this.getCartNumber()
-	},
-  	methods: {
-      getCartNumber: function(){
-        //console.log('[Home.VUE] [GETCARTNUMBER] START')
-      	var url = process.env.VUE_APP_API_BASE_URL + 'cart/number'
-        
-        axios.get(url).
-          then((response) => {
-            //console.log(response)
-            var number = response.data
-            navbarStore.commit('setCartNumber',number)
-        })
-        .catch(function (error) {
-          console.log('[GetCartNumber] ERROR : ' +  error)
-        })
-      }		
-	}
-}
-</script>
+<script> </script>
 
 <style scoped>
 

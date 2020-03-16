@@ -95,7 +95,7 @@
 
 <script>
 
-import axios from 'axios'
+import axios from '../axios/index'
 import userStore from '../store/userStore'
 import navbarStore from '../store/navbarStore'
 
@@ -112,8 +112,6 @@ export default {
       }
 	},
   	mounted: function() {
-		axios.defaults.headers.common['Authorization'] = 'Bearer ' + userStore.getters.getUserTokenAccess
-		//console.log(axios.defaults.headers.common['Authorization'])
 		this.getProduct(this.productId)
 	},
   	methods: {

@@ -51,7 +51,7 @@
 <script>
 
 import router from '../router/index'
-import axios from 'axios'
+import axios from '../axios/index'
 
 import userStore from '../store/userStore'
 
@@ -63,14 +63,14 @@ import userStore from '../store/userStore'
     }
   },
   mounted: function(){
-    //console.log(axios.defaults.headers.common['Authorization'])
+    //
   },
   methods:{
     loginSimple:  function() {
       console.log('[V]LOGINS [M]LOGIN [S]ENTER')
       var url = process.env.VUE_APP_API_BASE_URL + 'loginSimple'
       
-      axios({
+      this.$axios({
         method: 'post',
         url : url,
         data : {email : this.email, password: this.password}
@@ -96,7 +96,7 @@ import userStore from '../store/userStore'
       var url = process.env.VUE_APP_API_BASE_URL + 'loginPassport'
       //console.log('[URL = '+ apiURL)
       
-      axios({
+      this.$axios({
         method: 'post',
         url: url,
         data : {email : this.email, password: this.password}
@@ -132,7 +132,8 @@ import userStore from '../store/userStore'
     getCartNumber: function(id){
       console.log('[V]LOGIN [M]GETCARTNUMBER [S]ENTER')
       var url = process.env.VUE_APP_API_BASE_URL + 'cart/number'
-      axios({
+      
+      this.$axios({
           method: 'get',
           url: url,
         })
