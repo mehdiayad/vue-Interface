@@ -47,6 +47,7 @@
 								</div>
 							</div>
 
+
 							<div class="bg-dark pt-1 my-2 w-100"></div>
 
 							<div class="container-fluid" v-if="addressShippingDefault != null">
@@ -190,14 +191,14 @@ data () {
 		},
 		getTotalPriceCart(){
 
-			console.log("IN")
+			//console.log("IN")
 			this.totalCartPrice = 0
-			console.log("SIZE = " + this.carts.length)
+			//console.log("SIZE = " + this.carts.length)
 			for(var i = 0; i<this.carts.length; i++)
 			{
 				this.totalCartPrice += this.carts[i].cart_price
 			}
-			console.log("PRICE = " + this.totalCartPrice)
+			//console.log("PRICE = " + this.totalCartPrice)
 		}
 	}
 }
