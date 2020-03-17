@@ -149,7 +149,7 @@ export default {
 			var self = this;
 			self.alertFaillure = value
 			setTimeout(function(){
-				self.alertFaillure = value
+				self.alertFaillure = !value
 			}, 1000);
 		},
 

@@ -23,7 +23,7 @@
                 </select>
               </div>
           
-              <input class="search-bar col-6 col-sm-6" v-model="productSearch" placeholder="Rechercher un produit"/>
+              <input class="search-bar col-6 col-sm-6 mx-0" v-model="productSearch" placeholder="Rechercher un produit"/>
 
               <div class="input-group-append col-2 col-sm-2 m-0 p-0">
                   <a class="btn py-0 mx-0 px-0 bg-info w-100" @click='searchProducts()'> <i class="fa fa-search fa-2x text-white px-2" aria-hidden="true"></i> </a>
