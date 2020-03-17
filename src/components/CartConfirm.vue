@@ -72,9 +72,7 @@
 													<div class="mt-2 text-danger font-weight-bold"> Prix total : {{ cart.cart_price }} € </div>
 													
 												</div>
-												<div v-show="notLastElement(cart)" class="col-12 col-sm-12">
-													<div class="bg-dark pt-1"></div>
-												</div>
+												
 											</div>
 										</div>
 									</div>

@@ -13,7 +13,10 @@ export const functionsMixin = {
 			if (obj != null) test = true
 			console.log('test = ' + test)
 			return test
-		}
+		},
+		cutString: function(value,size){
+			return value.substring(0,size);
+		  }
 	}
 
 }

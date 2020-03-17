@@ -30,10 +30,8 @@
               </div>
 
             </div>
-          </div>
-          
-          </div>
-
+          </div>          
+        </div>
       </div>
 
       <div class="col-2 col-sm-2">
@@ -43,12 +41,8 @@
             </a>
 
             <div class="dropdown-menu bg-white text-dark" aria-labelledby="dropdownMenuLink">
-              <!--
-              <a class="dropdown-item text-dark" href="/clients" > <i class="fas fa-chevron-right"></i> Clients </a>
-              <a class="dropdown-item text-dark" href="/authorizedClients" > <i class="fas fa-chevron-right"></i> Authorized Clients </a>
-              <a class="dropdown-item text-dark" href="/personalAccessTokens" > <i class="fas fa-chevron-right"></i> Personal Access Tokens </a>
-              -->
-              <a class="dropdown-item text-dark" href="" @click='logout()'> <i class="fas fa-chevron-right"></i> Deconnexion </a>
+              <a class="dropdown-item text-dark btn" @click='showAccount()'> <i class="fas fa-chevron-right"></i> Mon compte </a>
+              <a class="dropdown-item text-dark btn" @click='logout()'> <i class="fas fa-chevron-right"></i> Deconnexion </a>
             </div>
 
           </div>
@@ -71,10 +65,55 @@
             </div>
         </div>
 
+      <!-- Modal -->
+      <div class="modal fade" id="exampleModal" tabindex="-1" data-backdrop="static" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Informations</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body text-left">
+              <div class="container-fluid">
+
+                <div class="form-group row">
+                    <div class="col-4 col-sm-4">Identifiant</div>
+                    <div class="col-1 col-sm-1"> </div>
+                    <input class="col-7 col-sm-7 bg-light border rounded" disabled v-model="user.userId">
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-4 col-sm-4">Nom</div>
+                    <div class="col-1 col-sm-1"> </div>
+                    <input class="col-7 col-sm-7 border rounded" v-model="user.userName">
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-4 col-sm-4">Email</div>
+                    <div class="col-1 col-sm-1"> </div>
+                    <input class="col-7 col-sm-7 bg-light border rounded" disabled v-model="user.userEmail">
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-4 col-sm-4">Clé d'access</div>
+                    <div class="col-1 col-sm-1"> </div>
+                    <input class="col-7 col-sm-7 bg-light border rounded" disabled v-model="user.userTokenAccess">
+                </div>
+                    
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+              <button type="button" class="btn btn-primary">Sauvegarder</button>
+            </div>
+          </div>
+        </div>
+      </div>
 
     </div>
   </div>
-
 </template>
 
 <script>
@@ -90,7 +129,7 @@ export default {
     return {
       categorySearch: navbarStore.getters.getCategorySearch,
       productSearch: navbarStore.getters.getProductSearch,
-      userId: userStore.getters.getUserId
+      user: userStore.getters.getUserAll
     }
   },
   computed:{
@@ -102,6 +141,9 @@ export default {
     },
     userName : function() {
       return userStore.getters.getUserName
+    },
+    userId : function() {
+      return userStore.getters.getUserID
     }
   },
   mounted: function() {
@@ -189,8 +231,10 @@ export default {
       }else{
         router.push({ name: 'home'})
       }
-
-    } 
+    },
+    showAccount: function(){
+      $('#exampleModal').modal('show');
+    }  
   }
 }
 </script>

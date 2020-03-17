@@ -42,7 +42,8 @@ const getters = {
 	getUserTokenAccess : state => { return state.userTokenAccess },
 	getUserTokenRefresh : state => { return state.userTokenRefresh },
 	getUserTokenType : state => { return state.userTokenType },
-	getUserTokenExpire : state => { return state.userTokenExpire }
+	getUserTokenExpire : state => { return state.userTokenExpire },
+	getUserAll : state => {return state}
 
 }
 
