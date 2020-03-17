@@ -102,7 +102,7 @@ import userStore from '../store/userStore'
         data : {email : this.email, password: this.password}
       })
       .then(function (response) {
-            console.log(response)
+            //console.log(response)
             
             if(response.data.userConnected){
 
