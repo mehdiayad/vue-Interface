@@ -37,7 +37,7 @@
       <div class="col-2 col-sm-2">
           <div class="dropdown show">
             <a class="btn bg-white text-dark dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              {{userName}}
+              {{user.userName}}
             </a>
 
             <div class="dropdown-menu bg-white text-dark" aria-labelledby="dropdownMenuLink">
@@ -50,7 +50,7 @@
 
       	 <div class="col-1 col-sm-1">
             <div class="row">
-              <router-link :to="{ name: 'cart_index', params: { id: userId } }">
+              <router-link :to="{ name: 'cart_index', params: { id: user.userId } }">
 
                   <div class="col-12 col-sm-12 text-white card_number">
                       <h4> {{cartNumber}} </h4>
@@ -69,9 +69,9 @@
       <div class="modal fade" id="exampleModal" tabindex="-1" data-backdrop="static" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
           <div class="modal-content">
-            <div class="modal-header">
+            <div class="modal-header bg-info text-white">
               <h5 class="modal-title" id="exampleModalLabel">Informations</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
@@ -87,7 +87,7 @@
                 <div class="form-group row">
                     <div class="col-4 col-sm-4">Nom</div>
                     <div class="col-1 col-sm-1"> </div>
-                    <input class="col-7 col-sm-7 border rounded" v-model="user.userName">
+                    <input class="col-7 col-sm-7 border rounded" v-model="userNameModal">
                 </div>
 
                 <div class="form-group row">
@@ -106,7 +106,7 @@
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
-              <button type="button" class="btn btn-primary">Sauvegarder</button>
+              <button type="button" @click="saveUser()" class="btn btn-info" :disabled="setStateSave">Sauvegarder</button>
             </div>
           </div>
         </div>
@@ -129,7 +129,8 @@ export default {
     return {
       categorySearch: navbarStore.getters.getCategorySearch,
       productSearch: navbarStore.getters.getProductSearch,
-      user: userStore.getters.getUserAll
+      user: userStore.getters.getUserAll,
+      userNameModal: userStore.getters.getUserName
     }
   },
   computed:{
@@ -139,11 +140,12 @@ export default {
     cartNumber : function() {
       return navbarStore.getters.getCartNumber
     },
-    userName : function() {
-      return userStore.getters.getUserName
-    },
-    userId : function() {
-      return userStore.getters.getUserID
+    setStateSave : function(){
+      if(this.userNameModal == userStore.getters.getUserName){
+        return true
+      }else{
+        return false
+      }
     }
   },
   mounted: function() {
@@ -203,16 +205,10 @@ export default {
     },	
     logout: function(){
 
-      //userStore.commit('setUserEmail',null)
       userStore.commit('setUserId',null)
       userStore.commit('setUserConnected',false)
       userStore.commit('setUserInformations',null)
       userStore.commit('setUserName',null)
-      //userStore.commit('setUserTokenType',null)
-      //userStore.commit('setUserTokenExpire',null)
-      //userStore.commit('setUserTokenAccess',null)
-      //userStore.commit('setUserTokenRefresh',null)
-      
       router.push({ name: 'login'})
 
     },
@@ -234,6 +230,26 @@ export default {
     },
     showAccount: function(){
       $('#exampleModal').modal('show');
+    },
+    saveUser: function(){
+
+        var url = process.env.VUE_APP_API_BASE_URL + 'user/' + userStore.getters.getUserId
+        axios({
+          method: 'put',
+          url : url,
+          data : {name : this.userNameModal, email: userStore.getters.getUserEmail}
+        })
+        .then((response) => {
+            //console.log(response)
+            var bool = response.data
+            if(bool){
+              userStore.commit('setUserName',this.userNameModal)
+              $('#exampleModal').modal('hide');
+            }
+        })
+        .catch(function (error) {
+          console.log('ERROR : ' +  error)
+        })
     }  
   }
 }

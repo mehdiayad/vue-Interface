@@ -68,8 +68,8 @@
 													</router-link>
 
 													<div class="mt-2">	Quantite : {{ cart.product_quantity }} </div>
-													<div class="mt-2"> Prix unitaire : {{ cart.price }} €</div>
-													<div class="mt-2 text-danger font-weight-bold"> Prix total : {{ cart.cart_price }} € </div>
+													<div class="mt-2"> Prix unitaire : {{ formatPrice(cart.price) }} €</div>
+													<div class="mt-2 text-danger font-weight-bold"> Prix total : {{ formatPrice(cart.cart_price) }} € </div>
 													
 												</div>
 												
@@ -94,7 +94,7 @@
 					<div class="small"> En passant votre commande, vous acceptez les Conditions générales de vente. Veuillez consulter notre Notice : données personnelles, notre Notice Cookies et notre Notice Annonces publicitaires basées sur vos centres d’intérêt. </div>
 					<div class="bg-dark pt-1 w-100 my-3"></div>
 					<h5 class="text-center"> Recapitulatif de la commande </h5>
-					<h5 class="text-danger"> Montant total : <span class="float-right"> {{ totalCartPrice }} € </span></h5>
+					<h5 class="text-danger"> Montant total : <span class="float-right"> {{ formatPrice(totalCartPrice) }} € </span></h5>
 				</div>
 			</div>
 
@@ -164,13 +164,13 @@ data () {
 		},
 		getCarts() {
 
-			console.log('call get carts')
+			//console.log('call get carts')
       		var url = process.env.VUE_APP_API_BASE_URL + 'cart'
 			//console.log(url)
 
 			axios.get(url)
 				.then((response) => {
-				console.log(response)
+				//console.log(response)
 				this.carts = response.data
 				this.getTotalPriceCart()
 
