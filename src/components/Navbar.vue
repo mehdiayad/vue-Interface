@@ -105,7 +105,7 @@ export default {
     }
   },
   mounted: function() {
-    
+
       this.getCategories()
       this.getCartNumber()
   },
@@ -179,6 +179,8 @@ export default {
 
       navbarStore.commit('setProductSearch',null)
       navbarStore.commit('setCategorySearch',0)
+      this.categorySearch = 0 // instant change view no need page to
+
 
       if(router.currentRoute.name == 'home'){
         router.go()

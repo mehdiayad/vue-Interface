@@ -1,12 +1,20 @@
 <template>
  
 	<div class="container-fluid pt-1">
-		<div class="row">
+		<div class="row pt-3">
 
 			<transition name="fade">
-				<div class="col-12 col-sm-12 text-center" v-show="displayAlertAdd()">
+				<div class="col-12 col-sm-12 text-center" v-show="displayAlertSuccess">
 					<div class="col-6 col-sm-6 mx-auto border rounded py-2 my-2 text-white" style="background-color:#39CCCC;">
 						<div> Votre produit a bien ete ajoute au panier </div>
+					</div>
+				</div>
+			</transition>
+
+			<transition name="fade">
+				<div class="col-12 col-sm-12 text-center" v-show="displayAlertFaillure">
+					<div class="col-6 col-sm-6 mx-auto border rounded py-2 my-2 text-white" style="background-color:#d9534f;">
+						<div> Vous ne pouvez pas ajouter plus de 15 quantite pour un article</div>
 					</div>
 				</div>
 			</transition>
@@ -76,7 +84,7 @@
 							</div>
 
 							<div class="text-center">
-								<button class="btn btn-info w-100 mt-3" @click="addToCart()"> Ajouter au panier </button>
+								<button class="btn btn-info w-100 mt-3" @click="getCartProduct()"> Ajouter au panier </button>
 
 								<router-link :to="{ name: 'cart_index', params: { id: userId } }">
 									<button class="btn btn-danger w-100 mt-3"> Voir le panier </button>
@@ -107,20 +115,44 @@ export default {
 		userId: userStore.getters.getUserId,
 		product: [],
 		descriptions: null,
-		alert: false,
-		productQuantity: 1
+		alertSuccess: false,
+		alertFaillure: false,
+		productQuantity: 1,
+		productQuantityHave: 0,
       }
 	},
   	mounted: function() {
 		this.getProduct(this.productId)
 	},
+	computed:{
+		displayAlertSuccess: function(){
+			//console.log('In getAlert Success')
+			return this.alertSuccess
+		},
+		displayAlertFaillure: function(){
+			//console.log('In getAlert Faillure')
+			return this.alertFaillure
+		}
+	},
   	methods: {
 		stockIsEnough: function(value){
 			return (value >= 15 ? true : false)
 		},
-		displayAlertAdd: function(){
-			return this.alert
+		setAlertSuccess: function(value){
+			var self = this;
+			self.alertSuccess = value
+			setTimeout(function(){
+				self.alertSuccess = !value
+			}, 2000);
 		},
+		setAlertFaillure: function(value){
+			var self = this;
+			self.alertFaillure = value
+			setTimeout(function(){
+				self.alertFaillure = value
+			}, 2000);
+		},
+
 		getProduct: function(id) {
 			//console.log('call get product')
       		var url = process.env.VUE_APP_API_BASE_URL + 'product/' + id
@@ -141,41 +173,70 @@ export default {
 		changeImg: function(path){
 			document.getElementById("product_img_show_display").src = this.getImgUrl(path);
 		},
-		displayConsole(){
-			console.log(this.product)
-			console.log(this.descriptions)
-		},
-		addToCart: function(){
-			
-      		var url = process.env.VUE_APP_API_BASE_URL + 'cart'
-			//console.log('[ADDTOCART] = ' + url)
-
+		getCartProduct: function(){
+			  var url = process.env.VUE_APP_API_BASE_URL + 'cart/product'
+			  
 			axios({
 				method: 'post',
 				url : url,
 				data : {
-						// variable elements
-						user_id: userStore.getters.getUserId, 
-						product_id : this.productId,
-						product_quantity : this.productQuantity,
-						product_price: this.product.price
-						}
+					// variable elements
+					user_id: userStore.getters.getUserId, 
+					product_id : this.productId,
+				}
 			})
        		.then((response) => {
-			//console.log(response)
-
-			if(response.data.isStored){
-				navbarStore.commit('updateCartNumber', this.productQuantity)
-				this.alert = true
-				this.productQuantity = 1
-			}
-			
+				//console.log(response)
+				var data = response.data
+				if(data.length > 0){
+					this.productQuantityHave = response.data[0].product_quantity
+				} 
+				//console.log('1-'+this.productQuantityHave)
+				this.addProductCart()
 			})
 			.catch(function (error) {
           		console.log(error)
-      		});
+			});
+			  
+		},
+		addProductCart: function(){
+
+			//console.log('2-'+this.productQuantityHave)
+
+			if(this.productQuantityHave + this.productQuantity >15){
+				this.setAlertFaillure(true)
+			}else{
+
+				var url = process.env.VUE_APP_API_BASE_URL + 'cart'
+				axios({
+					method: 'post',
+					url : url,
+					data : {
+							// variable elements
+							user_id: userStore.getters.getUserId, 
+							product_id : this.productId,
+							product_quantity : this.productQuantity,
+							product_price: this.product.price
+							}
+				})
+				.then((response) => {
+					if(response.data.isStored){
+						navbarStore.commit('updateCartNumber', this.productQuantity)
+						this.setAlertSuccess(true)
+						this.productQuantity = 1
+					}
+				})
+				.catch(function (error) {
+					console.log(error)
+			  	});
+			  
+			}			
+		},
+		addToCart(){
+
+			this.getCartProduct()
+			this.addProductCart()
 		}	
-		
 	}
 }
 </script>
