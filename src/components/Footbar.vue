@@ -1,6 +1,6 @@
 <template>
 
-  <div class="container-fluid bg-info">
+  <div class="container-fluid bg-dark">
 	<h4 class="text-center text-white p-3"> Version [ {{ appVersion}} ]</h4>
   </div>
 

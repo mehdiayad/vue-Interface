@@ -7,7 +7,7 @@
 					<div class="row">
 						
 						<transition name="fade">
-							<div class="col-12 col-sm-12 text-center" v-show="displayAlertUpdate()">
+							<div class="col-12 col-sm-12 text-center" v-show="displayAlertUpdate">
 								<div class="col-6 col-sm-6 mx-auto border rounded py-2 my-2 text-white" style="background-color:#39CCCC;">
 									<div> Votre produit a bien ete modifie </div>
 								</div>
@@ -15,7 +15,7 @@
 						</transition>
 
 						<transition name="fade">
-							<div class="col-12 col-sm-12 text-center" v-show="displayAlertDelete()">
+							<div class="col-12 col-sm-12 text-center" v-show="displayAlertDelete">
 								<div class="col-6 col-sm-6 mx-auto border rounded py-2 my-2 bg-danger text-white">
 									<div> Votre produit a bien ete supprime </div>
 								</div>
@@ -97,27 +97,47 @@ data () {
 	mounted:function(){
 		this.getCart(this.userId)
 	},
-  	methods: {
+	computed:{
 		displayAlertUpdate: function() {
+			//console.log('Call Update')
 			return this.alertUpdate
 		},
 		displayAlertDelete: function(){
+			//console.log('Call Delete')
 			return this.alertDelete
+		}
+	},
+  	methods: {
+
+		setAlertUpdate: function(value){
+			var self = this;
+			self.alertUpdate = value
+			setTimeout(function(){
+				self.alertUpdate = !value
+			}, 1000);
 		},
-		getCart(id) {
+		setAlertDelete: function(value){
+			var self = this;
+			self.alertDelete = value
+			setTimeout(function(){
+				self.alertDelete = !value
+			}, 1000);
+		},
+		getCart(id,quantityHave) {
+
 			//console.log('call get cart')
       		var url = process.env.VUE_APP_API_BASE_URL + 'cart'
 			//console.log(url)
 
-		axios.get(url)
-       		.then((response) => {
-			//console.log(response),
-			this.carts = response.data,
-			this.getTotalPriceCart()
+			axios.get(url)
+				.then((response) => {
+				//console.log(response),
+				this.carts = response.data,
+				this.getTotalPriceCart()
 			})
 			.catch(function (error) {
-          		console.log(error)
-      		});
+				console.log(error)
+			});
 
 		},
 		notLastElement(cart){
@@ -147,11 +167,10 @@ data () {
 						}
 			})
        		.then((response) => {
-			//console.log(response)
-			this.getTotalPriceCart()
-			this.getCartNumber()
-			this.alertUpdate = true
-			this.alertDelete = false
+				//console.log(response)
+				this.getTotalPriceCart()
+				this.getCartNumber()
+				this.setAlertUpdate(true)
 			})
 			.catch(function (error) {
           		console.log(error)
@@ -174,8 +193,7 @@ data () {
 				this.carts.splice(indexTemp, 1)
 				this.getTotalPriceCart()
 				this.getCartNumber()
-				this.alertDelete = true
-				this.alertUpdate = false
+				this.setAlertDelete(true)
 			})
 			.catch(function (error) {
           		console.log(error)

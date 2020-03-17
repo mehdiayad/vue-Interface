@@ -1,7 +1,7 @@
 <template>
 
   <div class="container-fluid ">
-    <div class="row bg-info align-items-center py-1 ">
+    <div class="row bg-dark align-items-center py-1 ">
 
       <div class="col-1 col-sm-1 text-center px-0">
           <a class="btn mx-auto" @click="goHomePage()"> 
@@ -25,8 +25,8 @@
           
               <input class="search-bar col-6 col-sm-6" v-model="productSearch" placeholder="Rechercher un produit"/>
 
-              <div class="input-group-append col-1 col-sm-1">
-                  <a class="btn my-0 py-0" @click='searchProducts()'> <i class="fa fa-search fa-2x text-white px-2 h-100 w-100" aria-hidden="true"></i> </a>
+              <div class="input-group-append col-2 col-sm-2 m-0 p-0">
+                  <a class="btn py-0 mx-0 px-0 bg-info w-100" @click='searchProducts()'> <i class="fa fa-search fa-2x text-white px-2" aria-hidden="true"></i> </a>
               </div>
 
             </div>
@@ -105,7 +105,6 @@ export default {
     }
   },
   mounted: function() {
-
       this.getCategories()
       this.getCartNumber()
   },
@@ -177,10 +176,13 @@ export default {
     },
     goHomePage: function(){
 
+      // instant change data, view reactive, no need page to reload
+      this.categorySearch = 0 
+      this.productSearch = null 
+
+      // save change in case page reload
       navbarStore.commit('setProductSearch',null)
       navbarStore.commit('setCategorySearch',0)
-      this.categorySearch = 0 // instant change view no need page to
-
 
       if(router.currentRoute.name == 'home'){
         router.go()

@@ -143,14 +143,14 @@ export default {
 			self.alertSuccess = value
 			setTimeout(function(){
 				self.alertSuccess = !value
-			}, 2000);
+			}, 1000);
 		},
 		setAlertFaillure: function(value){
 			var self = this;
 			self.alertFaillure = value
 			setTimeout(function(){
 				self.alertFaillure = value
-			}, 2000);
+			}, 1000);
 		},
 
 		getProduct: function(id) {
