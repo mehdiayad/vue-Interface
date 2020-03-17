@@ -8,6 +8,8 @@ import Login from '../components/Login.vue'
 import ProductIndex from '../components/ProductIndex.vue'
 import ProductShow from '../components/ProductShow.vue'
 import CartIndex from '../components/CartIndex.vue'
+import CartConfirm from '../components/CartConfirm.vue'
+
 
 Vue.use(VueRouter)
 
@@ -35,6 +37,11 @@ var router = new VueRouter({
     path:'/cart',
     name: 'cart_index',
     component: CartIndex
+  },
+  {
+    path:'/cart/confirm',
+    name: 'cart_confirm',
+    component: CartConfirm
   },
   {
     path:'/login',

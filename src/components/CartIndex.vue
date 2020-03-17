@@ -60,6 +60,7 @@
 								</div>
 							</div>
 						</div>
+						
 					</div>
 				</div>
 			</div>
@@ -67,7 +68,9 @@
 			<div class="col-3 col-sm-3">
 				<div class="px-3 py-3 bg-white text-center border rounded">
 					<h4 class="text-left"> Total : <span class="text-danger"> {{ formatPrice(totalCartPrice) }} €</span></h4>
-					<a class="btn btn-info rounded text-white w-100"> Passer la commande</a>
+					<router-link :to="{ name: 'cart_confirm', params: { id: 9 } }" style="text-decoration:none;">
+						<a class="btn btn-info rounded text-white w-100"> Passer la commande</a>
+					</router-link>
 				</div>
 			</div>
 
@@ -123,7 +126,7 @@ data () {
 				self.alertDelete = !value
 			}, 1000);
 		},
-		getCart(id,quantityHave) {
+		getCart(id) {
 
 			//console.log('call get cart')
       		var url = process.env.VUE_APP_API_BASE_URL + 'cart'
