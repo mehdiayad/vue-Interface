@@ -76,7 +76,7 @@
         data: this.loginForm
       })
       .then(function (response) {
-            console.log(response)
+            //console.log(response)
             if(response.data.userConnected){
               //console.log('Email2 = '+ this.email) this not working use self
               //console.log('Password2 = '+ this.password) this not working use self

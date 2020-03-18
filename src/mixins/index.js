@@ -9,15 +9,14 @@ export const myMixin = {
 			return '/images/products/'+ img_path
 		},
 		isNotNull: function(obj){
-			var test = false
 			if (obj != null) {
-				test = true
+				return true
+			}else{
+				return false
 			}
-			return test
 		},
 		cutString: function(value,size){
 			return value.substring(0,size);
-		  }
+		}
 	}
-
 }
