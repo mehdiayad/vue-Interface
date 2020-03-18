@@ -118,8 +118,6 @@
 
 <script>
 
-import axios from '../axios/index'
-import router from '../router/index'
 import userStore from '../store/userStore'
 import navbarStore from '../store/navbarStore'
 

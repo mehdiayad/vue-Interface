@@ -50,9 +50,6 @@
 
 <script>
 
-import router from '../router/index'
-import axios from '../axios/index'
-
 import userStore from '../store/userStore'
 
   export default {
@@ -66,37 +63,12 @@ import userStore from '../store/userStore'
     //
   },
   methods:{
-    loginSimple:  function() {
-      console.log('[V]LOGINS [M]LOGIN [S]ENTER')
-      var url = process.env.VUE_APP_API_BASE_URL + 'loginSimple'
-      
-      this.$axios({
-        method: 'post',
-        url : url,
-        data : {email : this.email, password: this.password}
-      })
-      .then(function (response) {
-            //console.log(response)
-            userStore.commit('setUserId',response.data.userId)
-            userStore.commit('setUserEmail',response.data.userEmail)
-            userStore.commit('setUserName',response.data.userName)
-            userStore.commit('setUserConnected',response.data.userConnected)
-            userStore.commit('setUserInformations',response.data.userInformations)
-            
-            if(userStore.getters.getUserConnected){
-              router.push({ name: 'home' })
-            }
-        })
-        .catch(function (error) {
-          console.log(error)
-      });
-    },
     loginPassport:  function() {
       console.log('[V]LOGINP [M]LOGIN [S]ENTER')
       var url = process.env.VUE_APP_API_BASE_URL + 'loginPassport'
       //console.log('[URL = '+ apiURL)
       
-      this.$axios({
+      axios({
         method: 'post',
         url: url,
         data : {email : this.email, password: this.password}
@@ -133,7 +105,7 @@ import userStore from '../store/userStore'
       console.log('[V]LOGIN [M]GETCARTNUMBER [S]ENTER')
       var url = process.env.VUE_APP_API_BASE_URL + 'cart/number'
       
-      this.$axios({
+      axios({
           method: 'get',
           url: url,
         })

@@ -106,7 +106,6 @@
 
 <script>
 
-import axios from '../axios/index'
 import userStore from '../store/userStore'
 import navbarStore from '../store/navbarStore'
 

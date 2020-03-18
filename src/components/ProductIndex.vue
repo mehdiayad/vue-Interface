@@ -39,7 +39,6 @@
 
 <script>
 
-import axios from '../axios/index'
 import navbarStore from '../store/navbarStore'
 import userStore from '../store/userStore'
 

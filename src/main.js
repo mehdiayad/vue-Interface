@@ -3,10 +3,12 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Vuex from 'vuex'
 
-import router from './router/index'
 import store from './store/index'
+
 import {functionsMixin} from './mixins/index'
-import axios from './axios/index'
+import myAxios from './axios/index'
+import myRouter from './router/index'
+
 
 Vue.use(Vuex)
 Vue.use(VueRouter)
@@ -14,7 +16,8 @@ Vue.mixin(functionsMixin)
 
 Vue.config.productionTip = false
 
-Vue.prototype.$axios = axios; 
+window.axios = myAxios
+window.router = myRouter
 
 var vm = new Vue({
   router,
