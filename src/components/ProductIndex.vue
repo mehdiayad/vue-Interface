@@ -39,8 +39,6 @@
 
 <script>
 
-import navbarStore from '../store/navbarStore'
-import userStore from '../store/userStore'
 
 export default {
 	

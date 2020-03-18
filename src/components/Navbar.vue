@@ -118,8 +118,6 @@
 
 <script>
 
-import userStore from '../store/userStore'
-import navbarStore from '../store/navbarStore'
 
 export default {
 

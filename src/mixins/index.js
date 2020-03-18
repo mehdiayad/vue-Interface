@@ -1,4 +1,4 @@
-export const functionsMixin = {
+export const myMixin = {
 
 	methods: {
 		formatPrice: function(value){
