@@ -31,7 +31,7 @@
 							<div class="container-fluid" v-if="addressShippingDefault != null">
 								<div class="row text-left">
 									<div class="col-5 col-sm-5">
-										<h5> 1. Adresse de livraison </h5>
+										<h5> 2. Adresse de livraison </h5>
 									</div>
 
 									<div class="col-5 col-sm-5">
