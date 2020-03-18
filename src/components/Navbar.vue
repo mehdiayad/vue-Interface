@@ -162,22 +162,17 @@ export default {
         })
     },
     fillCategories: function(categoryTemp1){
-      //console.log(categoryTemp1)
       var categoryTemp2 = []
       categoryTemp2[0 ]= 'Toutes les categories'
       for(var i= 0; i < categoryTemp1.length; i++){
         categoryTemp2[categoryTemp1[i].id] = categoryTemp1[i].name
       }
-      //console.log(categoryTemp2)
       navbarStore.commit('setCategories',categoryTemp2)
 
     },
     searchProducts: function() {
-      //console.log('[V]NAVBAR [M]SEARCHPRODUCTS [S]ENTER')
-
       navbarStore.commit('setCategorySearch',this.categorySearch)
       navbarStore.commit('setProductSearch',this.productSearch)
-      
       if(router.currentRoute.name == 'product_index'){
         router.go()
       }else{
@@ -186,9 +181,7 @@ export default {
 
     },
     getCartNumber: function(){
-      //console.log('[Home.VUE] [GETCARTNUMBER] START')
       var url = process.env.VUE_APP_API_BASE_URL + 'cart/number'
-      
       axios.get(url).
         then((response) => {
           //console.log(response)
@@ -200,13 +193,11 @@ export default {
       })
     },	
     logout: function(){
-
       userStore.commit('setUserId',null)
       userStore.commit('setUserConnected',false)
       userStore.commit('setUserInformations',null)
       userStore.commit('setUserName',null)
       router.push({ name: 'login'})
-
     },
     goHomePage: function(){
 

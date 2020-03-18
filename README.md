@@ -42,8 +42,8 @@
 - Download the project
 - Delete the folder node_modules if exist
 - Open the terminal and go to the project directory
-- Run [npm install] to install all dependencies in the node_nodules folder
+- Run [npm install] to install all dependencies
 - Run [npm run serve]
-- You should se App running at: Local: http://localhost:8080/ 
+- You should see App running at local: http://localhost:8080/ 
 - Open your browser and go to the page http://localhost:8080/
 - You can connect to the app with (email:super@gmail.com / password:super)

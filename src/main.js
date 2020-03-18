@@ -21,7 +21,7 @@ window.router = myRouter
 window.navbarStore = myNavbarStore
 window.userStore = myUserStore
 
-// Vue.prototype.$router = myRouter NOT WORKING ?!?
+// Vue.prototype.$router = myRouter (NOT WORKING !!!)
 
 // VUE INSTANCE
 var vm = new Vue({
@@ -33,5 +33,5 @@ var vm = new Vue({
 
 // BROWSER CONSOLE INSTANCE
 global.vm = vm
-global.v = Vuex
+global.vuex = Vuex
 global.store = myStore
