@@ -10,8 +10,9 @@ export const functionsMixin = {
 		},
 		isNotNull: function(obj){
 			var test = false
-			if (obj != null) test = true
-			console.log('test = ' + test)
+			if (obj != null) {
+				test = true
+			}
 			return test
 		},
 		cutString: function(value,size){
