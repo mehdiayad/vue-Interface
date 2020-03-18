@@ -63,7 +63,7 @@
     loginPassport:  function() {
       var url = process.env.VUE_APP_API_BASE_URL + 'loginPassport'
       
-      //inside axios this is lost so we save it to use it
+      //inside axios (this) is lost so we save it in order to use it inside the function
       var self = this;
       
       axios({
@@ -74,10 +74,11 @@
       .then(function (response) {
 
             console.log(response)
-            //console.log('Email2 = '+ this.email) this not working
-            //console.log('Password2 = '+ this.password) this not working
-            if(response.data.userConnected){
 
+            if(response.data.userConnected){
+              
+              //console.log('Email2 = '+ this.email) this not working
+              //console.log('Password2 = '+ this.password) this not working
               userStore.commit('setUserEmail',self.email)
               userStore.commit('setUserPassword',self.password)
               userStore.commit('setUserId',response.data.userId)
