@@ -47,4 +47,3 @@
 - You should se App running at: Local: http://localhost:8080/ 
 - Open your browser and go to the page http://localhost:8080/
 - You can connect to the app with (email:super@gmail.com / password:super)
-- test
