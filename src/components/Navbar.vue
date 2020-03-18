@@ -137,11 +137,7 @@ export default {
       return navbarStore.getters.getCartNumber
     },
     setStateSave : function(){
-      if(this.userNameModal == userStore.getters.getUserName){
-        return true
-      }else{
-        return false
-      }
+      return (this.userNameModal == userStore.getters.getUserName)
     }
   },
   mounted: function() {

@@ -7,20 +7,22 @@
         <div class="card mx-auto text-left">
           <div class="card-header bg-info text-white"> Connexion</div>
           <div class="card-body">
-            <div class="form-group">
-              <div> Email  </div>
-              <input v-model="email" type="email" class="form-control"/>
-            </div>
-            <div class="form-group">
-              <div> Mot de passe </div>
-              <input v-model="password" type="password" class="form-control"/>
-            </div>
-            <div class="form-group text-right">
-              <a class="btn btn-info text-white w-50" v-on:click="loginPassport()">Valider</a>
-            </div>
-            <div class="form-group text-left alert alert-danger" v-if="displayAlert">
-                <div> Les identifiants sont incorrects </div>
-            </div>
+            <form role="form">
+              <div class="form-group">
+                <div> Email  </div>
+                <input v-model="loginForm.email" type="email" class="form-control"/>
+              </div>
+              <div class="form-group">
+                <div> Mot de passe </div>
+                <input v-model="loginForm.password" type="password" class="form-control"/>
+              </div>
+              <div class="form-group text-right">
+                <a class="btn btn-info text-white w-50" v-on:click="loginPassport()">Valider</a>
+              </div>
+              <div class="form-group text-left alert alert-danger" v-if="displayAlert">
+                  <div> Les identifiants sont incorrects </div>
+              </div>
+            </form>
           </div>
         </div>
       </div>
@@ -37,16 +39,17 @@
 
   export default {
   data() {
-    return {
-      email: userStore.getters.getUserEmail,
-      password: userStore.getters.getUserPassword,
-      alertAuth: false
+    return {      
+      loginForm: {
+        email: userStore.getters.getUserEmail,
+        password: userStore.getters.getUserPassword,
+        alertAuth: false
+      }
     }
   },
   computed: {
     displayAlert: function(){
-      //console.log('Call display Alert')
-      return this.alertAuth
+      return this.loginForm.alertAuth
     }
   },
   mounted: function(){
@@ -56,9 +59,9 @@
 
     setAlertAuth : function(value){
       var self = this;
-			self.alertAuth = value
+			self.loginForm.alertAuth = value
 			setTimeout(function(){
-				self.alertAuth = !value
+				self.loginForm.alertAuth = !value
       }, 2000);
     },
 
@@ -69,15 +72,16 @@
       axios({
         method: 'post',
         url: url,
-        data : {email : this.email, password: this.password}
+        //data : {email : this.loginForm.email, password: this.loginForm.password} not need anymore
+        data: this.loginForm
       })
       .then(function (response) {
-            //console.log(response)
+            console.log(response)
             if(response.data.userConnected){
               //console.log('Email2 = '+ this.email) this not working use self
               //console.log('Password2 = '+ this.password) this not working use self
-              userStore.commit('setUserEmail',self.email)
-              userStore.commit('setUserPassword',self.password)
+              userStore.commit('setUserEmail',self.loginForm.email)
+              userStore.commit('setUserPassword',self.loginForm.password)
               userStore.commit('setUserId',response.data.userId)
               userStore.commit('setUserName',response.data.userName)
               userStore.commit('setUserConnected',response.data.userConnected)
