@@ -9,7 +9,7 @@
           <div class="card-body">
             <div class="form-group">
               <div> Email  </div>
-              <input v-model="email" type="text" class="form-control"/>
+              <input v-model="email" type="email" class="form-control"/>
             </div>
             <div class="form-group">
               <div> Mot de passe </div>
@@ -45,7 +45,7 @@
   },
   computed: {
     displayAlert: function(){
-      console.log('Call display Alert')
+      //console.log('Call display Alert')
       return this.alertAuth
     }
   },
@@ -53,6 +53,7 @@
     // nothing to do
   },
   methods:{
+
     setAlertAuth : function(value){
       var self = this;
 			self.alertAuth = value
@@ -60,25 +61,21 @@
 				self.alertAuth = !value
       }, 2000);
     },
+
     loginPassport:  function() {
       var url = process.env.VUE_APP_API_BASE_URL + 'loginPassport'
-      
       //inside axios (this) is lost so we save it in order to use it inside the function
-      var self = this;
-      
+      var self = this;      
       axios({
         method: 'post',
         url: url,
         data : {email : this.email, password: this.password}
       })
       .then(function (response) {
-
-            console.log(response)
-
+            //console.log(response)
             if(response.data.userConnected){
-              
-              //console.log('Email2 = '+ this.email) this not working
-              //console.log('Password2 = '+ this.password) this not working
+              //console.log('Email2 = '+ this.email) this not working use self
+              //console.log('Password2 = '+ this.password) this not working use self
               userStore.commit('setUserEmail',self.email)
               userStore.commit('setUserPassword',self.password)
               userStore.commit('setUserId',response.data.userId)
@@ -91,13 +88,11 @@
               userStore.commit('setUserTokenRefresh',response.data.refresh_token)
               axios.defaults.headers.common['Authorization'] = 'Bearer ' + userStore.getters.getUserTokenAccess
               router.push({ name: 'home' })
-
             }
             else
             {
               self.setAlertAuth(true)
             }
-
         })
         .catch(function (error) {
           console.log(error)
@@ -109,6 +104,5 @@
 </script>
 
 
-<style scoped>
-</style>
+<style scoped></style>
 

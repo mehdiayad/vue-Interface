@@ -1,12 +1,5 @@
-<template>
-
-</template> 
-
-<script>
-
-</script>
-
-<style>
-
-
-</style>
+axios({
+        method: 'post',
+        url: url,
+        data : {email : this.email, password: this.password}
+      })
