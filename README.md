@@ -26,7 +26,7 @@
 - Vuex : 3.1
 - Vuex-Persist : 2.2
 
-## Project concepts used
+## Project concepts
 
 - Component architecture with Vue
 - Axios for HTTP request with API
@@ -41,7 +41,7 @@
 - Setup first the  Laravel API and the database (https://github.com/mehdiayad/Laravel-WS/blob/master/README.md)
 - Download the project
 - Delete the folder node_modules if exist
-- Open the terminal and go to the root directory
+- Open the terminal and go to the project directory
 - Run [npm install] to install all dependencies in the node_nodules folder
 - Run [npm run serve]
 - You should se App running at: Local: http://localhost:8080/ 
