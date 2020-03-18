@@ -40,8 +40,9 @@
 
 - Setup first the  Laravel API and the database (https://github.com/mehdiayad/Laravel-WS/blob/master/README.md)
 - Download the project
+- Delete the folder node_modules if exist
 - Open the terminal and go to the root directory
-- Run npm install to install all dependencies in the nodules_modules
+- Run npm install to install all dependencies in the node_nodules folder
 - Run npm run serve
 - You should se App running at: Local: http://localhost:8080/ 
 - Open your browser and go to the page http://localhost:8080/
