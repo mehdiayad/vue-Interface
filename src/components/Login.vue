@@ -22,7 +22,7 @@
               <div class="form-group text-left alert alert-danger" v-if="displayAlert">
                   <div> Error [{{ loginForm.error.code}}] : {{ loginForm.error.type }} </div>
               </div>
-              <div class="form-group text-left alert alert-danger" v-if="false">
+              <div class="form-group text-left alert alert-danger" v-if="displayAlert">
                   <div> {{ loginForm.error.description }} </div>
               </div>
             </form>
