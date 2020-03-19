@@ -46,10 +46,10 @@
           password: userStore.getters.getUserPassword
         },
         error: {
-          code:null,
-          type:null,
-          description:null,
-          alert:false
+          code: null,
+          type: null,
+          description: null,
+          alert: false
         }
       }
     }
