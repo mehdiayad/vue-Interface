@@ -125,7 +125,6 @@ export default {
     return {
       categorySearch: navbarStore.getters.getCategorySearch,
       productSearch: navbarStore.getters.getProductSearch,
-      user: userStore.getters.getUserAll,
       userNameModal: userStore.getters.getUserName
     }
   },
@@ -141,8 +140,9 @@ export default {
     }
   },
   mounted: function() {
-      this.getCategories()
-      this.getCartNumber()
+    //console.log(this.user)
+    this.getCategories()
+    this.getCartNumber()
   },
   methods : {
     getCategories: function(){

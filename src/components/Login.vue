@@ -10,17 +10,20 @@
             <form role="form">
               <div class="form-group">
                 <div> Email  </div>
-                <input v-model="loginForm.email" type="email" class="form-control"/>
+                <input v-model="loginForm.data.email" type="email" class="form-control"/>
               </div>
               <div class="form-group">
                 <div> Mot de passe </div>
-                <input v-model="loginForm.password" type="password" class="form-control"/>
+                <input v-model="loginForm.data.password" type="password" class="form-control"/>
               </div>
               <div class="form-group text-right">
-                <a class="btn btn-info text-white w-50" v-on:click="loginPassport()">Valider</a>
+                <a class="btn btn-info text-white px-5" v-on:click="loginPassport()">Valider</a>
               </div>
               <div class="form-group text-left alert alert-danger" v-if="displayAlert">
-                  <div> Les identifiants sont incorrects </div>
+                  <div> Error [{{ loginForm.error.code}}] : {{ loginForm.error.type }} </div>
+              </div>
+              <div class="form-group text-left alert alert-danger" v-if="false">
+                  <div> {{ loginForm.error.description }} </div>
               </div>
             </form>
           </div>
@@ -34,35 +37,40 @@
 
 <script>
 
-//import userStore from '../store/userStore'
-//import navbarStore from '../store/navbarStore'
-
   export default {
   data() {
     return {      
       loginForm: {
-        email: userStore.getters.getUserEmail,
-        password: userStore.getters.getUserPassword,
-        alertAuth: false
+        data: {
+          email: userStore.getters.getUserEmail,
+          password: userStore.getters.getUserPassword
+        },
+        error: {
+          code:null,
+          type:null,
+          description:null,
+          alert:false
+        }
       }
     }
   },
   computed: {
     displayAlert: function(){
-      return this.loginForm.alertAuth
+      return this.loginForm.error.alert
     }
   },
   mounted: function(){
-    // nothing to do
+    console.log("In Login")
+    console.log(this.user)
   },
   methods:{
 
-    setAlertAuth : function(value){
+    setErrorAlert : function(value){
       var self = this;
-			self.loginForm.alertAuth = value
+			self.loginForm.error.alert = value
 			setTimeout(function(){
-				self.loginForm.alertAuth = !value
-      }, 2000);
+				self.loginForm.error.alert = !value
+      }, 5000);
     },
 
     loginPassport:  function() {
@@ -73,34 +81,38 @@
         method: 'post',
         url: url,
         //data : {email : this.loginForm.email, password: this.loginForm.password} not need anymore
-        data: this.loginForm
+        data: this.loginForm.data
       })
       .then(function (response) {
-            //console.log(response)
+            console.log(response)
             if(response.data.userConnected){
-              //console.log('Email2 = '+ this.email) this not working use self
-              //console.log('Password2 = '+ this.password) this not working use self
-              userStore.commit('setUserEmail',self.loginForm.email)
-              userStore.commit('setUserPassword',self.loginForm.password)
+              userStore.commit('setUserEmail',self.loginForm.data.email)
+              userStore.commit('setUserPassword',self.loginForm.data.password)
               userStore.commit('setUserId',response.data.userId)
               userStore.commit('setUserName',response.data.userName)
               userStore.commit('setUserConnected',response.data.userConnected)
               userStore.commit('setUserInformations',response.data.userInformations)
-              userStore.commit('setUserTokenType',response.data.token_type)
-              userStore.commit('setUserTokenExpire',response.data.expires_in)
-              userStore.commit('setUserTokenAccess',response.data.access_token)
-              userStore.commit('setUserTokenRefresh',response.data.refresh_token)
+              userStore.commit('setUserTokenType',response.data.tokenType)
+              userStore.commit('setUserTokenExpire',response.data.expiresIn)
+              userStore.commit('setUserTokenAccess',response.data.accessToken)
+              userStore.commit('setUserTokenRefresh',response.data.refreshToken)
               axios.defaults.headers.common['Authorization'] = 'Bearer ' + userStore.getters.getUserTokenAccess
               router.push({ name: 'home' })
             }
             else
             {
-              self.setAlertAuth(true)
+              self.loginForm.error.code = response.data.errorCode
+              self.loginForm.error.type = response.data.errorType
+              self.loginForm.error.description = response.data.errorDescription
+              self.setErrorAlert(true)
             }
         })
         .catch(function (error) {
           console.log(error)
-          self.setAlertAuth(true)
+          self.loginForm.error.code = 500
+          self.loginForm.error.type = "network_error"
+          self.loginForm.error.description = error
+          self.setErrorAlert(true)
       });
     }
   }

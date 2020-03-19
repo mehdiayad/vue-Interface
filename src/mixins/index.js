@@ -1,5 +1,10 @@
 export const myMixin = {
 
+	data() {
+		return{
+			user: userStore.getters.getUserAll,
+		}
+	},
 	methods: {
 		formatPrice: function(value){
   			let val = (value/1).toFixed(2).replace('.', ',')
