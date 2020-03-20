@@ -3,11 +3,25 @@
   <div class="container-fluid">
 
     <div class="row pt-2">
-      <div class="col-5 col-sm-5 mx-auto mt-5">        
+      <div class="col-6 col-sm-6 mx-auto mt-5">        
         <div class="card mx-auto text-left">
-          <div class="card-header bg-info text-white"> Connexion</div>
+          <div class="card-header bg-info text-white"> Connexion </div>
           <div class="card-body">
             <form role="form">
+              <div class="form-group row text-center">
+                <div class="col-4 col-sm-4">
+                  <input type="radio" id="grant" value="grant" v-model="loginForm.passportMode">
+                  <label for="grant" class="pl-1">Grant Access</label>
+                </div>
+                <div class="col-4 col-sm-4">
+                  <input type="radio" id="client" value="client" v-model="loginForm.passportMode">
+                  <label for="client" class="pl-1">Client Access</label>
+                </div>
+                <div class="col-4 col-sm-4">
+                  <input type="radio" id="personal" value="personal" v-model="loginForm.passportMode">
+                  <label for="personal" class="pl-1">Personal Access</label>
+                </div>
+              </div>
               <div class="form-group">
                 <div> Email  </div>
                 <input v-model="loginForm.data.email" type="email" class="form-control"/>
@@ -16,8 +30,12 @@
                 <div> Mot de passe </div>
                 <input v-model="loginForm.data.password" type="password" class="form-control"/>
               </div>
-              <div class="form-group">
-                <div> Code </div>
+              <div class="form-group" v-if="loginForm.passportMode=='client'">
+                <div> Code d'access client</div>
+                <input v-model="loginForm.data.code" type="text" class="form-control"/>
+              </div>
+              <div class="form-group" v-if="loginForm.passportMode=='personal'">
+                <div> Code d'access personel </div>
                 <input v-model="loginForm.data.code" type="text" class="form-control"/>
               </div>
               <div class="form-group text-right">
@@ -47,6 +65,7 @@
       test: null,
 
       loginForm: {
+        passportMode: 'grant',
         data: {
           email: userStore.getters.getUserEmail,
           password: userStore.getters.getUserPassword,
@@ -56,7 +75,8 @@
           code: null,
           type: null,
           description: null,
-          alert: false
+          alert: false,
+          time: 5000
         }
       }
     }
@@ -75,19 +95,26 @@
 			self.loginForm.error.alert = value
 			setTimeout(function(){
 				self.loginForm.error.alert = !value
-      }, 5000);
+      }, this.loginForm.error.time);
     },
 
     loginPassport:  function() {
-      //var url = process.env.VUE_APP_API_BASE_URL + 'loginPassportGrant'
-      var url = process.env.VUE_APP_API_BASE_URL + 'loginPassportClient'
+      
+      var url = null
 
+      if(this.loginForm.passportMode == 'grant'){
+        url = process.env.VUE_APP_API_BASE_URL + 'loginPassportGrant'
+      }else if(this.loginForm.passportMode == 'client'){
+        url = process.env.VUE_APP_API_BASE_URL + 'loginPassportClient'
+      } else{
+        url = process.env.VUE_APP_API_BASE_URL + 'loginPassportPersonal'
+      }
+      
       //inside axios (this) is lost so we save it in order to use it inside the function
       var self = this;      
       axios({
         method: 'post',
         url: url,
-        //data : {email : this.loginForm.email, password: this.loginForm.password} not need anymore
         data: this.loginForm.data
       })
       .then(function (response) {

@@ -13,14 +13,14 @@
 										<h5> 1. Adresse de facturation </h5>
 									</div>
 
-									<div class="col-5 col-sm-5">
+									<div class="col-4 col-sm-4">
 										<div> {{ adresses.billingDefault.full_name}}</div>
 										<div> {{ adresses.billingDefault.address}}</div>
 										<div> {{ adresses.billingDefault.postal_code +','+ adresses.billingDefault.city }}</div>
 										<div> {{ adresses.billingDefault.country}}</div>
 									</div>
 
-									<div class="col-2 col-sm-2">
+									<div class="col-3 col-sm-3">
 										<a class="btn btn-dark border rounded text-white w-100 mt-4"> Modifier</a>
 									</div>
 								</div>
@@ -34,14 +34,14 @@
 										<h5> 2. Adresse de livraison </h5>
 									</div>
 
-									<div class="col-5 col-sm-5">
+									<div class="col-4 col-sm-4">
 										<div> {{ adresses.shippingDefault.full_name}}</div>
 										<div> {{ adresses.shippingDefault.address}}</div>
 										<div> {{ adresses.shippingDefault.postal_code +','+ adresses.shippingDefault.city }}</div>
 										<div> {{ adresses.shippingDefault.country}}</div>
 									</div>
 
-									<div class="col-2 col-sm-2">
+									<div class="col-3 col-sm-3">
 										<a class="btn btn-dark border rounded text-white w-100 mt-4"> Modifier</a>
 									</div>
 								</div>
