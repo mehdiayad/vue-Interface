@@ -14,7 +14,8 @@ base.interceptors.request.use(function (config) {
     //console.log(config)
     //console.log('[Interceptor] token = ' + config.headers["Authorization"])
 
-    if(config.url != loginUrl){
+    var bool = config.url.includes('loginPassport')
+    if(bool == false){
       if(config.headers["Authorization"] == authNull){
         if(userStore.getters.getUserTokenAccess != null){
           config.headers["Authorization"]  = 'Bearer ' + userStore.getters.getUserTokenAccess
