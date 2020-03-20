@@ -16,12 +16,13 @@
                 <div> Mot de passe </div>
                 <input v-model="loginForm.data.password" type="password" class="form-control"/>
               </div>
+              <div class="form-group">
+                <div> Code </div>
+                <input v-model="loginForm.data.code" type="text" class="form-control"/>
+              </div>
               <div class="form-group text-right">
                 <a class="btn btn-info text-white px-5" v-on:click="loginPassport()">Valider</a>
               </div>
-              
-              <div> {{ test }} </div>
-
               <div class="form-group text-left alert alert-danger" v-if="displayAlert">
                   <div> Error [{{ loginForm.error.code}}] : {{ loginForm.error.type }} </div>
               </div>
@@ -48,7 +49,8 @@
       loginForm: {
         data: {
           email: userStore.getters.getUserEmail,
-          password: userStore.getters.getUserPassword
+          password: userStore.getters.getUserPassword,
+          code: null
         },
         error: {
           code: null,
@@ -77,8 +79,8 @@
     },
 
     loginPassport:  function() {
-      var url = process.env.VUE_APP_API_BASE_URL + 'loginPassportGrant'
-      //var url = process.env.VUE_APP_API_BASE_URL + 'loginPassportClient'
+      //var url = process.env.VUE_APP_API_BASE_URL + 'loginPassportGrant'
+      var url = process.env.VUE_APP_API_BASE_URL + 'loginPassportClient'
 
       //inside axios (this) is lost so we save it in order to use it inside the function
       var self = this;      
