@@ -10,7 +10,7 @@ base.interceptors.request.use(function (config) {
 
     // Do something before request is sent
     var authNull = "Bearer null"
-    var loginUrl = "http://localhost:8888/Laravel-WS/public/api/loginPassport"
+    var loginUrl = "http://localhost:8888/Laravel-WS/public/api/loginPassportGrant"
     //console.log(config)
     //console.log('[Interceptor] token = ' + config.headers["Authorization"])
 

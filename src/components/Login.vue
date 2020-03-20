@@ -60,11 +60,9 @@
     }
   },
   mounted: function(){
-    console.log("In Login")
-    console.log(this.user)
+    //console.log(this.user)
   },
   methods:{
-
     setErrorAlert : function(value){
       var self = this;
 			self.loginForm.error.alert = value
@@ -74,7 +72,7 @@
     },
 
     loginPassport:  function() {
-      var url = process.env.VUE_APP_API_BASE_URL + 'loginPassport'
+      var url = process.env.VUE_APP_API_BASE_URL + 'loginPassportGrant'
       //inside axios (this) is lost so we save it in order to use it inside the function
       var self = this;      
       axios({
