@@ -97,7 +97,7 @@
                 </div>
 
                 <div class="form-group row">
-                    <div class="col-4 col-sm-4">Clé d'access</div>
+                    <div class="col-4 col-sm-4">Clé d'acces</div>
                     <div class="col-1 col-sm-1"> </div>
                     <input class="col-7 col-sm-7 bg-light border rounded" disabled v-model="user.userTokenAccess">
                 </div>

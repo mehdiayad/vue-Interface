@@ -41,7 +41,7 @@
               </div>
 
               <div class="form-group" v-if="loginForm.passport.mode=='personal'">
-                <div> Clé </div>
+                <div> Clé d'acces </div>
                 <input v-model="loginForm.data.code" type="text" class="form-control"/>
               </div>
 
