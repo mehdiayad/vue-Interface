@@ -3,25 +3,25 @@
   <div class="container-fluid">
 
     <div class="row pt-2">
-      <div class="col-6 col-sm-6 mx-auto mt-5">        
+      <div class="col-8 col-sm-8 mx-auto mt-5" style="max-width: 600px;">        
         <div class="card mx-auto text-left">
           <div class="card-header bg-info text-white"> Connexion </div>
           <div class="card-body">
             <form role="form">
-              <div class="form-group row text-center">
-                <div class="col-4 col-sm-4">
-                  <input type="radio" id="grant" value="grant" v-model="loginForm.passport.mode">
-                  <label for="grant" class="pl-1">Grant Access</label>
+                <div class="form-group row text-center">
+                  <div class="col-4 col-sm-4">
+                    <input type="radio" id="grant" value="grant" v-model="loginForm.passport.mode">
+                    <label for="grant" class="pl-1">Acces generique</label>
+                  </div>
+                  <div class="col-4 col-sm-4">
+                    <input type="radio" id="client" value="client" v-model="loginForm.passport.mode">
+                    <label for="client" class="pl-1">Acces client</label>
+                  </div>
+                  <div class="col-4 col-sm-4">
+                    <input type="radio" id="personal" value="personal" v-model="loginForm.passport.mode">
+                    <label for="personal" class="pl-1">Acces personnel</label>
+                  </div>
                 </div>
-                <div class="col-4 col-sm-4">
-                  <input type="radio" id="client" value="client" v-model="loginForm.passport.mode">
-                  <label for="client" class="pl-1">Client Access</label>
-                </div>
-                <div class="col-4 col-sm-4">
-                  <input type="radio" id="personal" value="personal" v-model="loginForm.passport.mode">
-                  <label for="personal" class="pl-1">Personal Access</label>
-                </div>
-              </div>
               <div class="form-group">
                 <div> Email  </div>
                 <input v-model="loginForm.data.email" type="email" class="form-control"/>
@@ -33,7 +33,7 @@
 
               <div class="form-group" v-if="loginForm.passport.mode=='client'">
                 <div> 
-                  Code d'access client 
+                  Code 
                   <a class="btn btn-info p-1 m-1 text-white" @click="generateUrl()"> Generer le lien </a> 
                   <a class="btn btn-info p-1 m-1 text-white" v-if="(loginForm.passport.link!=null)"  :href="loginForm.passport.link" target="_blank"> Generer le code </a> 
                 </div>
@@ -41,7 +41,7 @@
               </div>
 
               <div class="form-group" v-if="loginForm.passport.mode=='personal'">
-                <div> Code d'access personel</div>
+                <div> Code </div>
                 <input v-model="loginForm.data.code" type="text" class="form-control"/>
               </div>
 
@@ -68,7 +68,7 @@
 
   export default {
   data() {
-    return {     
+    return {   
       loginForm: {
         passport:{
           mode: 'grant',
@@ -84,7 +84,7 @@
           type: null,
           description: null,
           alert: false,
-          time: 5000
+          time: 50000
         }
       }
     }
@@ -105,11 +105,9 @@
 				self.loginForm.error.alert = !value
       }, this.loginForm.error.time);
     },
-
     loginPassport:  function() {
-      
-      var url = null
 
+      var url = null
       if(this.loginForm.passport.mode == 'grant'){
         url = process.env.VUE_APP_API_BASE_URL + 'loginPassportGrant'
       }else if(this.loginForm.passport.mode == 'client'){
@@ -127,7 +125,6 @@
       })
       .then(function (response) {
             console.log(response)
-            self.test = response
             if(response.data.userConnected){
               userStore.commit('setUserEmail',self.loginForm.data.email)
               userStore.commit('setUserPassword',self.loginForm.data.password)
