@@ -33,6 +33,12 @@ const mutations = {
 	setUserTokenRefresh(state, value) { state.userTokenRefresh = value },
 	setUserTokenType(state, value) { state.userTokenType = value },
 	setUserTokenExpire(state, value) { state.userTokenExpire = value },
+	logout(state){
+		state.userId = null
+		state.userName = null
+		state.userInformations = null
+		state.userConnected = false
+	}
 }
 
 const getters = {

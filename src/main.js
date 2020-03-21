@@ -8,6 +8,8 @@ import myRouter from './router/index'
 import myNavbarStore from './store/navbarStore'
 import myUserStore from './store/userStore'
 import myStore from './store/index'
+import myCron from './cron/index'
+
 
 // GLOBAL DEFAULTS VARIBALES
 Vue.use(Vuex)
@@ -22,6 +24,8 @@ window.navbarStore = myNavbarStore
 window.userStore = myUserStore
 
 // Vue.prototype.$router = myRouter (NOT WORKING !!!)
+
+
 
 // VUE INSTANCE
 var vm = new Vue({
