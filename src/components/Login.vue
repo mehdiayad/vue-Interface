@@ -10,15 +10,15 @@
             <form role="form">
               <div class="form-group row text-center">
                 <div class="col-4 col-sm-4">
-                  <input type="radio" id="grant" value="grant" v-model="loginForm.passportMode">
+                  <input type="radio" id="grant" value="grant" v-model="loginForm.passport.mode">
                   <label for="grant" class="pl-1">Grant Access</label>
                 </div>
                 <div class="col-4 col-sm-4">
-                  <input type="radio" id="client" value="client" v-model="loginForm.passportMode">
+                  <input type="radio" id="client" value="client" v-model="loginForm.passport.mode">
                   <label for="client" class="pl-1">Client Access</label>
                 </div>
                 <div class="col-4 col-sm-4">
-                  <input type="radio" id="personal" value="personal" v-model="loginForm.passportMode">
+                  <input type="radio" id="personal" value="personal" v-model="loginForm.passport.mode">
                   <label for="personal" class="pl-1">Personal Access</label>
                 </div>
               </div>
@@ -26,18 +26,25 @@
                 <div> Email  </div>
                 <input v-model="loginForm.data.email" type="email" class="form-control"/>
               </div>
-              <div class="form-group">
+              <div class="form-group" v-if="loginForm.passport.mode=='grant'">
                 <div> Mot de passe </div>
                 <input v-model="loginForm.data.password" type="password" class="form-control"/>
               </div>
-              <div class="form-group" v-if="loginForm.passportMode=='client'">
-                <div> Code d'access client</div>
+
+              <div class="form-group" v-if="loginForm.passport.mode=='client'">
+                <div> 
+                  Code d'access client 
+                  <a class="btn btn-info p-1 m-1 text-white" @click="generateUrl()"> Generer le lien </a> 
+                  <a class="btn btn-info p-1 m-1 text-white" v-if="(loginForm.passport.link!=null)"  :href="loginForm.passport.link" target="_blank"> Generer le code </a> 
+                </div>
                 <input v-model="loginForm.data.code" type="text" class="form-control"/>
               </div>
-              <div class="form-group" v-if="loginForm.passportMode=='personal'">
-                <div> Code d'access personel </div>
+
+              <div class="form-group" v-if="loginForm.passport.mode=='personal'">
+                <div> Code d'access personel</div>
                 <input v-model="loginForm.data.code" type="text" class="form-control"/>
               </div>
+
               <div class="form-group text-right">
                 <a class="btn btn-info text-white px-5" v-on:click="loginPassport()">Valider</a>
               </div>
@@ -62,10 +69,11 @@
   export default {
   data() {
     return {     
-      test: null,
-
       loginForm: {
-        passportMode: 'grant',
+        passport:{
+          mode: 'grant',
+          link: null
+        },
         data: {
           email: userStore.getters.getUserEmail,
           password: userStore.getters.getUserPassword,
@@ -102,9 +110,9 @@
       
       var url = null
 
-      if(this.loginForm.passportMode == 'grant'){
+      if(this.loginForm.passport.mode == 'grant'){
         url = process.env.VUE_APP_API_BASE_URL + 'loginPassportGrant'
-      }else if(this.loginForm.passportMode == 'client'){
+      }else if(this.loginForm.passport.mode == 'client'){
         url = process.env.VUE_APP_API_BASE_URL + 'loginPassportClient'
       } else{
         url = process.env.VUE_APP_API_BASE_URL + 'loginPassportPersonal'
@@ -149,6 +157,36 @@
           self.loginForm.error.description = error
           self.setErrorAlert(true)
       });
+    },
+    generateUrl: function(){
+
+      var url = process.env.VUE_APP_API_BASE_URL + 'generateAuthorizeUrl'
+      var self = this
+       axios({
+        method: 'post',
+        url: url,
+        data: this.loginForm.data
+      })
+      .then(function (response) {
+            console.log(response)
+
+            if(response.data.errorCode==null){
+              
+              self.loginForm.passport.link = response.data.apiUrl
+
+            }else{
+
+              self.loginForm.error.code = response.data.errorCode
+              self.loginForm.error.type = response.data.errorType
+              self.loginForm.error.description = response.data.errorDescription
+              self.setErrorAlert(true)
+
+            }
+      })
+       .catch(function (error) {
+          console.log(error)
+       });
+
     }
   }
 }
