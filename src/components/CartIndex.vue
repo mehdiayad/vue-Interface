@@ -88,7 +88,7 @@ data () {
 	    return {
 			carts: {
 				data: [],
-				totalCartPtice: 0,
+				totalCartPrice: 0,
 			},
 			alertCart:{
 				update: false,

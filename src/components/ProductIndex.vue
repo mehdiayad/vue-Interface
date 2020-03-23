@@ -21,9 +21,9 @@
 			</div>
 		</div>
 
-		<div v-if="products.data.length==0" class="row mt-3">
-			<h3> Aucun produit ne correspond a votre recherche </h3>
-			<h5> Essayez de vérifier votre orthographe ou d’utiliser des termes plus généraux </h5>
+		<div v-if="products.data.length==0" class="mt-3">
+			<div class="h3"> Aucun produit ne correspond a votre recherche </div>
+			<div class="h5"> Essayez de vérifier votre orthographe ou d’utiliser des termes plus généraux </div>
 		</div>
 
 	</div>
@@ -66,7 +66,7 @@ export default {
 				data: this.navbarForm
 			})
        		.then((response) => {
-				console.log(response)
+				//console.log(response)
 				this.products.data = response.data.data
 				this.products.page = response.data.current_page
 				this.products.totalProducts = response.data.total
