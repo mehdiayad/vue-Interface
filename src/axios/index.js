@@ -10,9 +10,9 @@ base.interceptors.request.use(function (config) {
 
     // Do something before request is sent
     var authNull = "Bearer null"
-    var loginUrl = "http://localhost:8888/Laravel-WS/public/api/loginPassportGrant"
-    var bool1 = config.url.includes('loginPassport')
-    var bool2 = config.url.includes('user/1')
+    var bool1 = config.url.includes('passportAuth')
+    var bool2 = config.url.includes('passportTestToken')
+    
     if(bool1){
       // Token not needed for call API login endpoint
     }

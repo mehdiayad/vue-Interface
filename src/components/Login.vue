@@ -102,7 +102,7 @@
       }, this.loginForm.error.time);
     },
     loginSimple:  function() {
-      var url = process.env.VUE_APP_API_BASE_URL + 'loginPassportSimple'
+      var url = process.env.VUE_APP_API_BASE_URL + 'passportAuthSimple'
       //inside axios (this) is lost so we save it in order to use it inside the function
       var self = this;      
       axios({
@@ -134,9 +134,9 @@
       });
     },
     loginPassport:  function() {
-      var url = process.env.VUE_APP_API_BASE_URL + 'loginPassportGrant'
+      var url = process.env.VUE_APP_API_BASE_URL + 'passportAuthGrant'
       if(this.loginForm.passport.mode == 'client'){
-        url = process.env.VUE_APP_API_BASE_URL + 'loginPassportClient'
+        url = process.env.VUE_APP_API_BASE_URL + 'passportAuthClient'
       }
       //inside axios (this) is lost so we save it in order to use it inside the function
       var self = this;      
@@ -180,7 +180,7 @@
       });
     },
     generateUrl: function($event){
-      var url = process.env.VUE_APP_API_BASE_URL + 'loginPassportGenerateAuthorizeUrl'
+      var url = process.env.VUE_APP_API_BASE_URL + 'passportGenerateAuthorizeUrl'
       var self = this
        axios({
         method: 'post',
@@ -204,7 +204,7 @@
        });
     },
     testToken : function(){
-        var url = process.env.VUE_APP_API_BASE_URL + 'user/1'
+        var url = process.env.VUE_APP_API_BASE_URL + 'passportTestToken'
         var self = this
         
         axios({
