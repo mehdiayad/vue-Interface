@@ -11,7 +11,7 @@
 				</router-link>
 			</div>
 		</div>
-		<div v-if="products.length>0" class="row">
+		<div v-if="products.data.length>0" class="row">
 			<div class="col-4 col-sm-4 mx-auto text-white mt-3 mb-3">
 				<span v-if="canGoBefore()"> <a class="btn btn-info text-white mx-1" v-on:click="previousPage()"> Precedent </a> </span>
 				<span v-else> <a class="btn btn-info text-white disabled mx-1" v-on:click="previousPage()"> Precedent </a> </span>				
@@ -21,7 +21,7 @@
 			</div>
 		</div>
 
-		<div v-if="products.length=0" class="row mt-3">
+		<div v-if="products.data.length==0" class="row mt-3">
 			<h3> Aucun produit ne correspond a votre recherche </h3>
 			<h5> Essayez de vérifier votre orthographe ou d’utiliser des termes plus généraux </h5>
 		</div>
@@ -58,14 +58,15 @@ export default {
 	},
   	methods: {
 		getProducts(page) {
-      		var url = process.env.VUE_APP_API_BASE_URL + 'product/list?page=' + page
+			  var url = process.env.VUE_APP_API_BASE_URL + 'product/list?page=' + page
+			  //console.log(this.navbarForm)
 			axios({
 				method: 'post',
 				url : url,
 				data: this.navbarForm
 			})
        		.then((response) => {
-				//console.log(response)
+				console.log(response)
 				this.products.data = response.data.data
 				this.products.page = response.data.current_page
 				this.products.totalProducts = response.data.total

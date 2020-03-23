@@ -42,7 +42,7 @@
               </div>
 
               <div class="form-group text-right">
-                <a class="btn btn-info text-white px-5" v-on:click="login()">Valider</a>
+                <a class="btn btn-info text-white px-5" v-on:click="canLogin()">Valider</a>
               </div>
               <div class="form-group text-left alert alert-danger" v-if="displayAlert">
                   <div> Error [{{ loginForm.error.code}}] : {{ loginForm.error.type }} </div>
@@ -101,7 +101,8 @@
 				self.loginForm.error.alert = !value
       }, this.loginForm.error.time);
     },
-    loginSimple:  function() {
+    loginSimple: function() {
+      //console.log('Call 2')
       var url = process.env.VUE_APP_API_BASE_URL + 'passportAuthSimple'
       //inside axios (this) is lost so we save it in order to use it inside the function
       var self = this;      
@@ -133,7 +134,8 @@
           self.setErrorAlert(true)
       });
     },
-    loginPassport:  function() {
+    loginPassport: function() {
+      //console.log('Call 2')
       var url = process.env.VUE_APP_API_BASE_URL + 'passportAuthGrant'
       if(this.loginForm.passport.mode == 'client'){
         url = process.env.VUE_APP_API_BASE_URL + 'passportAuthClient'
@@ -204,30 +206,29 @@
        });
     },
     testToken : function(){
-        var url = process.env.VUE_APP_API_BASE_URL + 'passportTestToken'
-        var self = this
-        
+      //console.log('Call 1')
+      var self = this
+      var url = process.env.VUE_APP_API_BASE_URL + 'passportTestToken'
+      return new Promise(function(resolve,reject){
         axios({
           method: 'get',
           url: url,
         })
         .then(function (response) {
           //console.log(response)
+          //console.log('Call 11')
           self.loginForm.data.validToken = true
-          // only for passport grant authentification
-          if(self.loginForm.passport.mode == 'grant' && userStore.getters.getUserEmail == self.loginForm.data.email){
-            self.loginSimple()
-          }else{
-            self.loginPassport()
-          }
+          resolve('success')
         })
         .catch(function (error) {
           console.log(error)
+          //console.log('Call 11')
           self.loginForm.data.validToken = false
-          self.loginPassport()
+          resolve('faillure')
         });
+      });
     },
-    login(){
+    canLogin: function(){
       var canCall = false
       if(this.loginForm.passport.mode == "grant" && this.loginForm.data.email != null && this.loginForm.data.password != null && this.loginForm.data.email.length >0 && this.loginForm.data.password.length >0){
         canCall = true
@@ -236,11 +237,24 @@
         canCall = true
       }
       if(canCall == true){
-        this.testToken()
+        this.dologin()
       }else{
         window.alert("Veuillez remplir tous les champs avant de cliquer sur valider");
       }
-      
+    },
+    dologin: async function (){
+      // first call function
+      await this.testToken()
+      // second call function
+      if(this.loginForm.data.validToken){
+        if(this.loginForm.passport.mode == 'grant' && userStore.getters.getUserEmail == this.loginForm.data.email){
+          this.loginSimple()
+        }else{
+          this.loginPassport()
+        }
+      }else{
+        this.loginPassport()
+      }
     }
   }
 }

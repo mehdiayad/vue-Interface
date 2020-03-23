@@ -35,6 +35,7 @@
 - Global State management with VueX
 - Local storage with Vuex-persist
 - Mixin for DRY principle
+- Promises for Synchronous behavior
 
 ## Project setup
 
