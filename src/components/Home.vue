@@ -8,14 +8,11 @@
   </div>
 </template>
 
-
-
 <script> </script>
 
 <style scoped>
-
-.home_img{
-  height: 600px;
-}
+  .home_img{
+    height: 600px;
+  }
 </style>
 

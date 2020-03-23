@@ -27,7 +27,7 @@
 							<div class="bg-dark pt-1"></div>
 						</div>
 						
-						<div v-for="(cart,myIndex) in carts" :key="cart.id" :index="myIndex" class="col-12 col-sm-12">
+						<div v-for="(cart,myIndex) in carts.data" :key="cart.id" :index="myIndex" class="col-12 col-sm-12">
 							<div class="container-fluid">
 								<div class="row pt-3">
 									<div class="col-3 col-sm-3">
@@ -67,8 +67,8 @@
 
 			<div class="col-3 col-sm-3">
 				<div class="px-3 py-3 bg-white text-center border rounded">
-					<h4 class="text-left"> Total : <span class="text-danger"> {{ formatPrice(totalCartPrice) }} €</span></h4>
-					<router-link :to="{ name: 'cart_confirm', params: { id: 9 } }" style="text-decoration:none;">
+					<h4 class="text-left"> Total : <span class="text-danger"> {{ formatPrice(carts.totalCartPrice) }} €</span></h4>
+					<router-link :to="{ name: 'cart_confirm', params: { id: user.userId } }" style="text-decoration:none;">
 						<a class="btn btn-info rounded text-white w-100"> Passer la commande</a>
 					</router-link>
 				</div>
@@ -82,60 +82,53 @@
 
 <script>
 
-import axios from '../axios/index'
-import userStore from '../store/userStore'
-import navbarStore from '../store/navbarStore'
-
 export default {
 
 data () {
 	    return {
-			carts: [],
-			userId: userStore.getters.getUserId,
-			totalCartPrice: 0,
-			alertUpdate:false,
-			alertDelete:false
+			carts: {
+				data: [],
+				totalCartPtice: 0,
+			},
+			alertCart:{
+				update: false,
+				delete: false
+			}
       }
 	},
 	mounted:function(){
-		this.getCart(this.userId)
+		this.getCart(this.user.userId)
 	},
 	computed:{
 		displayAlertUpdate: function() {
-			//console.log('Call Update')
-			return this.alertUpdate
+			return this.alertCart.update
 		},
 		displayAlertDelete: function(){
-			//console.log('Call Delete')
-			return this.alertDelete
+			return this.alertCart.delete
 		}
 	},
   	methods: {
 
 		setAlertUpdate: function(value){
 			var self = this;
-			self.alertUpdate = value
+			self.alertCart.update = value
 			setTimeout(function(){
-				self.alertUpdate = !value
+				self.alertCart.update = !value
 			}, 1000);
 		},
 		setAlertDelete: function(value){
 			var self = this;
-			self.alertDelete = value
+			self.alertCart.delete = value
 			setTimeout(function(){
-				self.alertDelete = !value
+				self.alertCart.delete = !value
 			}, 1000);
 		},
 		getCart(id) {
-
-			//console.log('call get cart')
       		var url = process.env.VUE_APP_API_BASE_URL + 'cart'
-			//console.log(url)
-
 			axios.get(url)
 				.then((response) => {
 				//console.log(response),
-				this.carts = response.data,
+				this.carts.data = response.data,
 				this.getTotalPriceCart()
 			})
 			.catch(function (error) {
@@ -144,8 +137,7 @@ data () {
 
 		},
 		notLastElement(cart){
-			var temp = this.carts[this.carts.length-1]
-
+			var temp = this.carts.data[this.carts.data.length-1]
 			if(cart == temp) 
 				return false
 			else 
@@ -153,7 +145,7 @@ data () {
 		},
 		updateCart(indexTemp){
 
-			var cartTemp = this.carts[indexTemp]
+			var cartTemp = this.carts.data[indexTemp]
 			var idCart = cartTemp.cart_id;
       		var url = process.env.VUE_APP_API_BASE_URL + 'cart/' + idCart
 			cartTemp.cart_price = cartTemp.price * cartTemp.product_quantity
@@ -162,12 +154,12 @@ data () {
 				method: 'put',
 				url : url,
 				data : {
-						// variable elements
-						user_id: userStore.getters.getUserId, 
-						product_id : cartTemp.product_id,
-						product_quantity : cartTemp.product_quantity,
-						product_price: cartTemp.price
-						}
+					// variable elements
+					user_id: this.user.userId, 
+					product_id : cartTemp.product_id,
+					product_quantity : cartTemp.product_quantity,
+					product_price: cartTemp.price
+				}
 			})
        		.then((response) => {
 				//console.log(response)
@@ -183,7 +175,7 @@ data () {
 		deleteCart(indexTemp){
 
 			// Variables
-			var cartTemp = this.carts[indexTemp]
+			var cartTemp = this.carts.data[indexTemp]
 			var idCart = cartTemp.cart_id;
       		var url = process.env.VUE_APP_API_BASE_URL + 'cart/' + idCart
 
@@ -193,7 +185,7 @@ data () {
 			})
        		.then((response) => {
 				//console.log(response)
-				this.carts.splice(indexTemp, 1)
+				this.carts.data.splice(indexTemp, 1)
 				this.getTotalPriceCart()
 				this.getCartNumber()
 				this.setAlertDelete(true)
@@ -204,18 +196,17 @@ data () {
 		},
 		getTotalPriceCart(){
 
-			this.totalCartPrice = 0
-			for(var i = 0; i<this.carts.length; i++)
+			this.carts.totalCartPrice = 0
+			for(var i = 0; i<this.carts.data.length; i++)
 			{
-				this.totalCartPrice += this.carts[i].cart_price
+				this.carts.totalCartPrice += this.carts.data[i].cart_price
 			}
 		},
 		getCartNumber(){
-			
 			var cartNumber=0;
-			for(var i = 0; i<this.carts.length; i++)
+			for(var i = 0; i<this.carts.data.length; i++)
 			{
-				cartNumber += this.carts[i].product_quantity
+				cartNumber += this.carts.data[i].product_quantity
 			}
 			navbarStore.commit('setCartNumber', cartNumber)
 		}

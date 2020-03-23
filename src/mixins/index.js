@@ -1,5 +1,10 @@
-export const functionsMixin = {
+export const myMixin = {
 
+	data() {
+		return{
+			user: userStore.getters.getUserAll,
+		}
+	},
 	methods: {
 		formatPrice: function(value){
   			let val = (value/1).toFixed(2).replace('.', ',')
@@ -9,11 +14,14 @@ export const functionsMixin = {
 			return '/images/products/'+ img_path
 		},
 		isNotNull: function(obj){
-			var test = false
-			if (obj != null) test = true
-			console.log('test = ' + test)
-			return test
+			if (obj != null) {
+				return true
+			}else{
+				return false
+			}
+		},
+		cutString: function(value,size){
+			return value.substring(0,size);
 		}
 	}
-
 }
