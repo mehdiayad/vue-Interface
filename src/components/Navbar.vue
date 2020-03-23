@@ -189,10 +189,7 @@ export default {
       })
     },	
     logout: function(){
-      userStore.commit('setUserId',null)
-      userStore.commit('setUserConnected',false)
-      userStore.commit('setUserInformations',null)
-      userStore.commit('setUserName',null)
+      userStore.commit('logout')
       router.push({ name: 'login'})
     },
     goHomePage: function(){

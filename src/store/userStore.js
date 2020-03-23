@@ -19,7 +19,9 @@ const state = {
 	userTokenAccess: null,
 	userTokenRefresh: null,
 	userTokenType: null,
-	userTokenExpire: null,
+	userTokenExpiresIn: null,
+	userTokenExpiresAt: null,
+	userTokenCreatedAt: null,
 }
 
 const mutations = {
@@ -32,13 +34,10 @@ const mutations = {
 	setUserTokenAccess(state, value) { state.userTokenAccess = value },
 	setUserTokenRefresh(state, value) { state.userTokenRefresh = value },
 	setUserTokenType(state, value) { state.userTokenType = value },
-	setUserTokenExpire(state, value) { state.userTokenExpire = value },
-	logout(state){
-		state.userId = null
-		state.userName = null
-		state.userInformations = null
-		state.userConnected = false
-	}
+	setUserTokenExpiresIn(state, value) { state.userTokenExpiresIn = value },
+	setUserTokenExpiresAt(state, value) { state.userTokenExpiresAt = value },
+	setUserTokenCreatedAt(state, value) { state.userTokenCreatedAt = value },
+	logout(state){state.userConnected = false}
 }
 
 const getters = {
@@ -51,9 +50,10 @@ const getters = {
 	getUserTokenAccess : state => { return state.userTokenAccess },
 	getUserTokenRefresh : state => { return state.userTokenRefresh },
 	getUserTokenType : state => { return state.userTokenType },
-	getUserTokenExpire : state => { return state.userTokenExpire },
+	getUserTokenExpiresIn : state => { return state.userTokenExpiresIn },
+	getUserTokenExpiresAt : state => { return state.userTokenExpiresAt },
+	getUserTokenCreatedAt : state => { return state.userTokenCreatedAt },
 	getUserAll : state => {return state}
-
 }
 
 var userStore = new Vuex.Store({
@@ -70,7 +70,6 @@ var userStore = new Vuex.Store({
 
 	strict: true
 })
-
 
 export default userStore
 

@@ -47,3 +47,4 @@
 - You should see App running at local: http://localhost:8080/ 
 - Open your browser and go to the page http://localhost:8080/
 - You can connect to the app with (email:super@gmail.com / password:super)
+- The setup is now completed

@@ -1,7 +1,6 @@
 <template>
 
   <div class="container-fluid">
-
     <div class="row pt-2">
       <div class="col-8 col-sm-8 mx-auto mt-5" style="max-width: 600px;">        
         <div class="card mx-auto text-left">
@@ -9,17 +8,13 @@
           <div class="card-body">
             <form role="form">
                 <div class="form-group row text-center">
-                  <div class="col-4 col-sm-4">
+                  <div class="col-6 col-sm-6">
                     <input type="radio" id="grant" value="grant" v-model="loginForm.passport.mode">
                     <label for="grant" class="pl-1">Acces generique</label>
                   </div>
-                  <div class="col-4 col-sm-4">
+                  <div class="col-6 col-sm-6">
                     <input type="radio" id="client" value="client" v-model="loginForm.passport.mode">
                     <label for="client" class="pl-1">Acces client</label>
-                  </div>
-                  <div class="col-4 col-sm-4">
-                    <input type="radio" id="personal" value="personal" v-model="loginForm.passport.mode">
-                    <label for="personal" class="pl-1">Acces personnel</label>
                   </div>
                 </div>
               <div class="form-group">
@@ -34,8 +29,9 @@
               <div class="form-group" v-if="loginForm.passport.mode=='client'">
                 <div> 
                   Code 
-                  <a class="btn btn-info p-1 m-1 text-white" @click="generateUrl()"> Generer le lien </a> 
-                  <a class="btn btn-info p-1 m-1 text-white" v-if="(loginForm.passport.link!=null)"  :href="loginForm.passport.link" target="_blank"> Generer le code </a> 
+                  <a class="btn btn-info p-1 m-1 text-white" @click="generateUrl()"> 
+                    Generer le code 
+                  </a> 
                 </div>
                 <input v-model="loginForm.data.code" type="text" class="form-control"/>
               </div>
@@ -46,7 +42,7 @@
               </div>
 
               <div class="form-group text-right">
-                <a class="btn btn-info text-white px-5" v-on:click="loginPassport()">Valider</a>
+                <a class="btn btn-info text-white px-5" v-on:click="login()">Valider</a>
               </div>
               <div class="form-group text-left alert alert-danger" v-if="displayAlert">
                   <div> Error [{{ loginForm.error.code}}] : {{ loginForm.error.type }} </div>
@@ -68,7 +64,7 @@
 
   export default {
   data() {
-    return {   
+    return {
       loginForm: {
         passport:{
           mode: 'grant',
@@ -77,7 +73,8 @@
         data: {
           email: userStore.getters.getUserEmail,
           password: userStore.getters.getUserPassword,
-          code: null
+          code: null,
+          validToken: null
         },
         error: {
           code: null,
@@ -95,7 +92,7 @@
     }
   },
   mounted: function(){
-    //console.log(this.user)
+    // N/A
   },
   methods:{
     setErrorAlert : function(value){
@@ -106,16 +103,10 @@
       }, this.loginForm.error.time);
     },
     loginPassport:  function() {
-
-      var url = null
-      if(this.loginForm.passport.mode == 'grant'){
-        url = process.env.VUE_APP_API_BASE_URL + 'loginPassportGrant'
-      }else if(this.loginForm.passport.mode == 'client'){
+      var url = process.env.VUE_APP_API_BASE_URL + 'loginPassportGrant'
+      if(this.loginForm.passport.mode == 'client'){
         url = process.env.VUE_APP_API_BASE_URL + 'loginPassportClient'
-      } else{
-        url = process.env.VUE_APP_API_BASE_URL + 'loginPassportPersonal'
       }
-      
       //inside axios (this) is lost so we save it in order to use it inside the function
       var self = this;      
       axios({
@@ -124,7 +115,7 @@
         data: this.loginForm.data
       })
       .then(function (response) {
-            console.log(response)
+            //console.log(response)
             if(response.data.userConnected){
               userStore.commit('setUserEmail',self.loginForm.data.email)
               userStore.commit('setUserPassword',self.loginForm.data.password)
@@ -133,7 +124,9 @@
               userStore.commit('setUserConnected',response.data.userConnected)
               userStore.commit('setUserInformations',response.data.userInformations)
               userStore.commit('setUserTokenType',response.data.tokenType)
-              userStore.commit('setUserTokenExpire',response.data.expiresIn)
+              userStore.commit('setUserTokenExpiresIn',response.data.expiresIn)
+              userStore.commit('setUserTokenExpiresAt',response.data.expiresAt)
+              userStore.commit('setUserTokenCreatedAt',response.data.createdAt)
               userStore.commit('setUserTokenAccess',response.data.accessToken)
               userStore.commit('setUserTokenRefresh',response.data.refreshToken)
               axios.defaults.headers.common['Authorization'] = 'Bearer ' + userStore.getters.getUserTokenAccess
@@ -155,9 +148,8 @@
           self.setErrorAlert(true)
       });
     },
-    generateUrl: function(){
-
-      var url = process.env.VUE_APP_API_BASE_URL + 'generateAuthorizeUrl'
+    generateUrl: function($event){
+      var url = process.env.VUE_APP_API_BASE_URL + 'loginPassportGenerateAuthorizeUrl'
       var self = this
        axios({
         method: 'post',
@@ -165,25 +157,59 @@
         data: this.loginForm.data
       })
       .then(function (response) {
-            console.log(response)
-
+            //console.log(response)
             if(response.data.errorCode==null){
-              
               self.loginForm.passport.link = response.data.apiUrl
-
+              //console.log(self.loginForm.passport.link)
+              window.open(self.loginForm.passport.link, "_blank");
             }else{
-
               self.loginForm.error.code = response.data.errorCode
               self.loginForm.error.type = response.data.errorType
               self.loginForm.error.description = response.data.errorDescription
               self.setErrorAlert(true)
-
             }
       })
        .catch(function (error) {
           console.log(error)
        });
+    },
+    testToken : function(callback){
+        var tokenSave = userStore.getters.getUserTokenAccess;
+        var url = process.env.VUE_APP_API_BASE_URL + 'user/1'
+        var self = this
+        axios({
+          method: 'get',
+          url: url,
+        })
+        .then(function (response) {
+          self.loginForm.data.validToken = true
+          //console.log(response)
+          callback();
+        })
+        .catch(function (error) {
+          self.loginForm.data.validToken = false
+          console.log(error)
+          callback();
+        });
+    },
+    login(){
+      var canCall = false
+      
+      if(this.loginForm.passport.mode == "grant" && this.loginForm.data.email != null && this.loginForm.data.password != null && this.loginForm.data.email.length >0 && this.loginForm.data.password.length >0){
+        canCall = true
+      }
 
+      if(this.loginForm.passport.mode == "client" && this.loginForm.data.email != null && this.loginForm.data.code != null && this.loginForm.data.email.length >0 && this.loginForm.data.code.length >0){
+        canCall = true
+      }
+
+      if(canCall == true){
+        // synchronous call functions (callback system)  
+        this.testToken(this.loginPassport);
+      }else{
+        window.alert("Veuillez remplir tous les champs avant de cliquer sur valider");
+      }
+      
     }
   }
 }
