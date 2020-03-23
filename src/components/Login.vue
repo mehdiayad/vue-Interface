@@ -215,7 +215,7 @@
           //console.log(response)
           self.loginForm.data.validToken = true
           // only for passport grant authentification
-          if(self.loginForm.passport.mode = 'grant' && userStore.getters.getUserEmail == self.loginForm.data.email){
+          if(self.loginForm.passport.mode == 'grant' && userStore.getters.getUserEmail == self.loginForm.data.email){
             self.loginSimple()
           }else{
             self.loginPassport()
