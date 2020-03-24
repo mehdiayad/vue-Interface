@@ -19,7 +19,8 @@
 ## Project components version
 
 - Vue : 2.6
-- Vue-CLi : 4.2
+- Vue-cli : 4.2
+- NodeJS : 2.6
 - Bootstrap : 4.4
 - ES6 : 4.2
 - Vue Router : 3.1
