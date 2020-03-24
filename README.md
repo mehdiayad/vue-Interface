@@ -1,6 +1,5 @@
 <p align="center"><img src="https://upload.wikimedia.org/wikipedia/commons/9/95/Vue.js_Logo_2.svg" width="400"></p>
 
-
 ## About the project
 
 - Reproduce Amazon website as a training (Front End Side)
@@ -10,7 +9,6 @@
 ## Project Version
 
 - Version : 1.0.0-SNAPSHOT
-
 
 ## Project requirements
 
