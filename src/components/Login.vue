@@ -116,6 +116,7 @@
             if(response.data.userConnected){
               userStore.commit('setUserConnected',response.data.userConnected)
               userStore.commit('setUserInformations',response.data.userInformations)
+              self.startCronJob()             
               router.push({ name: 'home' })
             }
             else
@@ -162,6 +163,7 @@
               userStore.commit('setUserTokenCreatedAt',response.data.createdAt)
               userStore.commit('setUserTokenAccess',response.data.accessToken)
               userStore.commit('setUserTokenRefresh',response.data.refreshToken)
+              self.startCronJob()
               axios.defaults.headers.common['Authorization'] = 'Bearer ' + userStore.getters.getUserTokenAccess
               router.push({ name: 'home' })
             }
@@ -255,6 +257,11 @@
       }else{
         this.loginPassport()
       }
+    },
+    startCronJob: function(){
+      userStore.commit('setUserSessionTimeCounter',0)
+      userStore.commit('setUserSessionTimeRemaining', userStore.getters.getUserSessionTimeLimit)
+      cronJob.start()
     }
   }
 }

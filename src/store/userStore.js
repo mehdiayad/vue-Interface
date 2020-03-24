@@ -22,6 +22,9 @@ const state = {
 	userTokenExpiresIn: null,
 	userTokenExpiresAt: null,
 	userTokenCreatedAt: null,
+	userSessionTimeCounter: null,
+	userSessionTimeRemaining: null,
+	userSessionTimeLimit: 600,
 }
 
 const mutations = {
@@ -37,7 +40,16 @@ const mutations = {
 	setUserTokenExpiresIn(state, value) { state.userTokenExpiresIn = value },
 	setUserTokenExpiresAt(state, value) { state.userTokenExpiresAt = value },
 	setUserTokenCreatedAt(state, value) { state.userTokenCreatedAt = value },
-	logout(state){state.userConnected = false}
+	setUserSessionTimeLimit(state, value) { state.userSessionTimeLimit = value },
+	setUserSessionTimeCounter(state, value) { state.userSessionTimeCounter = value },
+	setUserSessionTimeRemaining(state, value) { state.userSessionTimeRemaining = value },
+	addUserSessionTimeCounter(state, value) { state.userSessionTimeCounter += value },
+	addUserSessionTimeRemaining(state, value) { state.userSessionTimeRemaining += value },
+	logout(state){
+		state.userConnected = false
+		state.userSessionTimeCounter = 0
+		state.userSessionTimeRemaining = 0
+	}
 }
 
 const getters = {
@@ -53,6 +65,9 @@ const getters = {
 	getUserTokenExpiresIn : state => { return state.userTokenExpiresIn },
 	getUserTokenExpiresAt : state => { return state.userTokenExpiresAt },
 	getUserTokenCreatedAt : state => { return state.userTokenCreatedAt },
+	getUserSessionTimeCounter : state => { return state.userSessionTimeCounter },
+	getUserSessionTimeRemaining : state => { return state.userSessionTimeRemaining },
+	getUserSessionTimeLimit : state => { return state.userSessionTimeLimit },
 	getUserAll : state => {return state}
 }
 

@@ -22,6 +22,18 @@ export const myMixin = {
 		},
 		cutString: function(value,size){
 			return value.substring(0,size);
-		}
+		},
+		msToTime: function(duration) {
+
+			var hours = Math.trunc(duration / 3600)
+			var minutes = Math.trunc((duration % 3600) / 60)
+			var seconds = Math.trunc(((duration % 3600) % 60))
+	
+			hours = (hours < 10) ? "0" + hours : hours;
+			minutes = (minutes < 10) ? "0" + minutes : minutes;
+			seconds = (seconds < 10) ? "0" + seconds : seconds;
+		  
+			return hours + ":" + minutes + ":" + seconds;
+		  }
 	}
 }

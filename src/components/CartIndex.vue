@@ -8,7 +8,7 @@
 						
 						<transition name="fade">
 							<div class="col-12 col-sm-12 text-center" v-show="displayAlertUpdate">
-								<div class="col-6 col-sm-6 mx-auto border rounded py-2 my-2 text-white" style="background-color:#39CCCC;">
+								<div class="col-6 col-sm-6 mx-auto border rounded py-2 my-2 alert-success success">
 									<div> Votre produit a bien ete modifie </div>
 								</div>
 							</div>
@@ -16,7 +16,7 @@
 
 						<transition name="fade">
 							<div class="col-12 col-sm-12 text-center" v-show="displayAlertDelete">
-								<div class="col-6 col-sm-6 mx-auto border rounded py-2 my-2 bg-danger text-white">
+								<div class="col-6 col-sm-6 mx-auto border rounded py-2 my-2 alert-danger danger">
 									<div> Votre produit a bien ete supprime </div>
 								</div>
 							</div>
@@ -27,40 +27,45 @@
 							<div class="bg-dark pt-1"></div>
 						</div>
 						
-						<div v-for="(cart,myIndex) in carts.data" :key="cart.id" :index="myIndex" class="col-12 col-sm-12">
-							<div class="container-fluid">
-								<div class="row pt-3">
-									<div class="col-3 col-sm-3">
-										<img alt="product overview" class="product_img_show_mini product_img_show_1 img-fluid  mt-3 w-100" :src="getImgUrl(cart.img_overview)" />
-									</div>
-									<div class="col-7 col-sm-7 text-left">
-										<router-link :to="{ name: 'product_show', params: { id: cart.product_id } }" style="text-decoration:none;">
-											<div class="description_title"> {{ cart.description_title }} </div>
-										</router-link>
-										<div class="mt-2">
-											Quantite :
-											<select v-model.number="cart.product_quantity">
-												<option v-for="number in 15" :key="number">
-													{{ number }}
-												</option>
-											</select>
-											<a @click="updateCart(myIndex)" class="btn btn-info text-white ml-3"> Modifier</a>
+						<div class="container-fluid">
+							<div v-if="carts.data.length>0">
+								<div v-for="(cart,myIndex) in carts.data" :key="cart.id" :index="myIndex" class="col-12 col-sm-12">
+									<div class="row pt-3">
+										<div class="col-3 col-sm-3">
+											<img alt="product overview" class="product_img_show_mini product_img_show_1 img-fluid  mt-3 w-100" :src="getImgUrl(cart.img_overview)" />
 										</div>
-										
-										<div class="mt-3">
-											<a @click="deleteCart(myIndex)" class="btn btn-danger text-white w-50"> Supprimer</a>
+										<div class="col-7 col-sm-7 text-left">
+											<router-link :to="{ name: 'product_show', params: { id: cart.product_id } }" style="text-decoration:none;">
+												<div class="description_title"> {{ cart.description_title }} </div>
+											</router-link>
+											<div class="mt-2">
+												Quantite :
+												<select v-model.number="cart.product_quantity">
+													<option v-for="number in 15" :key="number">
+														{{ number }}
+													</option>
+												</select>
+												<a @click="updateCart(myIndex)" class="btn btn-info text-white ml-3"> Modifier</a>
+											</div>
+											
+											<div class="mt-3">
+												<a @click="deleteCart(myIndex)" class="btn btn-danger text-white w-50"> Supprimer</a>
+											</div>
 										</div>
-									</div>
-									<div class="col-2 col-sm-2">
-										<h4 class="text-danger"> {{ formatPrice(cart.price) }} € </h4>
-									</div>
-									<div v-show="notLastElement(cart)" class="col-12 col-sm-12">
-										<div class="bg-dark pt-1"></div>
+										<div class="col-2 col-sm-2">
+											<h4 class="text-danger"> {{ formatPrice(cart.price) }} € </h4>
+										</div>
+										<div v-show="notLastElement(cart)" class="col-12 col-sm-12">
+											<div class="bg-dark pt-1"></div>
+										</div>
 									</div>
 								</div>
 							</div>
+							<div v-else class="text-left mt-2"> 
+								<h4> Votre panier est vide </h4>
+								<h6> Visitez notre liste de produits a travers la barre de recherche</h6>
+							</div>
 						</div>
-						
 					</div>
 				</div>
 			</div>
@@ -69,7 +74,7 @@
 				<div class="px-3 py-3 bg-white text-center border rounded">
 					<h4 class="text-left"> Total : <span class="text-danger"> {{ formatPrice(carts.totalCartPrice) }} €</span></h4>
 					<router-link :to="{ name: 'cart_confirm', params: { id: user.userId } }" style="text-decoration:none;">
-						<a class="btn btn-info rounded text-white w-100"> Passer la commande</a>
+						<button class="btn btn-info rounded text-white w-100" @click="displayCartAlert($event)"> Passer la commande</button>
 					</router-link>
 				</div>
 			</div>
@@ -122,6 +127,12 @@ data () {
 			setTimeout(function(){
 				self.alertCart.delete = !value
 			}, 1000);
+		},
+		displayCartAlert: function(event){
+			if(this.carts.data == 0){
+				window.alert('Votre panier est vide, vous ne pouvez pas passer de commande')
+				event.preventDefault()
+			}
 		},
 		getCart(id) {
       		var url = process.env.VUE_APP_API_BASE_URL + 'cart'

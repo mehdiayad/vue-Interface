@@ -1,8 +1,12 @@
 <template>
 
   <div class="container-fluid ">
-    <div class="row bg-dark align-items-center py-1 ">
-
+    <div class="row bg-dark align-items-center">
+      
+      <div class="col-12 col-sm-12 text-center px-0 alert-danger danger">
+          <div> Durée de la session : {{userSessionTimeRemaining}} </div>      			
+      </div>
+      
       <div class="col-1 col-sm-1 text-center px-0">
           <a class="btn mx-auto" @click="goHomePage()"> 
             <h3 class="text-white">VueJS</h3>
@@ -125,7 +129,7 @@ export default {
     return {
       categorySearch: navbarStore.getters.getCategorySearch,
       productSearch: navbarStore.getters.getProductSearch,
-      userNameModal: userStore.getters.getUserName
+      userNameModal: userStore.getters.getUserName,
     }
   },
   computed:{
@@ -137,6 +141,9 @@ export default {
     },
     setStateSave : function(){
       return (this.userNameModal == userStore.getters.getUserName)
+    },
+    userSessionTimeRemaining : function(){
+      return this.msToTime(userStore.getters.getUserSessionTimeRemaining)
     }
   },
   mounted: function() {
@@ -189,6 +196,9 @@ export default {
       })
     },	
     logout: function(){
+      userStore.commit('setUserSessionTimeCounter',0)
+      userStore.commit('setUserSessionTimeRemaining',0)
+      cronJob.stop()
       userStore.commit('logout')
       router.push({ name: 'login'})
     },

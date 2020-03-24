@@ -8,7 +8,7 @@ import myRouter from './router/index'
 import myNavbarStore from './store/navbarStore'
 import myUserStore from './store/userStore'
 import myStore from './store/index'
-import myCron from './cron/index'
+import cronJob from './cron/index'
 
 
 // GLOBAL DEFAULTS VARIBALES
@@ -22,10 +22,9 @@ window.axios = myAxios
 window.router = myRouter
 window.navbarStore = myNavbarStore
 window.userStore = myUserStore
+window.cronJob = cronJob
 
 // Vue.prototype.$router = myRouter (NOT WORKING !!!)
-
-
 
 // VUE INSTANCE
 var vm = new Vue({

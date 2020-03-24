@@ -10,7 +10,7 @@
 export default {
   	data () {
 	    return {
-			appVersion: "1.0.0-SNAPSHOT",
+			appVersion: "1.4-SNAPSHOT",
 	      }
     }
 }
