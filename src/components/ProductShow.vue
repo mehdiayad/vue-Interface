@@ -137,14 +137,14 @@ export default {
 			self.addAlert.success = value
 			setTimeout(function(){
 				self.addAlert.success = !value
-			}, 1000);
+			}, 3000);
 		},
 		setAlertAddFaillure: function(value){
 			var self = this;
 			self.addAlert.faillure = value
 			setTimeout(function(){
 				self.addAlert.faillure = !value
-			}, 1000);
+			}, 3000);
 		},
 		getProduct: function(id) {
       		var url = process.env.VUE_APP_API_BASE_URL + 'product/' + id

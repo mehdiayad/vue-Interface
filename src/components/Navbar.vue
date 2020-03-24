@@ -110,7 +110,7 @@
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
-              <button type="button" @click="saveUser()" class="btn btn-info" :disabled="setStateSave">Sauvegarder</button>
+              <button type="button" @click="saveUser()" class="btn btn-info">Sauvegarder</button>
             </div>
           </div>
         </div>
@@ -138,9 +138,6 @@ export default {
     },
     cartNumber : function() {
       return navbarStore.getters.getCartNumber
-    },
-    setStateSave : function(){
-      return (this.userNameModal == userStore.getters.getUserName)
     },
     userSessionTimeRemaining : function(){
       return this.msToTime(userStore.getters.getUserSessionTimeRemaining)
@@ -223,6 +220,9 @@ export default {
     },
     saveUser: function(){
 
+      if(this.userNameModal == userStore.getters.getUserName){
+        $('#exampleModal').modal('hide');
+      }else{
         var url = process.env.VUE_APP_API_BASE_URL + 'user/' + userStore.getters.getUserId
         axios({
           method: 'put',
@@ -230,7 +230,7 @@ export default {
           data : {name : this.userNameModal, email: userStore.getters.getUserEmail}
         })
         .then((response) => {
-            //console.log(response)
+            console.log(response)
             var bool = response.data
             if(bool){
               userStore.commit('setUserName',this.userNameModal)
@@ -240,6 +240,7 @@ export default {
         .catch(function (error) {
           console.log('ERROR : ' +  error)
         })
+      }
     }  
   }
 }
