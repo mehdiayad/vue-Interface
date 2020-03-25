@@ -17,13 +17,15 @@
 ## Project components version
 
 - Vue : 2.6
-- Vue-cli : 4.2
-- NodeJS : 2.6
+- Vue-Cli : 4.2
+- Typescript : 3.8
+- Nodejs : 2.6
 - Bootstrap : 4.4
 - ES6 : 4.2
-- Vue Router : 3.1
+- Vue-Router : 3.1
 - Vuex : 3.1
 - Vuex-Persist : 2.2
+- Cron : 2.2
 
 ## Project concepts
 
@@ -35,6 +37,7 @@
 - Local storage with Vuex-persist
 - Mixin for DRY principle
 - Promises for Synchronous behavior
+- Cron Job for managing Session time
 
 ## Project setup
 

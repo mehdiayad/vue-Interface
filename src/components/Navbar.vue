@@ -3,8 +3,8 @@
   <div class="container-fluid ">
     <div class="row bg-dark align-items-center">
       
-      <div class="col-12 col-sm-12 text-center px-0 alert-danger danger">
-          <div> Durée de la session : {{userSessionTimeRemaining}} </div>      			
+      <div class="col-12 col-sm-12 text-center alert-danger danger">
+          <div class="h5 py-1 my-0"> Durée de la session : {{userSessionTimeRemaining}} </div>      			
       </div>
       
       <div class="col-1 col-sm-1 text-center px-0">
@@ -104,6 +104,12 @@
                     <div class="col-4 col-sm-4">Clé d'acces</div>
                     <div class="col-1 col-sm-1"> </div>
                     <input class="col-7 col-sm-7 bg-light border rounded" disabled v-model="user.userTokenAccess">
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-4 col-sm-4">Date d'expiration</div>
+                    <div class="col-1 col-sm-1"> </div>
+                    <input class="col-7 col-sm-7 bg-light border rounded" disabled v-model="user.userTokenExpiresAt">
                 </div>
                     
               </div>

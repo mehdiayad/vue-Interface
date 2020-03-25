@@ -8,7 +8,13 @@
   </div>
 </template>
 
-<script> </script>
+<script> 
+export default{
+  mounted: function(){
+    // N/A
+  }
+}
+</script>
 
 <style scoped>
   .home_img{
