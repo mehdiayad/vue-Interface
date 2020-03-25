@@ -1,6 +1,8 @@
 import userStore from '../store/userStore'
+import router from '../router/index'
 
 var listener = window.addEventListener('storage', function(event){
+    
     if (event.key == 'event-logout') {
         console.log('logout event')
         // COMMENT LINE BELOW FOR STABLE VERSION
