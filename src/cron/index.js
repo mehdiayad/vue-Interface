@@ -12,7 +12,6 @@ var cronJob = new CronJob1('* * * * * *', function() {
             if(userStore.getters.getUserConnected){
                 console.log('[CRON] logout user each 10 minutes');
                 userStore.commit('logout');
-                myRouter.push('login');
             }
         }
     }

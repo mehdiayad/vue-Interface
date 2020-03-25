@@ -9,7 +9,7 @@ import myNavbarStore from './store/navbarStore'
 import myUserStore from './store/userStore'
 import myStore from './store/index'
 import cronJob from './cron/index'
-
+import crosstabs from './crosstabs/index'
 
 // GLOBAL DEFAULTS VARIBALES
 Vue.use(Vuex)
@@ -23,15 +23,14 @@ window.router = myRouter
 window.navbarStore = myNavbarStore
 window.userStore = myUserStore
 window.cronJob = cronJob
-
-// Vue.prototype.$router = myRouter (NOT WORKING !!!)
+window.crosstabs = crosstabs
 
 // VUE INSTANCE
 var vm = new Vue({
   router: myRouter,
   store: myStore,
   render: h => h(require('./App').default),
-  //render: h => h(App),
+  //render: h => h(App),  
 }).$mount('#app')
 
 // BROWSER CONSOLE INSTANCE

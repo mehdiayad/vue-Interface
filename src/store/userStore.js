@@ -1,6 +1,8 @@
 import Vuex from 'vuex'
 import Vue from 'vue'
 import VuexPersist from 'vuex-persist'
+import cronJob from '../cron/index'
+import router from '../router/index'
 
 Vue.use(Vuex)
 
@@ -45,11 +47,30 @@ const mutations = {
 	setUserSessionTimeRemaining(state, value) { state.userSessionTimeRemaining = value },
 	addUserSessionTimeCounter(state, value) { state.userSessionTimeCounter += value },
 	addUserSessionTimeRemaining(state, value) { state.userSessionTimeRemaining += value },
+	login(state){
+		console.log('call login user store mutations')
+		state.userConnected = true
+		state.userSessionTimeCounter = 0
+		state.userSessionTimeRemaining = 600
+		cronJob.start()
+		localStorage.setItem('event-login', new Date().toLocaleString());
+		if( router!= null && router.currentRoute.name != 'home'){
+			router.push({ name: 'home'})
+		}
+	},
 	logout(state){
+		console.log('call logout user store mutations')
 		state.userConnected = false
 		state.userSessionTimeCounter = 0
 		state.userSessionTimeRemaining = 0
-	}
+		state.userInformations = "Disconnected"
+		cronJob.stop()
+      	localStorage.setItem('event-logout', new Date().toLocaleString());
+	  	if(router!= null && router.currentRoute.name != 'login'){
+			router.push({ name: 'login'})
+		}
+	},
+
 }
 
 const getters = {

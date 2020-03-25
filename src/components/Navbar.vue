@@ -199,11 +199,7 @@ export default {
       })
     },	
     logout: function(){
-      userStore.commit('setUserSessionTimeCounter',0)
-      userStore.commit('setUserSessionTimeRemaining',0)
-      cronJob.stop()
       userStore.commit('logout')
-      router.push({ name: 'login'})
     },
     goHomePage: function(){
 

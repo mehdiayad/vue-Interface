@@ -31,19 +31,22 @@ export default {
   components: { 
    navbar,footbar
   },
+  mounted: function(){
+	  // N/A
+  },
   methods:{
-	  displayNavbar() {
-		  if(this.$route.name == "login")
-	        return false;
-		  else
-		  	return true;
-	    },
-	    displayFootbar() {
-			  if(this.$route.name == "login")
-		        return false;
-			  else
-			  	return true;
-	    }
+	displayNavbar: function() {
+		if(this.$route.name == "login")
+		return false;
+		else
+		return true;
+	},
+	displayFootbar: function() {
+			if(this.$route.name == "login")
+			return false;
+			else
+			return true;
+	}
   }
 }
 </script>
@@ -103,7 +106,6 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
-  min-width: 900px;
 }
 
 .router_view{

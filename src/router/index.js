@@ -9,6 +9,7 @@ import ProductIndex from '../components/ProductIndex.vue'
 import ProductShow from '../components/ProductShow.vue'
 import CartIndex from '../components/CartIndex.vue'
 import CartConfirm from '../components/CartConfirm.vue'
+import myUserStore from '../store/userStore'
 
 
 Vue.use(VueRouter)
@@ -62,18 +63,11 @@ var router = new VueRouter({
 
 router.beforeEach((to, from, next) => {
   
-  var isAuthenticated = false
-  var local = JSON.parse(localStorage.getItem('user'))
-  
-  if(local != null){
-    isAuthenticated = local.userConnected
-  }     
-  
-  if (to.name == 'login' && isAuthenticated){
+  if (to.name == 'login' && myUserStore.userConnected == true){
     next({ name: 'home' })
   }
 
-  if (to.name !== 'login' && !isAuthenticated){
+  if (to.name !== 'login' && myUserStore.userConnected == false){
     next({ name: 'login' })
   }
   else {

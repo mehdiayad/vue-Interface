@@ -102,7 +102,6 @@
       }, this.loginForm.error.time);
     },
     loginSimple: function() {
-      //console.log('Call 2')
       var url = process.env.VUE_APP_API_BASE_URL + 'passportAuthSimple'
       //inside axios (this) is lost so we save it in order to use it inside the function
       var self = this;      
@@ -114,10 +113,8 @@
       .then(function (response) {
             //console.log(response)
             if(response.data.userConnected){
-              userStore.commit('setUserConnected',response.data.userConnected)
               userStore.commit('setUserInformations',response.data.userInformations)
-              self.startCronJob()             
-              router.push({ name: 'home' })
+              userStore.commit('login')
             }
             else
             {
@@ -136,7 +133,6 @@
       });
     },
     loginPassport: function() {
-      //console.log('Call 2')
       var url = process.env.VUE_APP_API_BASE_URL + 'passportAuthGrant'
       if(this.loginForm.passport.mode == 'client'){
         url = process.env.VUE_APP_API_BASE_URL + 'passportAuthClient'
@@ -155,7 +151,6 @@
               userStore.commit('setUserPassword',self.loginForm.data.password)
               userStore.commit('setUserId',response.data.userId)
               userStore.commit('setUserName',response.data.userName)
-              userStore.commit('setUserConnected',response.data.userConnected)
               userStore.commit('setUserInformations',response.data.userInformations)
               userStore.commit('setUserTokenType',response.data.tokenType)
               userStore.commit('setUserTokenExpiresIn',response.data.expiresIn)
@@ -163,9 +158,8 @@
               userStore.commit('setUserTokenCreatedAt',response.data.createdAt)
               userStore.commit('setUserTokenAccess',response.data.accessToken)
               userStore.commit('setUserTokenRefresh',response.data.refreshToken)
-              self.startCronJob()
               axios.defaults.headers.common['Authorization'] = 'Bearer ' + userStore.getters.getUserTokenAccess
-              router.push({ name: 'home' })
+              userStore.commit('login')
             }
             else
             {
@@ -257,11 +251,6 @@
       }else{
         this.loginPassport()
       }
-    },
-    startCronJob: function(){
-      userStore.commit('setUserSessionTimeCounter',0)
-      userStore.commit('setUserSessionTimeRemaining', userStore.getters.getUserSessionTimeLimit)
-      cronJob.start()
     }
   }
 }
