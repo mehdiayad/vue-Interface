@@ -2,7 +2,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Vuex from 'vuex'
-import {myMixin} from './mixins/index'
+import myMixin from './mixins/index'
 import myAxios from './axios/index'
 import myRouter from './router/index'
 import myNavbarStore from './store/navbarStore'
@@ -11,13 +11,13 @@ import myStore from './store/index'
 import cronJob from './cron/index'
 import crosstabs from './crosstabs/index'
 
-// GLOBAL DEFAULTS VARIBALES
+// Vue variables
 Vue.use(Vuex)
 Vue.use(VueRouter)
 Vue.config.productionTip = false
-
-// GLOBAL CUSTOM VARIABLES
 Vue.mixin(myMixin)
+
+// Window variables
 window.axios = myAxios
 window.router = myRouter
 window.navbarStore = myNavbarStore

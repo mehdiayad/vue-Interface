@@ -1,4 +1,4 @@
-export const myMixin = {
+var myMixin = {
 
 	data() {
 		return{
@@ -37,3 +37,5 @@ export const myMixin = {
 		  }
 	}
 }
+
+export default myMixin;
