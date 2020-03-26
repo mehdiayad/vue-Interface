@@ -19,11 +19,12 @@
                 </div>
               <div class="form-group">
                 <div> Email  </div>
-                <input v-model="loginForm.data.email" type="email" class="form-control"/>
+                <input v-model="loginForm.data.email"  type="email" class="form-control"/>
               </div>
+
               <div class="form-group" v-if="loginForm.passport.mode=='grant'">
                 <div> Mot de passe </div>
-                <input v-model="loginForm.data.password" type="password" class="form-control"/>
+                <input v-model="loginForm.data.password" v-on:keyup.enter="canLogin()" type="password" class="form-control"/>
               </div>
 
               <div class="form-group" v-if="loginForm.passport.mode=='client'">
@@ -33,12 +34,7 @@
                     Generer le code 
                   </a> 
                 </div>
-                <input v-model="loginForm.data.code" type="text" class="form-control"/>
-              </div>
-
-              <div class="form-group" v-if="loginForm.passport.mode=='personal'">
-                <div> Clé d'acces </div>
-                <input v-model="loginForm.data.code" type="text" class="form-control"/>
+                <input v-model="loginForm.data.code" v-on:keyup.enter="canLogin()" type="text" class="form-control"/>
               </div>
 
               <div class="form-group text-right">
@@ -80,7 +76,7 @@
           type: null,
           description: null,
           alert: false,
-          time: 50000
+          time: 3000
         }
       }
     }
@@ -91,7 +87,9 @@
     }
   },
   mounted: function(){
-    // N/A
+    //console.log(userStore)
+    //console.log(navbarStore)
+    //console.log(componentsStore)
   },
   methods:{
     setErrorAlert : function(value){

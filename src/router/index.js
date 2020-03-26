@@ -11,7 +11,6 @@ import CartIndex from '../components/CartIndex.vue'
 import CartConfirm from '../components/CartConfirm.vue'
 import myUserStore from '../store/userStore'
 
-
 Vue.use(VueRouter)
 
 var router = new VueRouter({
@@ -62,7 +61,7 @@ var router = new VueRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  
+
   if (to.name == 'login' && myUserStore.userConnected == true){
     next({ name: 'home' })
   }

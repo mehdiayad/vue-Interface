@@ -8,7 +8,7 @@ Vue.use(Vuex)
 
 const vuexPersist = new VuexPersist({
   key: 'user',
-  storage: window.localStorage
+  storage: window.localStorage,
 })
 
 const state = {
@@ -16,7 +16,7 @@ const state = {
 	userName: null,
 	userEmail: null,
 	userPassword: null,
-	userConnected: false,
+	userConnected: null,
 	userInformations: null,
 	userTokenAccess: null,
 	userTokenRefresh: null,
@@ -26,7 +26,7 @@ const state = {
 	userTokenCreatedAt: null,
 	userSessionTimeCounter: null,
 	userSessionTimeRemaining: null,
-	userSessionTimeLimit: 600,
+	userSessionTimeLimit: null,
 }
 
 const mutations = {
@@ -52,6 +52,7 @@ const mutations = {
 		state.userConnected = true
 		state.userSessionTimeCounter = 0
 		state.userSessionTimeRemaining = 600
+		state.userSessionTimeLimit = 600
 		cronJob.start()
 		localStorage.setItem('event-login', new Date().toLocaleString());
 		if( router!= null && router.currentRoute.name != 'home'){
@@ -63,13 +64,14 @@ const mutations = {
 		state.userConnected = false
 		state.userSessionTimeCounter = 0
 		state.userSessionTimeRemaining = 0
+		state.userSessionTimeLimit = 600
 		state.userInformations = "Disconnected"
 		cronJob.stop()
       	localStorage.setItem('event-logout', new Date().toLocaleString());
 	  	if(router!= null && router.currentRoute.name != 'login'){
 			router.push({ name: 'login'})
 		}
-	},
+	}
 
 }
 

@@ -1,5 +1,5 @@
 <template>
-	<div class="container-fluid text-left">
+	<div class="container-fluid text-left" :key="componentKeyProductIndex">
 		<div v-if="products.data.length>0" class="row">
 			<div class="col-4 col-sm-4 mt-3" v-for="product in products.data" v-bind:key="product.id">
 				<router-link :to="{ name: 'product_show', params: { id: product.id } }" style="text-decoration:none;">
@@ -51,8 +51,14 @@ export default {
 				categorySearch: navbarStore.getters.getCategorySearch,
 				pagination: 10,
 			}
-	      }
-    },
+		}
+	},
+	computed: {
+		componentKeyProductIndex: function(){
+			console.log('key changed !')
+			return componentsStore.getters.getKeyProductIndex
+		}
+	},
   	mounted: function() {
 		this.getProducts(this.products.page)
 	},

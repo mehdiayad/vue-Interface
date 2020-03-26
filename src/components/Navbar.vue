@@ -150,7 +150,6 @@ export default {
     }
   },
   mounted: function() {
-    //console.log(this.user)
     this.getCategories()
     this.getCartNumber()
   },
@@ -180,7 +179,8 @@ export default {
       navbarStore.commit('setCategorySearch',this.categorySearch)
       navbarStore.commit('setProductSearch',this.productSearch)
       if(router.currentRoute.name == 'product_index'){
-        router.go()
+        componentsStore.commit('setKeyProductIndex',1)
+        router.go() //work but not a good solution
       }else{
         router.push({ name: 'product_index'})
       }

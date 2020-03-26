@@ -7,9 +7,10 @@ import myAxios from './axios/index'
 import myRouter from './router/index'
 import myNavbarStore from './store/navbarStore'
 import myUserStore from './store/userStore'
+import myComponentsStore from './store/componentsStore'
 import myStore from './store/index'
-import cronJob from './cron/index'
-import crosstabs from './crosstabs/index'
+import myCronJob from './cron/index'
+import myStorage from './localStorage/index'
 
 // Vue variables
 Vue.use(Vuex)
@@ -22,8 +23,9 @@ window.axios = myAxios
 window.router = myRouter
 window.navbarStore = myNavbarStore
 window.userStore = myUserStore
-window.cronJob = cronJob
-window.crosstabs = crosstabs
+window.componentsStore = myComponentsStore
+window.cronJob = myCronJob
+window.storage = myStorage
 
 // VUE INSTANCE
 var vm = new Vue({
@@ -37,3 +39,4 @@ var vm = new Vue({
 global.vm = vm
 global.vuex = Vuex
 global.store = myStore
+
