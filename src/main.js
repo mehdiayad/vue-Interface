@@ -7,6 +7,8 @@ import myAxios from './axios/index'
 import myRouter from './router/index'
 import myNavbarStore from './store/navbarStore'
 import myUserStore from './store/userStore'
+import mySessionStore from './store/sessionStore'
+
 import myComponentsStore from './store/componentsStore'
 import myStore from './store/index'
 import myCronJob from './cron/index'
@@ -23,6 +25,7 @@ window.axios = myAxios
 window.router = myRouter
 window.navbarStore = myNavbarStore
 window.userStore = myUserStore
+window.sessionStore = mySessionStore
 window.componentsStore = myComponentsStore
 window.cronJob = myCronJob
 window.storage = myStorage

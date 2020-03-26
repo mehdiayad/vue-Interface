@@ -4,7 +4,7 @@
     <div class="row bg-dark align-items-center">
       
       <div class="col-12 col-sm-12 text-center alert-danger danger">
-          <div class="h5 py-1 my-0"> Durée de la session : {{userSessionTimeRemaining}} </div>      			
+          <div class="h5 py-1 my-0"> Durée de la session : {{sessionTimeRemaining}} </div>      			
       </div>
       
       <div class="col-1 col-sm-1 text-center px-0">
@@ -145,8 +145,8 @@ export default {
     cartNumber : function() {
       return navbarStore.getters.getCartNumber
     },
-    userSessionTimeRemaining : function(){
-      return this.msToTime(userStore.getters.getUserSessionTimeRemaining)
+    sessionTimeRemaining : function(){
+      return this.msToTime(sessionStore.getters.getSessionTimeRemaining)
     }
   },
   mounted: function() {
@@ -180,7 +180,8 @@ export default {
       navbarStore.commit('setProductSearch',this.productSearch)
       if(router.currentRoute.name == 'product_index'){
         componentsStore.commit('setKeyProductIndex',1)
-        router.go() //work but not a good solution
+        router.go()
+        //this.$parent.$children[2].forceRerender()
       }else{
         router.push({ name: 'product_index'})
       }
@@ -200,6 +201,7 @@ export default {
     },	
     logout: function(){
       userStore.commit('logout')
+      sessionStore.commit('logout')
     },
     goHomePage: function(){
 
@@ -232,7 +234,7 @@ export default {
           data : {name : this.userNameModal, email: userStore.getters.getUserEmail}
         })
         .then((response) => {
-            console.log(response)
+            //console.log(response)
             var bool = response.data
             if(bool){
               userStore.commit('setUserName',this.userNameModal)

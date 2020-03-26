@@ -24,9 +24,6 @@ const state = {
 	userTokenExpiresIn: null,
 	userTokenExpiresAt: null,
 	userTokenCreatedAt: null,
-	userSessionTimeCounter: null,
-	userSessionTimeRemaining: null,
-	userSessionTimeLimit: null,
 }
 
 const mutations = {
@@ -42,17 +39,9 @@ const mutations = {
 	setUserTokenExpiresIn(state, value) { state.userTokenExpiresIn = value },
 	setUserTokenExpiresAt(state, value) { state.userTokenExpiresAt = value },
 	setUserTokenCreatedAt(state, value) { state.userTokenCreatedAt = value },
-	setUserSessionTimeLimit(state, value) { state.userSessionTimeLimit = value },
-	setUserSessionTimeCounter(state, value) { state.userSessionTimeCounter = value },
-	setUserSessionTimeRemaining(state, value) { state.userSessionTimeRemaining = value },
-	addUserSessionTimeCounter(state, value) { state.userSessionTimeCounter += value },
-	addUserSessionTimeRemaining(state, value) { state.userSessionTimeRemaining += value },
 	login(state){
 		console.log('call login user store mutations')
 		state.userConnected = true
-		state.userSessionTimeCounter = 0
-		state.userSessionTimeRemaining = 600
-		state.userSessionTimeLimit = 600
 		cronJob.start()
 		localStorage.setItem('event-login', new Date().toLocaleString());
 		if( router!= null && router.currentRoute.name != 'home'){
@@ -62,9 +51,6 @@ const mutations = {
 	logout(state){
 		console.log('call logout user store mutations')
 		state.userConnected = false
-		state.userSessionTimeCounter = 0
-		state.userSessionTimeRemaining = 0
-		state.userSessionTimeLimit = 600
 		state.userInformations = "Disconnected"
 		cronJob.stop()
       	localStorage.setItem('event-logout', new Date().toLocaleString());
@@ -88,9 +74,6 @@ const getters = {
 	getUserTokenExpiresIn : state => { return state.userTokenExpiresIn },
 	getUserTokenExpiresAt : state => { return state.userTokenExpiresAt },
 	getUserTokenCreatedAt : state => { return state.userTokenCreatedAt },
-	getUserSessionTimeCounter : state => { return state.userSessionTimeCounter },
-	getUserSessionTimeRemaining : state => { return state.userSessionTimeRemaining },
-	getUserSessionTimeLimit : state => { return state.userSessionTimeLimit },
 	getUserAll : state => {return state}
 }
 

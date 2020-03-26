@@ -1,15 +1,13 @@
 import userStore from '../store/userStore'
 import router from '../router/index'
 import cronJob from '../cron/index'
-
+import sessionStore from '../store/sessionStore';
 
 var listener = window.addEventListener('storage', function(event){
 
-    //console.log('local storage listener change detected')
-
     // Local storage deleted manually
     if(event.key == null){
-        console.log('clear local storage event')
+        console.log('listener clear local storage event')
         if(router.currentRoute.name != 'login'){
             // stop cron job
             cronJob.stop()
@@ -20,18 +18,37 @@ var listener = window.addEventListener('storage', function(event){
         router.go()
     }
 
+    if(event.key == 'navbar'){
+        console.log('listener event navbar')
+        //router.go()
+    }
+
+    if(event.key == 'user'){
+        console.log('listener event user')
+        //router.go()
+    }
+
+    if(event.key == 'session'){
+        //console.log('listener event session')
+        //router.go()
+    }
+
     // one window/tab logout so every windows/tabs logout
     if (event.key == 'event-logout') {
-        console.log('logout event')
+        console.log('listener event logout')
         // COMMENT LINE BELOW FOR STABLE VERSION
-        userStore.commit('logout') //TODO FIX INFINITE VUEX DATA UPDATING 
+        // TODO FIX INFINITE VUEX DATA UPDATING 
+        sessionStore.commit('logout') 
+        userStore.commit('logout') 
     }
 
     // one window/tab login so every windows/tabs login
     if (event.key == 'event-login') { 
-        console.log('login event')
+        console.log('listener event login')
         // COMMENT LINE BELOW FOR STABLE VERSION
-        userStore.commit('login') //TODO FIX INFINITE VUEX DATA UPDATING
+        // TODO FIX INFINITE VUEX DATA UPDATING
+        sessionStore.commit('login') 
+        userStore.commit('login') 
     }
 });
 

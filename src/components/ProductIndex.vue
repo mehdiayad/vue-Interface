@@ -50,20 +50,22 @@ export default {
 				productSearch: navbarStore.getters.getProductSearch,
 				categorySearch: navbarStore.getters.getCategorySearch,
 				pagination: 10,
-			}
-		}
-	},
-	computed: {
-		componentKeyProductIndex: function(){
-			console.log('key changed !')
-			return componentsStore.getters.getKeyProductIndex
+			},
+			componentKeyProductIndex: 0,
 		}
 	},
   	mounted: function() {
 		this.getProducts(this.products.page)
 	},
   	methods: {
-		getProducts(page) {
+		forceRerender: function(){
+			// not working
+			console.log('Before = '+ this.componentKeyProductIndex)
+			this.componentKeyProductIndex++;
+			console.log('After = '+ this.componentKeyProductIndex)
+			this.$forceUpdate()
+		},
+		getProducts: function(page) {
 			  var url = process.env.VUE_APP_API_BASE_URL + 'product/list?page=' + page
 			  //console.log(this.navbarForm)
 			axios({
@@ -85,21 +87,21 @@ export default {
           		console.log(error)
       		});
 		},
-		canGoBefore(){
+		canGoBefore: function(){
 			if(this.products.currentPage > 1){ return true; }
 			else { return false; }
 		},
-		canGoAfter(){
+		canGoAfter: function(){
 			if(this.products.currentPage < this.products.lastPage){ return true; }
 			else { return false; }
 		},
-		previousPage(){
+		previousPage: function(){
 			if(this.canGoBefore()){
 			this.products.page--;
 			this.getProducts(this.products.page);
 			}
 		},
-		nextPage(){
+		nextPage: function(){
 			if(this.canGoAfter()){
 			this.products.page++;
 			this.getProducts(this.products.page);

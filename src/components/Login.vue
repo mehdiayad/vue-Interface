@@ -111,6 +111,7 @@
       .then(function (response) {
             //console.log(response)
             if(response.data.userConnected){
+              sessionStore.commit('login')
               userStore.commit('setUserInformations',response.data.userInformations)
               userStore.commit('login')
             }
@@ -145,6 +146,7 @@
       .then(function (response) {
             //console.log(response)
             if(response.data.userConnected){
+              axios.defaults.headers.common['Authorization'] = 'Bearer ' + response.data.accessToken
               userStore.commit('setUserEmail',self.loginForm.data.email)
               userStore.commit('setUserPassword',self.loginForm.data.password)
               userStore.commit('setUserId',response.data.userId)
@@ -156,7 +158,7 @@
               userStore.commit('setUserTokenCreatedAt',response.data.createdAt)
               userStore.commit('setUserTokenAccess',response.data.accessToken)
               userStore.commit('setUserTokenRefresh',response.data.refreshToken)
-              axios.defaults.headers.common['Authorization'] = 'Bearer ' + userStore.getters.getUserTokenAccess
+              sessionStore.commit('login')
               userStore.commit('login')
             }
             else
