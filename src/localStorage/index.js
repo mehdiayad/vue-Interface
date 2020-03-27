@@ -28,11 +28,6 @@ var listener = window.addEventListener('storage', function(event){
         //router.go()
     }
 
-    if(event.key == 'session'){
-        //console.log('listener event session')
-        //router.go()
-    }
-
     // one window/tab logout so every windows/tabs logout
     if (event.key == 'event-logout') {
         console.log('listener event logout')
