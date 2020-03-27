@@ -9,7 +9,7 @@ import ProductIndex from '../components/ProductIndex.vue'
 import ProductShow from '../components/ProductShow.vue'
 import CartIndex from '../components/CartIndex.vue'
 import CartConfirm from '../components/CartConfirm.vue'
-import myUserStore from '../store/userStore'
+import userStore from '../store/userStore'
 
 Vue.use(VueRouter)
 
@@ -62,11 +62,11 @@ var router = new VueRouter({
 
 router.beforeEach((to, from, next) => {
 
-  if (to.name == 'login' && myUserStore.userConnected == true){
+  if (to.name == 'login' && userStore.getters.getUserConnected == true){
     next({ name: 'home' })
   }
 
-  if (to.name !== 'login' && myUserStore.userConnected == false){
+  else if (to.name !== 'login' && userStore.getters.getUserConnected == false){
     next({ name: 'login' })
   }
   else {

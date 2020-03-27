@@ -13,8 +13,8 @@
                     <label for="grant" class="pl-1">Acces generique</label>
                   </div>
                   <div class="col-6 col-sm-6">
-                    <input type="radio" id="client" value="client" v-model="loginForm.passport.mode">
-                    <label for="client" class="pl-1">Acces client</label>
+                    <input type="radio" id="client" value="client" v-model="loginForm.passport.mode" disabled>
+                    <label for="client" class="pl-1"><del>Acces client</del></label>
                   </div>
                 </div>
               <div class="form-group">
