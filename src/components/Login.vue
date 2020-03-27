@@ -21,7 +21,6 @@
                 <div> Email  </div>
                 <input v-model="loginForm.data.email"  type="email" class="form-control"/>
               </div>
-
               <div class="form-group" v-if="loginForm.passport.mode=='grant'">
                 <div> Mot de passe </div>
                 <input v-model="loginForm.data.password" v-on:keyup.enter="canLogin()" type="password" class="form-control"/>

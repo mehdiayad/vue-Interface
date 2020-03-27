@@ -40,7 +40,6 @@ const mutations = {
 	setUserTokenExpiresAt(state, value) { state.userTokenExpiresAt = value },
 	setUserTokenCreatedAt(state, value) { state.userTokenCreatedAt = value },
 	login(state){
-		console.log('call login user store mutations')
 		state.userConnected = true
 		cronJob.start()
 		localStorage.setItem('event-login', new Date().toLocaleString());
@@ -49,7 +48,6 @@ const mutations = {
 		}
 	},
 	logout(state){
-		console.log('call logout user store mutations')
 		state.userConnected = false
 		state.userInformations = "Disconnected"
 		cronJob.stop()

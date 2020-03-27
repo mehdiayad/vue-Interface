@@ -181,7 +181,7 @@ export default {
       if(router.currentRoute.name == 'product_index'){
         componentsStore.commit('setKeyProductIndex',1)
         router.go()
-        //this.$parent.$children[2].forceRerender()
+        
       }else{
         router.push({ name: 'product_index'})
       }

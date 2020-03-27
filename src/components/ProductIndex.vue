@@ -51,23 +51,20 @@ export default {
 				categorySearch: navbarStore.getters.getCategorySearch,
 				pagination: 10,
 			},
-			componentKeyProductIndex: 0,
+		}
+	},
+	computed: {
+		componentKeyProductIndex: function(){
+			return componentsStore.getters.getKeyProductIndex
 		}
 	},
   	mounted: function() {
 		this.getProducts(this.products.page)
 	},
   	methods: {
-		forceRerender: function(){
-			// not working
-			console.log('Before = '+ this.componentKeyProductIndex)
-			this.componentKeyProductIndex++;
-			console.log('After = '+ this.componentKeyProductIndex)
-			this.$forceUpdate()
-		},
 		getProducts: function(page) {
+			console.log('call function getproducts ')
 			  var url = process.env.VUE_APP_API_BASE_URL + 'product/list?page=' + page
-			  //console.log(this.navbarForm)
 			axios({
 				method: 'post',
 				url : url,
@@ -81,8 +78,7 @@ export default {
 				this.products.currentPage = response.data.current_page
 				this.products.lastPage = response.data.last_page
 				this.products.nextPageUrl = response.data.next_page_url
-				this.products.previousPageUrl = response.data.prev_page_url
-			})
+				this.products.previousPageUrl = response.data.prev_page_url			})
 			.catch(function (error) {
           		console.log(error)
       		});
