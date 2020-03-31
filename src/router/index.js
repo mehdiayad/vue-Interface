@@ -62,15 +62,23 @@ var router = new VueRouter({
 
 router.beforeEach((to, from, next) => {
 
-  if (to.name == 'login' && userStore.getters.getUserConnected == true){
-    next({ name: 'home' })
-  }
-
-  else if (to.name !== 'login' && userStore.getters.getUserConnected == false){
-    next({ name: 'login' })
+  if(to.name == 'login'){
+    if(userStore.getters.getUserConnected == true){
+      //console.log('in router function case 1A')
+      next({ name: 'home' })
+    }else{
+      //console.log('in router function case 1B')
+      next()
+    }
   }
   else {
-    next()
+    if(userStore.getters.getUserConnected == false){
+      //console.log('in router function case 2A')
+      next({ name: 'login' })
+    }else{
+      //console.log('in router function case 2B')
+      next()
+    }
   }
 
 })

@@ -4,7 +4,7 @@ import sessionStore from '../store/sessionStore'
 
 
 var cronJob = new CronJob1('* * * * * *', function() {
-    //console.log('cron call')
+    console.log('cron call')
     if(userStore.getters.getUserConnected){
         sessionStore.commit('addSessionTimeCounter',1)
         sessionStore.commit('addSessionTimeRemaining', -1)

@@ -12,7 +12,7 @@ import mySessionStore from './store/sessionStore'
 import myComponentsStore from './store/componentsStore'
 import myStore from './store/index'
 import myCronJob from './cron/index'
-import MyListener from './listener/index'
+import myListenerStorage from './listener/listenerStorage'
 
 // Vue variables
 Vue.use(Vuex)
@@ -28,7 +28,8 @@ window.userStore = myUserStore
 window.sessionStore = mySessionStore
 window.componentsStore = myComponentsStore
 window.cronJob = myCronJob
-window.listener = MyListener
+window.listenerStorage = myListenerStorage
+
 
 // VUE INSTANCE
 var vm = new Vue({

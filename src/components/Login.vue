@@ -86,9 +86,7 @@
     }
   },
   mounted: function(){
-    //console.log(userStore)
-    //console.log(navbarStore)
-    //console.log(componentsStore)
+    cronJob.stop()
   },
   methods:{
     setErrorAlert : function(value){

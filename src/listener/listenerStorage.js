@@ -3,19 +3,28 @@ import router from '../router/index'
 import cronJob from '../cron/index'
 import sessionStore from '../store/sessionStore';
 
-var listener = window.addEventListener('storage', function(event){
+var listenerStorage = window.addEventListener('storage', function(event){
+
+    // WARNING //
+    // DELETE CACHE DELETE LOCAL STORAGE BUT NOT VUEX DATA
+    // CHANGE VUEX DATA AUTOMATICALLY CHANGE LOCAL STORAGE
+    // LOCAL STORAGE IS NOT 100 REACTIVE ITS A DATABASE
+    //console.log('call storage listener')
+
 
     // Local storage deleted manually
     if(event.key == null){
         console.log('listener clear local storage event')
         if(router.currentRoute.name != 'login'){
-            // stop cron job
+            // logout
+            userStore.commit('setUserEmail',null)
+            userStore.commit('setUserPassword',null)
+            userStore.commit('logout')
+        }else{
+            // NO REDIRECTION BUT DELETE ALL DATA (LOCAL + VUEX)
+            // JUST IN CASE
             cronJob.stop()
-            // redirect to login page
-            router.push({ name: 'login'})
         }
-        // sync vuex with local storage (login form will be empty)
-        router.go()
     }
 
     // one window/tab logout so every windows/tabs logout
@@ -37,4 +46,4 @@ var listener = window.addEventListener('storage', function(event){
     }
 });
 
-export default listener
+export default listenerStorage

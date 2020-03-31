@@ -178,14 +178,12 @@ export default {
     searchProducts: function() {
       navbarStore.commit('setCategorySearch',this.categorySearch)
       navbarStore.commit('setProductSearch',this.productSearch)
+      componentsStore.commit('setKeyProductIndex',1)
       if(router.currentRoute.name == 'product_index'){
-        componentsStore.commit('setKeyProductIndex',1)
         router.go()
-        
       }else{
         router.push({ name: 'product_index'})
       }
-
     },
     getCartNumber: function(){
       var url = process.env.VUE_APP_API_BASE_URL + 'cart/number'

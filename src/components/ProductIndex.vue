@@ -78,7 +78,8 @@ export default {
 				this.products.currentPage = response.data.current_page
 				this.products.lastPage = response.data.last_page
 				this.products.nextPageUrl = response.data.next_page_url
-				this.products.previousPageUrl = response.data.prev_page_url			})
+				this.products.previousPageUrl = response.data.prev_page_url			
+			})
 			.catch(function (error) {
           		console.log(error)
       		});
