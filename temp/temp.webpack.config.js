@@ -35,4 +35,5 @@ module.exports = {
     // make sure to include the plugin for the magic
     new VueLoaderPlugin()
   ]
+
 }
