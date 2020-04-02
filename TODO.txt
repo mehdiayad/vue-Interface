@@ -1,1 +1,3 @@
 - add axios class to encapsulate all axios calls
+- reorganize code to ES6
+- Create reusable subcomponent
