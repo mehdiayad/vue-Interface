@@ -15,7 +15,6 @@ const state = {
 	userId: null,
 	userName: null,
 	userEmail: null,
-	userPassword: null,
 	userConnected: null,
 	userInformations: null,
 	userTokenAccess: null,
@@ -29,7 +28,6 @@ const state = {
 const mutations = {
 	setUserId(state, value) { state.userId = value },
 	setUserName(state, value) { state.userName = value },
-	setUserPassword(state, value) { state.userPassword = value },
 	setUserEmail(state, value) { state.userEmail = value },
 	setUserConnected(state, value) { state.userConnected = value },
 	setUserInformations(state, value) { state.userInformations = value },
@@ -62,7 +60,6 @@ const mutations = {
 const getters = {
 	getUserId: state => { return state.userId },
 	getUserName: state => { return state.userName },
-	getUserPassword: state => { return state.userPassword },
 	getUserEmail: state => { return state.userEmail },
 	getUserConnected: state => { return state.userConnected },
 	getUserInformations: state => { return state.userInformations },

@@ -14,11 +14,7 @@ var myMixin = {
 			return '/images/products/'+ img_path
 		},
 		isNotNull: function(obj){
-			if (obj != null) {
-				return true
-			}else{
-				return false
-			}
+			return (obj != null)
 		},
 		cutString: function(value,size){
 			return value.substring(0,size);

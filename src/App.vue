@@ -4,7 +4,7 @@
     <div class="container-fluid" >
       <div class="row">
         
-        <div v-if="displayNavbar()" class="col-12 col-sm-12 px-0">
+        <div v-if="isLoginPage()" class="col-12 col-sm-12 px-0">
           <navbar></navbar>
         </div>
 
@@ -12,7 +12,7 @@
             <router-view></router-view>
         </div>
 
-		    <div v-if="displayFootbar()" class="col-12 col-sm-12 px-0">
+		    <div v-if="isLoginPage()" class="col-12 col-sm-12 px-0">
           <footbar></footbar>
         </div>
         
@@ -35,17 +35,8 @@ export default {
 	  // N/A
   },
   methods:{
-	displayNavbar: function() {
-		if(this.$route.name == "login")
-		return false;
-		else
-		return true;
-	},
-	displayFootbar: function() {
-			if(this.$route.name == "login")
-			return false;
-			else
-			return true;
+	isLoginPage: function() {
+		return(!(this.$route.name == "login"))
 	}
   }
 }

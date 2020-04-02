@@ -107,7 +107,7 @@
 
 export default {
 
-data () {
+	data () {
 	    return {
 			adresses:{
 				billing:[],
@@ -126,7 +126,7 @@ data () {
 		this.getCarts()
 	},
   	methods: {
-		getAddresses() {
+		getAddresses: function() {
       		var url = process.env.VUE_APP_API_BASE_URL + 'address'
 			axios.get(url)
 				.then((response) => {
@@ -153,7 +153,7 @@ data () {
 			});
 
 		},
-		getCarts() {
+		getCarts: function() {
       		var url = process.env.VUE_APP_API_BASE_URL + 'cart'
 			axios.get(url)
 				.then((response) => {
@@ -166,14 +166,7 @@ data () {
 				console.log(error)
 			});
 		},
-		notLastElement(cart){
-			var temp = this.carts.data[this.carts.data.length-1]
-			if(cart == temp) 
-				return false
-			else 
-				return true
-		},
-		getTotalPriceCart(){
+		getTotalPriceCart: function(){
 			this.carts.totalCartPrice = 0
 			for(var i = 0; i<this.carts.data.length; i++)
 			{

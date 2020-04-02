@@ -55,7 +55,7 @@
 										<div class="col-2 col-sm-2">
 											<h4 class="text-danger"> {{ formatPrice(cart.price) }} € </h4>
 										</div>
-										<div v-show="notLastElement(cart)" class="col-12 col-sm-12">
+										<div v-show="ifNotLastElement(cart)" class="col-12 col-sm-12">
 											<div class="bg-dark pt-1"></div>
 										</div>
 									</div>
@@ -113,7 +113,6 @@ data () {
 		}
 	},
   	methods: {
-
 		setAlertUpdate: function(value){
 			var self = this;
 			self.alertCart.update = value
@@ -134,7 +133,7 @@ data () {
 				event.preventDefault()
 			}
 		},
-		getCart(id) {
+		getCart: function(id) {
       		var url = process.env.VUE_APP_API_BASE_URL + 'cart'
 			axios.get(url)
 				.then((response) => {
@@ -147,14 +146,10 @@ data () {
 			});
 
 		},
-		notLastElement(cart){
-			var temp = this.carts.data[this.carts.data.length-1]
-			if(cart == temp) 
-				return false
-			else 
-				return true
+		ifNotLastElement: function(cart){
+			return (cart != this.carts.data[this.carts.data.length-1])
 		},
-		updateCart(indexTemp){
+		updateCart: function(indexTemp){
 
 			var cartTemp = this.carts.data[indexTemp]
 			var idCart = cartTemp.cart_id;
@@ -183,7 +178,7 @@ data () {
       		});
 
 		},
-		deleteCart(indexTemp){
+		deleteCart: function(indexTemp){
 
 			// Variables
 			var cartTemp = this.carts.data[indexTemp]
@@ -205,7 +200,7 @@ data () {
           		console.log(error)
       		});
 		},
-		getTotalPriceCart(){
+		getTotalPriceCart: function(){
 
 			this.carts.totalCartPrice = 0
 			for(var i = 0; i<this.carts.data.length; i++)
@@ -213,7 +208,7 @@ data () {
 				this.carts.totalCartPrice += this.carts.data[i].cart_price
 			}
 		},
-		getCartNumber(){
+		getCartNumber: function(){
 			var cartNumber=0;
 			for(var i = 0; i<this.carts.data.length; i++)
 			{

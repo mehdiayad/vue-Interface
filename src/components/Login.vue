@@ -66,7 +66,7 @@
         },
         data: {
           email: userStore.getters.getUserEmail,
-          password: userStore.getters.getUserPassword,
+          password: null,
           code: null,
           validToken: null
         },
