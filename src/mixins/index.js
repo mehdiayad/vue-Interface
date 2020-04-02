@@ -21,9 +21,9 @@ var myMixin = {
 		},
 		msToTime(duration) {
 
-			var hours = Math.trunc(duration / 3600)
-			var minutes = Math.trunc((duration % 3600) / 60)
-			var seconds = Math.trunc(((duration % 3600) % 60))
+			let hours = Math.trunc(duration / 3600)
+			let minutes = Math.trunc((duration % 3600) / 60)
+			let seconds = Math.trunc(((duration % 3600) % 60))
 	
 			hours = (hours < 10) ? "0" + hours : hours;
 			minutes = (minutes < 10) ? "0" + minutes : minutes;

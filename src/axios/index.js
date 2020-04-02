@@ -9,9 +9,9 @@ const base = axios.create({
 base.interceptors.request.use(function (config) {
 
     // Do something before request is sent
-    var authNull = "Bearer null"
-    var bool1 = config.url.includes('passportAuth')
-    var bool2 = config.url.includes('passportTestToken')
+    let authNull = "Bearer null"
+    let bool1 = config.url.includes('passportAuth')
+    let bool2 = config.url.includes('passportTestToken')
     
     if(bool1){
       // Token not needed for call API login endpoint

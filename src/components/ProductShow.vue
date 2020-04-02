@@ -145,7 +145,7 @@ export default {
 			}, 3000);
 		},
 		getProduct(id) {
-      		var url = process.env.VUE_APP_API_BASE_URL + 'product/' + id
+      		let url = process.env.VUE_APP_API_BASE_URL + 'product/' + id
 			axios({
 				method: 'get',
 				url : url,
@@ -163,7 +163,7 @@ export default {
 			document.getElementById("product_img_show_display").src = this.getImgUrl(path);
 		},
 		getCartProduct(){
-			  var url = process.env.VUE_APP_API_BASE_URL + 'cart/product'
+			  let url = process.env.VUE_APP_API_BASE_URL + 'cart/product'
 			axios({
 				method: 'post',
 				url : url,
@@ -174,7 +174,7 @@ export default {
 			})
        		.then((response) => {
 				//console.log(response)
-				var data = response.data
+				let data = response.data
 				if(data.length>0){
 					this.product.quantityStored = response.data[0].product_quantity
 				} 
@@ -190,8 +190,7 @@ export default {
 			if(this.product.quantityStored + this.product.quantitySelected >15){
 				this.setAlertAddFaillure(true)
 			}else{
-
-				var url = process.env.VUE_APP_API_BASE_URL + 'cart'
+				let url = process.env.VUE_APP_API_BASE_URL + 'cart'
 				axios({
 					method: 'post',
 					url : url,

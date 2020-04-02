@@ -155,7 +155,7 @@ export default {
   },
   methods : {
     getCategories(){
-      var url = process.env.VUE_APP_API_BASE_URL + 'category'
+      let url = process.env.VUE_APP_API_BASE_URL + 'category'
       axios.get(url)
         .then((response) => {
           //console.log(response.data)
@@ -167,9 +167,9 @@ export default {
         })
     },
     fillCategories(categoryTemp1){
-      var categoryTemp2 = []
+      let categoryTemp2 = []
       categoryTemp2[0 ]= 'Toutes les categories'
-      for(var i= 0; i < categoryTemp1.length; i++){
+      for(let i= 0; i < categoryTemp1.length; i++){
         categoryTemp2[categoryTemp1[i].id] = categoryTemp1[i].name
       }
       navbarStore.commit('setCategories',categoryTemp2)
@@ -186,7 +186,7 @@ export default {
       }
     },
     getCartNumber(){
-      var url = process.env.VUE_APP_API_BASE_URL + 'cart/number'
+      let url = process.env.VUE_APP_API_BASE_URL + 'cart/number'
       axios.get(url).
         then((response) => {
           //console.log(response)
@@ -224,7 +224,7 @@ export default {
       if(this.userNameModal == userStore.getters.getUserName){
         $('#exampleModal').modal('hide');
       }else{
-        var url = process.env.VUE_APP_API_BASE_URL + 'user/' + userStore.getters.getUserId
+        let url = process.env.VUE_APP_API_BASE_URL + 'user/' + userStore.getters.getUserId
         axios({
           method: 'put',
           url : url,

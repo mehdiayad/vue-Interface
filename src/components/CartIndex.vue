@@ -132,7 +132,7 @@ data () {
 			}
 		},
 		getCart(id) {
-      		var url = process.env.VUE_APP_API_BASE_URL + 'cart'
+      		let url = process.env.VUE_APP_API_BASE_URL + 'cart'
 			axios.get(url)
 				.then((response) => {
 				//console.log(response),
@@ -149,9 +149,9 @@ data () {
 		},
 		updateCart(indexTemp){
 
-			var cartTemp = this.carts.data[indexTemp]
-			var idCart = cartTemp.cart_id;
-      		var url = process.env.VUE_APP_API_BASE_URL + 'cart/' + idCart
+			let cartTemp = this.carts.data[indexTemp]
+			let idCart = cartTemp.cart_id;
+      		let url = process.env.VUE_APP_API_BASE_URL + 'cart/' + idCart
 			cartTemp.cart_price = cartTemp.price * cartTemp.product_quantity
 
 			axios({
@@ -179,9 +179,9 @@ data () {
 		deleteCart(indexTemp){
 
 			// Variables
-			var cartTemp = this.carts.data[indexTemp]
-			var idCart = cartTemp.cart_id;
-      		var url = process.env.VUE_APP_API_BASE_URL + 'cart/' + idCart
+			let cartTemp = this.carts.data[indexTemp]
+			let idCart = cartTemp.cart_id;
+      		let url = process.env.VUE_APP_API_BASE_URL + 'cart/' + idCart
 
 			axios({
 				method: 'delete',
@@ -200,14 +200,14 @@ data () {
 		},
 		getTotalPriceCart(){
 			this.carts.totalCartPrice = 0
-			for(var i = 0; i<this.carts.data.length; i++)
+			for(let i = 0; i<this.carts.data.length; i++)
 			{
 				this.carts.totalCartPrice += this.carts.data[i].cart_price
 			}
 		},
 		getCartNumber(){
-			var cartNumber=0;
-			for(var i = 0; i<this.carts.data.length; i++)
+			let cartNumber=0;
+			for(let i = 0; i<this.carts.data.length; i++)
 			{
 				cartNumber += this.carts.data[i].product_quantity
 			}

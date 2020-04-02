@@ -96,7 +96,7 @@
       }, this.loginForm.error.time);
     },
     loginSimple() {
-      var url = process.env.VUE_APP_API_BASE_URL + 'passportAuthSimple'
+      let url = process.env.VUE_APP_API_BASE_URL + 'passportAuthSimple'
       axios({
         method: 'post',
         url: url,
@@ -126,7 +126,7 @@
       });
     },
     loginPassport() {
-      var url = process.env.VUE_APP_API_BASE_URL + 'passportAuthGrant'
+      let url = process.env.VUE_APP_API_BASE_URL + 'passportAuthGrant'
       if(this.loginForm.passport.mode == 'client'){
         url = process.env.VUE_APP_API_BASE_URL + 'passportAuthClient'
       }
@@ -169,7 +169,7 @@
       });
     },
     generateUrl(){
-      var url = process.env.VUE_APP_API_BASE_URL + 'passportGenerateAuthorizeUrl'
+      let url = process.env.VUE_APP_API_BASE_URL + 'passportGenerateAuthorizeUrl'
        axios({
         method: 'post',
         url: url,
@@ -193,7 +193,7 @@
     },
     testToken(){
       //console.log('Call 1')
-      var url = process.env.VUE_APP_API_BASE_URL + 'passportTestToken'
+      let url = process.env.VUE_APP_API_BASE_URL + 'passportTestToken'
       return new Promise((resolve,reject) => {
         axios({
           method: 'get',
@@ -214,7 +214,7 @@
       });
     },
     canLogin(){
-      var canCall = false
+      let canCall = false
       if(this.loginForm.passport.mode === "grant" && this.loginForm.data.email !== null && this.loginForm.data.password !== null && this.loginForm.data.email.length>0 && this.loginForm.data.password.length>0){
         canCall = true
       }

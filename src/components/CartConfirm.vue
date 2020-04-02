@@ -127,21 +127,21 @@ export default {
 	},
   	methods: {
 		getAddresses() {
-      		var url = process.env.VUE_APP_API_BASE_URL + 'address'
+      		let url = process.env.VUE_APP_API_BASE_URL + 'address'
 			axios.get(url)
 				.then((response) => {
 				//console.log(response),
 				this.adresses.billing = response.data.billing
 				this.adresses.shipping = response.data.shipping
 
-				for (var i= 0; i< this.adresses.billing.length; i++){
+				for (let i= 0; i< this.adresses.billing.length; i++){
 					if (this.adresses.billing[i].is_default){
 						this.adresses.billingDefault = this.adresses.billing[i]
 						break; 
 					}
 				}
 
-				for (var i= 0; i< this.adresses.shipping.length; i++){
+				for (let i= 0; i< this.adresses.shipping.length; i++){
 					if (this.adresses.shipping[i].is_default){
 						this.adresses.shippingDefault = this.adresses.shipping[i]
 						break; 
@@ -154,7 +154,7 @@ export default {
 
 		},
 		getCarts() {
-      		var url = process.env.VUE_APP_API_BASE_URL + 'cart'
+      		let url = process.env.VUE_APP_API_BASE_URL + 'cart'
 			axios.get(url)
 				.then((response) => {
 				//console.log(response)
@@ -168,7 +168,7 @@ export default {
 		},
 		getTotalPriceCart(){
 			this.carts.totalCartPrice = 0
-			for(var i = 0; i<this.carts.data.length; i++)
+			for(let i = 0; i<this.carts.data.length; i++)
 			{
 				this.carts.totalCartPrice += this.carts.data[i].cart_price
 			}

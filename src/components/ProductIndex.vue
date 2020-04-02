@@ -68,7 +68,7 @@ export default {
   	methods: {
 		getProducts(page) {
 			//console.log('call function getproducts ')
-			  var url = process.env.VUE_APP_API_BASE_URL + 'product/list?page=' + page
+			  let url = process.env.VUE_APP_API_BASE_URL + 'product/list?page=' + page
 			axios({
 				method: 'post',
 				url : url,
