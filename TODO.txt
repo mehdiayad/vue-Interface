@@ -2,5 +2,4 @@
 - reorganize code to ES6
 - Create reusable subcomponent
 - change == to ===
-- Create repository Model for axios call instead of forms
-- Include control in reposotoory model before call axios
+- Create repository Model for axios (pass axios model instead of form)
