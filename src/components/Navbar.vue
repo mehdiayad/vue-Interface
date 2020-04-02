@@ -162,7 +162,7 @@ export default {
           var categoryTemp1 = response.data
           this.fillCategories(categoryTemp1)
         })
-        .catch(function (error) {
+        .catch( (error) => {
           console.log('ERROR : ' +  error)
         })
     },
@@ -193,7 +193,7 @@ export default {
           var number = response.data
           navbarStore.commit('setCartNumber',number)
       })
-      .catch(function (error) {
+      .catch( (error) => {
         console.log('ERROR : ' +  error)
       })
     },	
