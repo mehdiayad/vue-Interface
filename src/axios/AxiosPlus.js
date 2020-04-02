@@ -1,6 +1,6 @@
 import axios from '../axios/index'
 
-const axiosPlus = class AxiosPlus{
+class AxiosPlus{
 
     constructor() {
         this.response = null
@@ -23,5 +23,6 @@ const axiosPlus = class AxiosPlus{
     }
     
 }
+const axiosPlus = new AxiosPlus()
 
 export default axiosPlus;
