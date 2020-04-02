@@ -90,20 +90,17 @@
   },
   methods:{
     setErrorAlert(value){
-      var self = this;
-			self.loginForm.error.alert = value
+			this.loginForm.error.alert = value
 			setTimeout(() => {
-				self.loginForm.error.alert = !value
+				this.loginForm.error.alert = !value
       }, this.loginForm.error.time);
     },
     loginSimple() {
       var url = process.env.VUE_APP_API_BASE_URL + 'passportAuthSimple'
-      //inside axios (this) is lost so we save it in order to use it inside the function
-      var self = this;      
       axios({
         method: 'post',
         url: url,
-        data: self.loginForm.data
+        data: this.loginForm.data
       })
       .then( (response) => {
             //console.log(response)
@@ -114,18 +111,18 @@
             }
             else
             {
-              self.loginForm.error.code = response.data.errorCode
-              self.loginForm.error.type = response.data.errorType
-              self.loginForm.error.description = response.data.errorDescription
-              self.setErrorAlert(true)
+              this.loginForm.error.code = response.data.errorCode
+              this.loginForm.error.type = response.data.errorType
+              this.loginForm.error.description = response.data.errorDescription
+              this.setErrorAlert(true)
             }
         })
         .catch( (error) => {
           console.log(error)
-          self.loginForm.error.code = 500
-          self.loginForm.error.type = "network_error"
-          self.loginForm.error.description = error
-          self.setErrorAlert(true)
+          this.loginForm.error.code = 500
+          this.loginForm.error.type = "network_error"
+          this.loginForm.error.description = error
+          this.setErrorAlert(true)
       });
     },
     loginPassport() {
@@ -133,8 +130,6 @@
       if(this.loginForm.passport.mode == 'client'){
         url = process.env.VUE_APP_API_BASE_URL + 'passportAuthClient'
       }
-      //inside axios (this) is lost so we save it in order to use it inside the function
-      var self = this;      
       axios({
         method: 'post',
         url: url,
@@ -144,7 +139,7 @@
             //console.log(response)
             if(response.data.userConnected){
               axios.defaults.headers.common['Authorization'] = 'Bearer ' + response.data.accessToken
-              userStore.commit('setUserEmail',self.loginForm.data.email)
+              userStore.commit('setUserEmail',this.loginForm.data.email)
               userStore.commit('setUserId',response.data.userId)
               userStore.commit('setUserName',response.data.userName)
               userStore.commit('setUserInformations',response.data.userInformations)
@@ -159,23 +154,22 @@
             }
             else
             {
-              self.loginForm.error.code = response.data.errorCode
-              self.loginForm.error.type = response.data.errorType
-              self.loginForm.error.description = response.data.errorDescription
-              self.setErrorAlert(true)
+              this.loginForm.error.code = response.data.errorCode
+              this.loginForm.error.type = response.data.errorType
+              this.loginForm.error.description = response.data.errorDescription
+              this.setErrorAlert(true)
             }
         })
         .catch( (error) => {
           console.log(error)
-          self.loginForm.error.code = 500
-          self.loginForm.error.type = "network_error"
-          self.loginForm.error.description = error
-          self.setErrorAlert(true)
+          this.loginForm.error.code = 500
+          this.loginForm.error.type = "network_error"
+          this.loginForm.error.description = error
+          this.setErrorAlert(true)
       });
     },
     generateUrl(){
       var url = process.env.VUE_APP_API_BASE_URL + 'passportGenerateAuthorizeUrl'
-      var self = this
        axios({
         method: 'post',
         url: url,
@@ -184,13 +178,13 @@
       .then( (response) => {
             //console.log(response)
             if(response.data.errorCode===null){
-              self.loginForm.passport.link = response.data.apiUrl
-              window.open(self.loginForm.passport.link, "_blank");
+              this.loginForm.passport.link = response.data.apiUrl
+              window.open(this.loginForm.passport.link, "_blank");
             }else{
-              self.loginForm.error.code = response.data.errorCode
-              self.loginForm.error.type = response.data.errorType
-              self.loginForm.error.description = response.data.errorDescription
-              self.setErrorAlert(true)
+              this.loginForm.error.code = response.data.errorCode
+              this.loginForm.error.type = response.data.errorType
+              this.loginForm.error.description = response.data.errorDescription
+              this.setErrorAlert(true)
             }
       })
        .catch( (error) => {
@@ -199,7 +193,6 @@
     },
     testToken(){
       //console.log('Call 1')
-      var self = this
       var url = process.env.VUE_APP_API_BASE_URL + 'passportTestToken'
       return new Promise((resolve,reject) => {
         axios({
@@ -209,13 +202,13 @@
         .then( (response) => {
           //console.log(response)
           //console.log('Call 11')
-          self.loginForm.data.validToken = true
+          this.loginForm.data.validToken = true
           resolve('success')
         })
         .catch( (error) => {
           console.log(error)
           //console.log('Call 11')
-          self.loginForm.data.validToken = false
+          this.loginForm.data.validToken = false
           resolve('faillure')
         });
       });

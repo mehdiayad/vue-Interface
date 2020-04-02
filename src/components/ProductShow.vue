@@ -133,22 +133,23 @@ export default {
 			return (value >= 15 ? true : false)
 		},
 		setAlertAddSuccess(value){
-			var self = this;
-			self.addAlert.success = value
+			this.addAlert.success = value
 			setTimeout(() => {
-				self.addAlert.success = !value
+				this.addAlert.success = !value
 			}, 3000);
 		},
 		setAlertAddFaillure(value){
-			var self = this;
-			self.addAlert.faillure = value
+			this.addAlert.faillure = value
 			setTimeout(() => {
-				self.addAlert.faillure = !value
+				this.addAlert.faillure = !value
 			}, 3000);
 		},
 		getProduct(id) {
       		var url = process.env.VUE_APP_API_BASE_URL + 'product/' + id
-			axios.get(url)
+			axios({
+				method: 'get',
+				url : url,
+			})
        		.then((response) => {
 				//console.log(response),
 				this.product.data = response.data

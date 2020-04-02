@@ -114,17 +114,15 @@ data () {
 	},
   	methods: {
 		setAlertUpdate(value){
-			var self = this;
-			self.alertCart.update = value
+			this.alertCart.update = value
 			setTimeout(() => {
-				self.alertCart.update = !value
+				this.alertCart.update = !value
 			}, 1000);
 		},
 		setAlertDelete(value){
-			var self = this;
-			self.alertCart.delete = value
+			this.alertCart.delete = value
 			setTimeout(() => {
-				self.alertCart.delete = !value
+				this.alertCart.delete = !value
 			}, 1000);
 		},
 		displayCartAlert(event){
