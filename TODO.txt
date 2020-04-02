@@ -1,5 +1,6 @@
-- add axios class to encapsulate all axios calls
 - reorganize code to ES6
-- Create reusable subcomponent
+- Create reusable sub component
 - change == to === everywhere
 - Create repository Model for axios (pass axios model instead of form)
+- add axios class to encapsulate all axios calls
+
