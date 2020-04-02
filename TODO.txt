@@ -6,3 +6,5 @@
 - add axios class to encapsulate all axios calls
 - create repository Model for axios (pass  model instead of form)
 - Create reusable sub components
+- Add some patterns
+
