@@ -4,6 +4,7 @@ import VueRouter from 'vue-router'
 import Vuex from 'vuex'
 import myMixin from './mixins/index'
 import myAxios from './axios/index'
+import myAxiosPlus from './axios/AxiosPlus'
 import myRouter from './router/index'
 import myNavbarStore from './store/navbarStore'
 import myUserStore from './store/userStore'
@@ -21,6 +22,7 @@ Vue.mixin(myMixin)
 
 // Window variables
 window.axios = myAxios
+window.axiosPlus = myAxiosPlus
 window.router = myRouter
 window.navbarStore = myNavbarStore
 window.userStore = myUserStore

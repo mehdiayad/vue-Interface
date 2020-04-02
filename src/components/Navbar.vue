@@ -232,13 +232,12 @@ export default {
         })
         .then((response) => {
             //console.log(response)
-            var bool = response.data
-            if(bool){
+            if(response.data){
               userStore.commit('setUserName',this.userNameModal)
               $('#exampleModal').modal('hide');
             }
         })
-        .catch(function (error) {
+        .catch( (error) => {
           console.log('ERROR : ' +  error)
         })
       }

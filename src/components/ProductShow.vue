@@ -135,14 +135,14 @@ export default {
 		setAlertAddSuccess(value){
 			var self = this;
 			self.addAlert.success = value
-			setTimeout(function(){
+			setTimeout(() => {
 				self.addAlert.success = !value
 			}, 3000);
 		},
 		setAlertAddFaillure(value){
 			var self = this;
 			self.addAlert.faillure = value
-			setTimeout(function(){
+			setTimeout(() => {
 				self.addAlert.faillure = !value
 			}, 3000);
 		},
@@ -154,7 +154,7 @@ export default {
 				this.product.data = response.data
 				this.product.descriptions = this.product.data.description_product.split('.')
 			})
-			.catch(function (error) {
+			.catch( (error) => {
           		console.log(error)
       		});
 		},
@@ -179,7 +179,7 @@ export default {
 				} 
 				this.addProductCart()
 			})
-			.catch(function (error) {
+			.catch( (error) => {
           		console.log(error)
 			});
 			  
@@ -209,7 +209,7 @@ export default {
 						this.product.quantitySelected = 1
 					}
 				})
-				.catch(function (error) {
+				.catch( (error) => {
 					console.log(error)
 			  	});
 			}			

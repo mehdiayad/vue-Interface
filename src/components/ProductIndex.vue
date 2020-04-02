@@ -84,7 +84,7 @@ export default {
 				this.products.nextPageUrl = response.data.next_page_url
 				this.products.previousPageUrl = response.data.prev_page_url			
 			})
-			.catch(function (error) {
+			.catch( (error) => {
           		console.log(error)
       		});
 		},

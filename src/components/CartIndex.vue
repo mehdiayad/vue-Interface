@@ -116,14 +116,14 @@ data () {
 		setAlertUpdate(value){
 			var self = this;
 			self.alertCart.update = value
-			setTimeout(function(){
+			setTimeout(() => {
 				self.alertCart.update = !value
 			}, 1000);
 		},
 		setAlertDelete(value){
 			var self = this;
 			self.alertCart.delete = value
-			setTimeout(function(){
+			setTimeout(() => {
 				self.alertCart.delete = !value
 			}, 1000);
 		},
@@ -141,7 +141,7 @@ data () {
 				this.carts.data = response.data,
 				this.getTotalPriceCart()
 			})
-			.catch(function (error) {
+			.catch( (error) => {
 				console.log(error)
 			});
 
@@ -173,7 +173,7 @@ data () {
 				this.getCartNumber()
 				this.setAlertUpdate(true)
 			})
-			.catch(function (error) {
+			.catch( (error) => {
           		console.log(error)
       		});
 
@@ -196,12 +196,11 @@ data () {
 				this.getCartNumber()
 				this.setAlertDelete(true)
 			})
-			.catch(function (error) {
+			.catch((error) => {
           		console.log(error)
       		});
 		},
 		getTotalPriceCart(){
-
 			this.carts.totalCartPrice = 0
 			for(var i = 0; i<this.carts.data.length; i++)
 			{

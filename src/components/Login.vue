@@ -92,7 +92,7 @@
     setErrorAlert(value){
       var self = this;
 			self.loginForm.error.alert = value
-			setTimeout(function(){
+			setTimeout(() => {
 				self.loginForm.error.alert = !value
       }, this.loginForm.error.time);
     },
@@ -105,7 +105,7 @@
         url: url,
         data: self.loginForm.data
       })
-      .then(function (response) {
+      .then( (response) => {
             //console.log(response)
             if(response.data.userConnected){
               sessionStore.commit('login')
@@ -120,7 +120,7 @@
               self.setErrorAlert(true)
             }
         })
-        .catch(function (error) {
+        .catch( (error) => {
           console.log(error)
           self.loginForm.error.code = 500
           self.loginForm.error.type = "network_error"
@@ -140,7 +140,7 @@
         url: url,
         data: this.loginForm.data
       })
-      .then(function (response) {
+      .then( (response) => {
             //console.log(response)
             if(response.data.userConnected){
               axios.defaults.headers.common['Authorization'] = 'Bearer ' + response.data.accessToken
@@ -165,7 +165,7 @@
               self.setErrorAlert(true)
             }
         })
-        .catch(function (error) {
+        .catch( (error) => {
           console.log(error)
           self.loginForm.error.code = 500
           self.loginForm.error.type = "network_error"
@@ -181,7 +181,7 @@
         url: url,
         data: this.loginForm.data
       })
-      .then(function (response) {
+      .then( (response) => {
             //console.log(response)
             if(response.data.errorCode==null){
               self.loginForm.passport.link = response.data.apiUrl
@@ -193,7 +193,7 @@
               self.setErrorAlert(true)
             }
       })
-       .catch(function (error) {
+       .catch( (error) => {
           console.log(error)
        });
     },
@@ -201,18 +201,19 @@
       //console.log('Call 1')
       var self = this
       var url = process.env.VUE_APP_API_BASE_URL + 'passportTestToken'
-      return new Promise(function(resolve,reject){
+      return new Promise((resolve,reject) => {
+
         axios({
           method: 'get',
           url: url,
         })
-        .then(function (response) {
+        .then( (response) => {
           //console.log(response)
           //console.log('Call 11')
           self.loginForm.data.validToken = true
           resolve('success')
         })
-        .catch(function (error) {
+        .catch( (error) => {
           console.log(error)
           //console.log('Call 11')
           self.loginForm.data.validToken = false

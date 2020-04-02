@@ -148,7 +148,7 @@ export default {
 					}
 				}
 			})
-			.catch(function (error) {
+			.catch((error) => {
 				console.log(error)
 			});
 
@@ -162,7 +162,7 @@ export default {
 				this.getTotalPriceCart()
 
 			})
-			.catch(function (error) {
+			.catch((error) => {
 				console.log(error)
 			});
 		},

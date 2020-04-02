@@ -16,8 +16,10 @@
 
 ## Project components version
 
+- ES6
 - Vue : 2.6
 - Vue-Cli : 4.2
+- Babel : 4.2
 - Typescript : 3.8
 - Nodejs : 2.6
 - Bootstrap : 4.4
