@@ -121,12 +121,12 @@ export default {
 			}
       }
 	},
-	mounted:function(){
+	mounted(){
 		this.getAddresses()
 		this.getCarts()
 	},
   	methods: {
-		getAddresses: function() {
+		getAddresses() {
       		var url = process.env.VUE_APP_API_BASE_URL + 'address'
 			axios.get(url)
 				.then((response) => {
@@ -153,7 +153,7 @@ export default {
 			});
 
 		},
-		getCarts: function() {
+		getCarts() {
       		var url = process.env.VUE_APP_API_BASE_URL + 'cart'
 			axios.get(url)
 				.then((response) => {
@@ -166,7 +166,7 @@ export default {
 				console.log(error)
 			});
 		},
-		getTotalPriceCart: function(){
+		getTotalPriceCart(){
 			this.carts.totalCartPrice = 0
 			for(var i = 0; i<this.carts.data.length; i++)
 			{

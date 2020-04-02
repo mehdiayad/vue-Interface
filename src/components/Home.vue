@@ -10,7 +10,7 @@
 
 <script> 
 export default{
-  mounted: function(){
+  mounted(){
     // N/A
   }
 }

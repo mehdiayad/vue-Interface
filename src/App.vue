@@ -31,11 +31,11 @@ export default {
   components: { 
    navbar,footbar
   },
-  mounted: function(){
+  mounted(){
 	  // N/A
   },
   methods:{
-	isLoginPage: function() {
+	isLoginPage() {
 		return(!(this.$route.name == "login"))
 	}
   }

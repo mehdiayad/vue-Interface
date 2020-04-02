@@ -81,22 +81,22 @@
     }
   },
   computed: {
-    displayAlert: function(){
+    displayAlert(){
       return this.loginForm.error.alert
     }
   },
-  mounted: function(){
+  mounted(){
     cronJob.stop()
   },
   methods:{
-    setErrorAlert : function(value){
+    setErrorAlert(value){
       var self = this;
 			self.loginForm.error.alert = value
 			setTimeout(function(){
 				self.loginForm.error.alert = !value
       }, this.loginForm.error.time);
     },
-    loginSimple: function() {
+    loginSimple() {
       var url = process.env.VUE_APP_API_BASE_URL + 'passportAuthSimple'
       //inside axios (this) is lost so we save it in order to use it inside the function
       var self = this;      
@@ -128,7 +128,7 @@
           self.setErrorAlert(true)
       });
     },
-    loginPassport: function() {
+    loginPassport() {
       var url = process.env.VUE_APP_API_BASE_URL + 'passportAuthGrant'
       if(this.loginForm.passport.mode == 'client'){
         url = process.env.VUE_APP_API_BASE_URL + 'passportAuthClient'
@@ -145,7 +145,6 @@
             if(response.data.userConnected){
               axios.defaults.headers.common['Authorization'] = 'Bearer ' + response.data.accessToken
               userStore.commit('setUserEmail',self.loginForm.data.email)
-              userStore.commit('setUserPassword',self.loginForm.data.password)
               userStore.commit('setUserId',response.data.userId)
               userStore.commit('setUserName',response.data.userName)
               userStore.commit('setUserInformations',response.data.userInformations)
@@ -174,7 +173,7 @@
           self.setErrorAlert(true)
       });
     },
-    generateUrl: function($event){
+    generateUrl(){
       var url = process.env.VUE_APP_API_BASE_URL + 'passportGenerateAuthorizeUrl'
       var self = this
        axios({
@@ -198,7 +197,7 @@
           console.log(error)
        });
     },
-    testToken : function(){
+    testToken(){
       //console.log('Call 1')
       var self = this
       var url = process.env.VUE_APP_API_BASE_URL + 'passportTestToken'
@@ -221,7 +220,7 @@
         });
       });
     },
-    canLogin: function(){
+    canLogin(){
       var canCall = false
       if(this.loginForm.passport.mode == "grant" && this.loginForm.data.email != null && this.loginForm.data.password != null && this.loginForm.data.email.length >0 && this.loginForm.data.password.length >0){
         canCall = true
@@ -235,7 +234,7 @@
         window.alert("Veuillez remplir tous les champs avant de cliquer sur valider");
       }
     },
-    dologin: async function (){
+    async dologin(){
       // first call function
       await this.testToken()
       // second call function

@@ -139,22 +139,22 @@ export default {
     }
   },
   computed:{
-    categories : function() {
+    categories() {
       return navbarStore.getters.getCategories
     },
-    cartNumber : function() {
+    cartNumber() {
       return navbarStore.getters.getCartNumber
     },
-    sessionTimeRemaining : function(){
+    sessionTimeRemaining(){
       return this.msToTime(sessionStore.getters.getSessionTimeRemaining)
     }
   },
-  mounted: function() {
+  mounted() {
     this.getCategories()
     this.getCartNumber()
   },
   methods : {
-    getCategories: function(){
+    getCategories(){
       var url = process.env.VUE_APP_API_BASE_URL + 'category'
       axios.get(url)
         .then((response) => {
@@ -166,7 +166,7 @@ export default {
           console.log('ERROR : ' +  error)
         })
     },
-    fillCategories: function(categoryTemp1){
+    fillCategories(categoryTemp1){
       var categoryTemp2 = []
       categoryTemp2[0 ]= 'Toutes les categories'
       for(var i= 0; i < categoryTemp1.length; i++){
@@ -175,7 +175,7 @@ export default {
       navbarStore.commit('setCategories',categoryTemp2)
 
     },
-    searchProducts: function() {
+    searchProducts() {
       navbarStore.commit('setCategorySearch',this.categorySearch)
       navbarStore.commit('setProductSearch',this.productSearch)
       componentsStore.commit('setKeyProductIndex',1)
@@ -185,7 +185,7 @@ export default {
         router.push({ name: 'product_index'})
       }
     },
-    getCartNumber: function(){
+    getCartNumber(){
       var url = process.env.VUE_APP_API_BASE_URL + 'cart/number'
       axios.get(url).
         then((response) => {
@@ -197,11 +197,11 @@ export default {
         console.log('ERROR : ' +  error)
       })
     },	
-    logout: function(){
+    logout(){
       userStore.commit('logout')
       sessionStore.commit('logout')
     },
-    goHomePage: function(){
+    goHomePage(){
 
       // instant change data, view reactive, no need page to reload
       this.categorySearch = 0 
@@ -217,11 +217,10 @@ export default {
         router.push({ name: 'home'})
       }
     },
-    showAccount: function(){
+    showAccount(){
       $('#exampleModal').modal('show');
     },
-    saveUser: function(){
-
+    saveUser(){
       if(this.userNameModal == userStore.getters.getUserName){
         $('#exampleModal').modal('hide');
       }else{

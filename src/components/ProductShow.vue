@@ -117,36 +117,36 @@ export default {
 			}
       }
 	},
-  	mounted: function() {
+  	mounted() {
 		this.getProduct(this.$route.params.id)
 	},
 	computed:{
-		displayAlertAddSuccess: function(){
+		displayAlertAddSuccess(){
 			return this.addAlert.success
 		},
-		displayAlertAddFaillure: function(){
+		displayAlertAddFaillure(){
 			return this.addAlert.faillure
 		}
 	},
   	methods: {
-		stockIsEnough: function(value){
+		stockIsEnough(value){
 			return (value >= 15 ? true : false)
 		},
-		setAlertAddSuccess: function(value){
+		setAlertAddSuccess(value){
 			var self = this;
 			self.addAlert.success = value
 			setTimeout(function(){
 				self.addAlert.success = !value
 			}, 3000);
 		},
-		setAlertAddFaillure: function(value){
+		setAlertAddFaillure(value){
 			var self = this;
 			self.addAlert.faillure = value
 			setTimeout(function(){
 				self.addAlert.faillure = !value
 			}, 3000);
 		},
-		getProduct: function(id) {
+		getProduct(id) {
       		var url = process.env.VUE_APP_API_BASE_URL + 'product/' + id
 			axios.get(url)
        		.then((response) => {
@@ -158,10 +158,10 @@ export default {
           		console.log(error)
       		});
 		},
-		changeImg: function(path){
+		changeImg(path){
 			document.getElementById("product_img_show_display").src = this.getImgUrl(path);
 		},
-		getCartProduct: function(){
+		getCartProduct(){
 			  var url = process.env.VUE_APP_API_BASE_URL + 'cart/product'
 			axios({
 				method: 'post',
@@ -184,7 +184,7 @@ export default {
 			});
 			  
 		},
-		addProductCart: function(){
+		addProductCart(){
 
 			if(this.product.quantityStored + this.product.quantitySelected >15){
 				this.setAlertAddFaillure(true)

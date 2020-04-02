@@ -101,39 +101,39 @@ data () {
 			}
       }
 	},
-	mounted:function(){
+	mounted(){
 		this.getCart(this.user.userId)
 	},
 	computed:{
-		displayAlertUpdate: function() {
+		displayAlertUpdate() {
 			return this.alertCart.update
 		},
-		displayAlertDelete: function(){
+		displayAlertDelete(){
 			return this.alertCart.delete
 		}
 	},
   	methods: {
-		setAlertUpdate: function(value){
+		setAlertUpdate(value){
 			var self = this;
 			self.alertCart.update = value
 			setTimeout(function(){
 				self.alertCart.update = !value
 			}, 1000);
 		},
-		setAlertDelete: function(value){
+		setAlertDelete(value){
 			var self = this;
 			self.alertCart.delete = value
 			setTimeout(function(){
 				self.alertCart.delete = !value
 			}, 1000);
 		},
-		displayCartAlert: function(event){
+		displayCartAlert(event){
 			if(this.carts.data == 0){
 				window.alert('Votre panier est vide, vous ne pouvez pas passer de commande')
 				event.preventDefault()
 			}
 		},
-		getCart: function(id) {
+		getCart(id) {
       		var url = process.env.VUE_APP_API_BASE_URL + 'cart'
 			axios.get(url)
 				.then((response) => {
@@ -146,10 +146,10 @@ data () {
 			});
 
 		},
-		ifNotLastElement: function(cart){
+		ifNotLastElement(cart){
 			return (cart != this.carts.data[this.carts.data.length-1])
 		},
-		updateCart: function(indexTemp){
+		updateCart(indexTemp){
 
 			var cartTemp = this.carts.data[indexTemp]
 			var idCart = cartTemp.cart_id;
@@ -178,7 +178,7 @@ data () {
       		});
 
 		},
-		deleteCart: function(indexTemp){
+		deleteCart(indexTemp){
 
 			// Variables
 			var cartTemp = this.carts.data[indexTemp]
@@ -200,7 +200,7 @@ data () {
           		console.log(error)
       		});
 		},
-		getTotalPriceCart: function(){
+		getTotalPriceCart(){
 
 			this.carts.totalCartPrice = 0
 			for(var i = 0; i<this.carts.data.length; i++)
@@ -208,7 +208,7 @@ data () {
 				this.carts.totalCartPrice += this.carts.data[i].cart_price
 			}
 		},
-		getCartNumber: function(){
+		getCartNumber(){
 			var cartNumber=0;
 			for(var i = 0; i<this.carts.data.length; i++)
 			{

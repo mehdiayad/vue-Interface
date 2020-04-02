@@ -12,12 +12,10 @@
 			</div>
 		</div>
 		<div v-if="products.data.length>0" class="row">
-			<div class="col-4 col-sm-4 mx-auto text-white mt-3 mb-3">
-				<span v-if="canGoBefore()"> <a class="btn btn-info text-white mx-1" v-on:click="previousPage()"> Precedent </a> </span>
-				<span v-else> <a class="btn btn-info text-white disabled mx-1" v-on:click="previousPage()"> Precedent </a> </span>				
+			<div class="col-4 col-sm-4 mx-auto text-white mt-3 mb-3 text-center">
+				<span v-if="canGoBefore()"> <a class="btn btn-info text-white mx-1" :class="isDisabledBefore" @click="previousPage()"> Precedent </a> </span>
 				<span class="text text-dark mx-1"> {{products.currentPage}} of {{products.lastPage}} </span>
-				<span v-if="canGoAfter()"> <a class="btn btn-info text-white mx-1" v-on:click="nextPage()"> Suivant </a> </span>
-				<span v-else> <a class="btn btn-info text-white disabled mx-1" v-on:click="nextPage()"> Suivant </a> </span>
+				<span v-if="canGoAfter()"> <a class="btn btn-info text-white mx-1" :class="isDisabledAfter" @click="nextPage()"> Suivant </a> </span>
 			</div>
 		</div>
 
@@ -54,15 +52,21 @@ export default {
 		}
 	},
 	computed: {
-		componentKeyProductIndex: function(){
+		componentKeyProductIndex(){
 			return componentsStore.getters.getKeyProductIndex
+		},
+		isDisabledBefore(){
+			return (this.canGoBefore() == true ? '' : 'disabled')
+		},
+		isDisabledAfter(){
+			return (this.canGoAfter() == true ? '' : 'disabled')
 		}
 	},
-  	mounted: function() {
+  	mounted() {
 		this.getProducts(this.products.page)
 	},
   	methods: {
-		getProducts: function(page) {
+		getProducts(page) {
 			//console.log('call function getproducts ')
 			  var url = process.env.VUE_APP_API_BASE_URL + 'product/list?page=' + page
 			axios({
@@ -84,24 +88,24 @@ export default {
           		console.log(error)
       		});
 		},
-		canGoBefore: function(){
+		canGoBefore(){
 			if(this.products.currentPage > 1){ return true; }
 			else { return false; }
 		},
-		canGoAfter: function(){
+		canGoAfter(){
 			if(this.products.currentPage < this.products.lastPage){ return true; }
 			else { return false; }
 		},
-		previousPage: function(){
+		previousPage(){
 			if(this.canGoBefore()){
-			this.products.page--;
-			this.getProducts(this.products.page);
+				this.products.page--;
+				this.getProducts(this.products.page);
 			}
 		},
-		nextPage: function(){
+		nextPage(){
 			if(this.canGoAfter()){
-			this.products.page++;
-			this.getProducts(this.products.page);
+				this.products.page++;
+				this.getProducts(this.products.page);
 			}
 		}
 	}

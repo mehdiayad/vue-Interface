@@ -6,20 +6,20 @@ var myMixin = {
 		}
 	},
 	methods: {
-		formatPrice: function(value){
+		formatPrice(value){
   			let val = (value/1).toFixed(2).replace('.', ',')
  			return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
 		},
-		getImgUrl: function(img_path) {
+		getImgUrl(img_path) {
 			return '/images/products/'+ img_path
 		},
-		isNotNull: function(obj){
+		isNotNull(obj){
 			return (obj != null)
 		},
-		cutString: function(value,size){
+		cutString(value,size){
 			return value.substring(0,size);
 		},
-		msToTime: function(duration) {
+		msToTime(duration) {
 
 			var hours = Math.trunc(duration / 3600)
 			var minutes = Math.trunc((duration % 3600) / 60)
