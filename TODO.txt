@@ -1,10 +1,11 @@
 - remove password from vuex (DONE)
 - Replace simple if statements by conditional operator (DONE)
+- change == to === everywhere (DONE)
+- Remove self in arrow function
 - Pass adequate variable to let instead of var
 - pass all code to ES6
-- change == to === everywhere
 - add axios class to encapsulate all axios calls
-- create repository Model for axios (pass  model instead of form)
+- create repository Model for axios (pass model instead of form)
 - Create reusable sub components
 - Add some patterns
 

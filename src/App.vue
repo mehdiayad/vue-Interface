@@ -35,9 +35,9 @@ export default {
 	  // N/A
   },
   methods:{
-	isLoginPage() {
-		return(!(this.$route.name == "login"))
-	}
+    isLoginPage() {
+      return(this.$route.name !== "login")
+    }
   }
 }
 </script>

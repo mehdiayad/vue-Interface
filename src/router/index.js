@@ -63,7 +63,7 @@ var router = new VueRouter({
 router.beforeEach((to, from, next) => {
 
   if(to.name == 'login'){
-    if(userStore.getters.getUserConnected == true){
+    if(userStore.getters.getUserConnected === true){
       //console.log('in router function case 1A')
       next({ name: 'home' })
     }else{
@@ -72,7 +72,7 @@ router.beforeEach((to, from, next) => {
     }
   }
   else {
-    if(userStore.getters.getUserConnected == false){
+    if(userStore.getters.getUserConnected === false){
       //console.log('in router function case 2A')
       next({ name: 'login' })
     }else{

@@ -24,8 +24,8 @@ base.interceptors.request.use(function (config) {
     }
     else{
       // for all others incoming requests
-      if(config.headers["Authorization"] == authNull){
-        if(userStore.getters.getUserTokenAccess != null){
+      if(config.headers["Authorization"] === authNull){
+        if(userStore.getters.getUserTokenAccess !== null){
           config.headers["Authorization"]  = 'Bearer ' + userStore.getters.getUserTokenAccess
         }else{
           throw new axios.Cancel('[Interceptor] Operation canceled by the user')

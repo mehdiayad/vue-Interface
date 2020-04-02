@@ -174,7 +174,7 @@ export default {
        		.then((response) => {
 				//console.log(response)
 				var data = response.data
-				if(data.length > 0){
+				if(data.length>0){
 					this.product.quantityStored = response.data[0].product_quantity
 				} 
 				this.addProductCart()

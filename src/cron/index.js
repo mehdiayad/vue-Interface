@@ -8,7 +8,7 @@ var cronJob = new CronJob1('* * * * * *', function() {
     if(userStore.getters.getUserConnected){
         sessionStore.commit('addSessionTimeCounter',1)
         sessionStore.commit('addSessionTimeRemaining', -1)
-        if(sessionStore.getters.getSessionTimeCounter == sessionStore.getters.getSessionTimeLimit){
+        if(sessionStore.getters.getSessionTimeCounter === sessionStore.getters.getSessionTimeLimit){
             console.log('[CRON] logout user each 10 minutes');
             userStore.commit('logout');
             sessionStore.commit('logout');

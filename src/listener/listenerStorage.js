@@ -13,9 +13,9 @@ var listenerStorage = window.addEventListener('storage', function(event){
 
 
     // Local storage deleted manually
-    if(event.key == null){
+    if(event.key === null){
         console.log('listener clear local storage event')
-        if(router.currentRoute.name != 'login'){
+        if(router.currentRoute.name !== 'login'){
             // logout
             userStore.commit('setUserEmail',null)
             userStore.commit('setUserPassword',null)
@@ -28,7 +28,7 @@ var listenerStorage = window.addEventListener('storage', function(event){
     }
 
     // one window/tab logout so every windows/tabs logout
-    if (event.key == 'event-logout') {
+    if (event.key === 'event-logout') {
         console.log('listener event logout')
         // COMMENT LINE BELOW FOR STABLE VERSION
         // TODO FIX INFINITE VUEX DATA UPDATING 
@@ -37,7 +37,7 @@ var listenerStorage = window.addEventListener('storage', function(event){
     }
 
     // one window/tab login so every windows/tabs login
-    if (event.key == 'event-login') { 
+    if (event.key === 'event-login') { 
         console.log('listener event login')
         // COMMENT LINE BELOW FOR STABLE VERSION
         // TODO FIX INFINITE VUEX DATA UPDATING

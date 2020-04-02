@@ -41,7 +41,7 @@ const mutations = {
 		state.userConnected = true
 		cronJob.start()
 		localStorage.setItem('event-login', new Date().toLocaleString());
-		if( router!= null && router.currentRoute.name != 'home'){
+		if(router.currentRoute.name !== 'home'){
 			router.push({ name: 'home'})
 		}
 	},
@@ -50,7 +50,7 @@ const mutations = {
 		state.userInformations = "Disconnected"
 		cronJob.stop()
       	localStorage.setItem('event-logout', new Date().toLocaleString());
-	  	if(router!= null && router.currentRoute.name != 'login'){
+	  	if(router.currentRoute.name !== 'login'){
 			router.push({ name: 'login'})
 		}
 	}

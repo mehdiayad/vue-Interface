@@ -56,10 +56,10 @@ export default {
 			return componentsStore.getters.getKeyProductIndex
 		},
 		isDisabledBefore(){
-			return (this.canGoBefore() == true ? '' : 'disabled')
+			return (this.canGoBefore() === true ? '' : 'disabled')
 		},
 		isDisabledAfter(){
-			return (this.canGoAfter() == true ? '' : 'disabled')
+			return (this.canGoAfter() === true ? '' : 'disabled')
 		}
 	},
   	mounted() {
@@ -89,12 +89,10 @@ export default {
       		});
 		},
 		canGoBefore(){
-			if(this.products.currentPage > 1){ return true; }
-			else { return false; }
+			return (this.products.currentPage > 1 ? true : false)
 		},
 		canGoAfter(){
-			if(this.products.currentPage < this.products.lastPage){ return true; }
-			else { return false; }
+			return (this.products.currentPage < this.products.lastPage ? true : false)
 		},
 		previousPage(){
 			if(this.canGoBefore()){

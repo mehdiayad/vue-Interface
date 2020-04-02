@@ -14,7 +14,7 @@ var myMixin = {
 			return '/images/products/'+ img_path
 		},
 		isNotNull(obj){
-			return (obj != null)
+			return (obj !== null)
 		},
 		cutString(value,size){
 			return value.substring(0,size);

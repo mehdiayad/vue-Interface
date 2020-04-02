@@ -183,7 +183,7 @@
       })
       .then( (response) => {
             //console.log(response)
-            if(response.data.errorCode==null){
+            if(response.data.errorCode===null){
               self.loginForm.passport.link = response.data.apiUrl
               window.open(self.loginForm.passport.link, "_blank");
             }else{
@@ -222,10 +222,10 @@
     },
     canLogin(){
       var canCall = false
-      if(this.loginForm.passport.mode == "grant" && this.loginForm.data.email != null && this.loginForm.data.password != null && this.loginForm.data.email.length >0 && this.loginForm.data.password.length >0){
+      if(this.loginForm.passport.mode === "grant" && this.loginForm.data.email !== null && this.loginForm.data.password !== null && this.loginForm.data.email.length>0 && this.loginForm.data.password.length>0){
         canCall = true
       }
-      if(this.loginForm.passport.mode == "client" && this.loginForm.data.email != null && this.loginForm.data.code != null && this.loginForm.data.email.length >0 && this.loginForm.data.code.length >0){
+      if(this.loginForm.passport.mode === "client" && this.loginForm.data.email !== null && this.loginForm.data.code !== null && this.loginForm.data.email.length>0 && this.loginForm.data.code.length>0){
         canCall = true
       }
       if(canCall == true){
@@ -239,7 +239,7 @@
       await this.testToken()
       // second call function
       if(this.loginForm.data.validToken){
-        if(this.loginForm.passport.mode == 'grant' && userStore.getters.getUserEmail == this.loginForm.data.email){
+        if(this.loginForm.passport.mode === 'grant' && userStore.getters.getUserEmail === this.loginForm.data.email){
           this.loginSimple()
         }else{
           this.loginPassport()
