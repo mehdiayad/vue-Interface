@@ -202,7 +202,6 @@
       var self = this
       var url = process.env.VUE_APP_API_BASE_URL + 'passportTestToken'
       return new Promise((resolve,reject) => {
-
         axios({
           method: 'get',
           url: url,
