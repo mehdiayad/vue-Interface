@@ -48,6 +48,8 @@
 - Delete the folder node_modules if exist
 - Open the terminal and go to the project directory
 - Run [npm install] to install all dependencies
+- If you installed apache .env file must have this VUE_APP_API_BASE_URL="http://localhost:8070/api/"
+- If you installed nginx  .env file must have this VUE_APP_API_BASE_URL="http://localhost:8090/api/"
 - Run [npm run serve]
 - You should see App running at local: http://localhost:8080/ 
 - Open your browser and go to the page http://localhost:8080/
